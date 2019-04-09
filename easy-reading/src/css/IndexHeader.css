@@ -1,0 +1,140 @@
+.header{
+    width: 1200px;
+    height:450px;
+    margin:0 auto;
+    position: relative;
+
+}
+
+.headerMain{
+    width: 1200px;
+    height:300px;
+
+}
+.headerLeft{
+    width:200px;
+    height:300px;
+    float:left;
+
+}
+.headerLeft dl{
+    text-align: center;
+    margin-top: 10px;
+}
+.headerLeft dt{
+    font-size: 20px;
+}
+
+.typeComponent{
+    width:100px;
+    height: 60px;
+    position: relative;
+
+
+}
+.headerLeft .typeIcon{
+    width:20px;
+    height:20px;
+    position: absolute;
+    top:50%;
+    left:20%;
+    margin-top: -10px;
+    float:left;
+}
+.headerLeft .typeName{
+
+    width:100px;
+    height:50px;
+    position:absolute;
+    top:50%;
+    margin-top: -18px;
+    padding-left: 15px;
+    float:left;
+
+}
+
+.headerCenter{
+    width:800px;
+    height:300px;
+    float:left;
+    background-color: yellow;
+}
+.headerRight{
+    width:200px;
+    height:300px;
+    float:left;
+    background-color: #FCFCFA;
+}
+.headerRight dl{
+    text-align: center;
+    margin-top: 10px;
+}
+.headerRight dt{
+    font-size: 16px;
+    color:#262626;
+
+}
+.search{
+    width: 1200px;
+    height: 150px;
+    margin: 0 auto;
+    position:relative;
+    background-color: red;
+}
+.search div{
+    display:inline;
+}
+.search span{
+    width:100px;
+    height:50px;
+    position: absolute;
+    top:50%;
+    left:100%;
+    margin-left: -100px;
+    margin-top: -25px;
+    font-size: 20px;
+}
+.search img{
+    width:200px;
+    height:80px;
+    position:absolute;
+    top:50%;
+    margin-top: -40px;
+
+}
+#searchComponent{
+    height: 50px;
+    width: 200px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left: -100px;
+    margin-top: -25px;
+
+}
+.slick{
+    width:800px;
+    height:250px;
+}
+.indexMenu{
+    width:800px;
+    height:50px;
+
+}
+.indexMenu .ant-menu-item{
+    width:260px;
+    margin: 2px;
+    text-align: center;
+    font-size: 20px;
+}
+.ant-carousel .slick-slide {
+    text-align: center;
+    height: 250px;
+    line-height: 160px;
+    background: #000;
+    overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+    color: #fff;
+}

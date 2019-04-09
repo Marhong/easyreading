@@ -1,0 +1,78 @@
+.search{
+    width: 1200px;
+    height: 150px;
+    margin: 0 auto;
+    position:relative;
+    background-color: red;
+}
+.search div{
+    display:inline;
+}
+.search span{
+    width:100px;
+    height:50px;
+    position: absolute;
+    top:50%;
+    left:100%;
+    margin-left: -100px;
+    margin-top: -25px;
+    font-size: 20px;
+}
+.search img{
+    width:200px;
+    height:80px;
+    position:absolute;
+    top:50%;
+    margin-top: -40px;
+
+}
+#searchComponent{
+    height: 50px;
+    width: 200px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left: -100px;
+    margin-top: -25px;
+
+}
+/*.header2{
+    width: 1200px;
+    height: 150px;
+
+    margin:auto;
+    position: absolute;
+    left:0;
+    right: 0;
+    background-color: white;
+}*/
+/*.header-search{
+    height: 50px;
+    width: 300px;
+    margin:auto;
+    position: absolute;
+    top:0px;
+    left:0;
+    bottom: 0;
+    right: 0;
+
+}
+#ydLogo{
+    width:200px;
+    height:80px;
+    margin:auto;
+    position: absolute;
+    top:0px;
+    bottom: 0;
+
+}
+#ydPersonal{
+    width:100px;
+    height:50px;
+    margin:auto;
+    position: absolute;
+    top:0px;
+    bottom: 0;
+    right: 0;
+    font-size: 20px;
+}*/
