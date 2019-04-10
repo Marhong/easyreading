@@ -36,7 +36,7 @@ export default class IndexHeaderCenter extends Component{
                     </Menu.Item>
 
                 </Menu>
-            <Carousel autoplay className="slick" >
+            <Carousel autoplay  >
                 <div><h3>1</h3></div>
                 <div><h3>2</h3></div>
                 <div><h3>3</h3></div>

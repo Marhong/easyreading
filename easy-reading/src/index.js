@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import IndexHeader from "./components/IndexHeader";
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
 import IndexHeaderCenter from "./components/IndexHeaderCenter";
+import BookType from "./components/BookType";
 
 ReactDOM.render(<IndexHeader />, document.getElementById('root'));
 
