@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import '../static/iconfont.css';
+
 
 export default class BookType extends Component{
     static defaultProps = {

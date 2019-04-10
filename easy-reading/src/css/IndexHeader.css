@@ -134,12 +134,8 @@
     text-align: center;
     height: 250px;
     line-height: 160px;
-
     overflow: hidden;
 }
-
-
-
 
 .ant-carousel .slick-dots li.slick-active button{
     background: red;
@@ -150,9 +146,7 @@
     height:10px;
     background-color: black;
 }
-.ant-carousel .slick-slide h3 {
-    color: #fff;
-}
+
 .personModule{
     width:1200px;
     height:300px;
@@ -179,10 +173,15 @@
     min-height: 250px;
     margin: 10px auto -10px auto;
 }
+
 .finishedModule{
     width:200px;
     height:350px;
     margin-top: 50px;
+}
+.finishedModule .ant-carousel .slick-slide{
+    width: 200px;
+    height:310px;
 }
 
 

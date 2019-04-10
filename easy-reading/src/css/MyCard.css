@@ -1,13 +1,17 @@
 .myCard{
     width: 200px;
-    height: 300px;
+    height: 310px;
     padding-right: 10px;
     overflow: hidden;
     position:relative;
     text-align: center;
     background-color: #F7F5F0;
+
 }
 
+.myCard a{
+    color: #1a1a1a;
+}
 .myCard p{
     margin-bottom: 1px;
 }
@@ -18,17 +22,15 @@
 .myCard .bookRank{
     color:red;
     font-size: 12px;
-    height:20px;
 }
 .myCard .bookFans{
     font-size: 16px;
     color: #f00;
-    height:20px;
 }
 .myCard .bookDesc{
     font-size: 12px;
     color: #1a1a1a;
-    height:20px;
+    height: 20px;
 }
 .myCard img{
     width:100px;
@@ -41,5 +43,5 @@
 }
 .myCard .bookDetail{
     margin-top: 5px;
-    height:20px;
+    margin-bottom: 10px;
 }

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import '../static/iconfont.css';
+
 import BookType from "./BookType";
 
 export default class IndexHeaderLeft extends Component{
