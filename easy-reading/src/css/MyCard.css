@@ -1,0 +1,45 @@
+.myCard{
+    width: 200px;
+    height: 300px;
+    padding-right: 10px;
+    overflow: hidden;
+    position:relative;
+    text-align: center;
+    background-color: #F7F5F0;
+}
+
+.myCard p{
+    margin-bottom: 1px;
+}
+.myCard .bookName{
+    font-size: 16px;
+    color: #1a1a1a;
+}
+.myCard .bookRank{
+    color:red;
+    font-size: 12px;
+    height:20px;
+}
+.myCard .bookFans{
+    font-size: 16px;
+    color: #f00;
+    height:20px;
+}
+.myCard .bookDesc{
+    font-size: 12px;
+    color: #1a1a1a;
+    height:20px;
+}
+.myCard img{
+    width:100px;
+    height:150px;
+    max-width: 100%;
+    min-width: 50px;
+    max-height: 100%;
+    min-height: 80px;
+    margin: 10px auto 5px auto;
+}
+.myCard .bookDetail{
+    margin-top: 5px;
+    height:20px;
+}

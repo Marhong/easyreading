@@ -6,6 +6,7 @@ import IndexHeaderRight from './IndexHeaderRight';
 import IndexHeaderMain from './IndexHeaderMain';
 import '../css/IndexHeader.css';
 import PersonalizedModule from "./PersonalizedModule";
+import FinishedModule from "./FinishedModule";
 export default class IndexHeader extends Component{
     render(){
         return(
@@ -13,7 +14,7 @@ export default class IndexHeader extends Component{
                 <IndexHeaderSearch/>
                 <IndexHeaderMain/>
                 <PersonalizedModule/>
-                <PersonalizedModule/>
+                <FinishedModule/>
             </div>
         )
     }
