@@ -6,6 +6,7 @@ import '../css/MyNormalCard.css';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
+// 自定义的Card，用于展示“静态”书籍信息
 export default class MyNormalCard extends Component{
     static defaultProps = {
         book: {}

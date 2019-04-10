@@ -5,6 +5,7 @@ import {CardDeck,Card} from 'react-bootstrap';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
+// 自定义的CardDeck
 export default class MyCardDeck extends Component{
     static defaultProps = {
         data:{},

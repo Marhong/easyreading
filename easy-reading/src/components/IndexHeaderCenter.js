@@ -4,6 +4,7 @@ import { Carousel } from 'antd';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+// 展示菜单栏和“个性化推荐”书籍
 export default class IndexHeaderCenter extends Component{
     state = {
         current: 'mail',

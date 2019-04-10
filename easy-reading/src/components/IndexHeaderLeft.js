@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 
 import BookType from "./BookType";
 
+// 展示书籍类型
 export default class IndexHeaderLeft extends Component{
     render(){
         const data = [{id:"111","name":"玄幻","number":"200","iconName":"icon-wuxia"},

@@ -6,6 +6,7 @@ import '../css/MyCard.css';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
+// 自定义的Card，用于展示轮播的书籍信息
 export default class MySelectedCard extends Component{
     static defaultProps = {
         book: {}

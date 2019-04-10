@@ -3,6 +3,7 @@ import {Input} from 'antd';
 
 
 const Search = Input.Search;
+// 展示首页头部搜索模块
 export default class IndexHeaderSearch extends Component{
     render(){
         return(

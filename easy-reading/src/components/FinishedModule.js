@@ -3,6 +3,8 @@ import MySelectedCard from "./MySelectedCard";
 import { Carousel } from 'antd';
 import { Menu, Icon } from 'antd';
 import {CardDeck,Card,Button} from 'react-bootstrap';
+
+// 展示“完本精选模块”书籍的组件
 export default class FinishedModule extends Component{
     render(){
         const data =[{id:"sm122",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180",name:"11征服荒野",bookHref:"",desc:"我是简介所为和司我是"},

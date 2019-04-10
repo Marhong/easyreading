@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 
+// 展示站内公告
 export default class IndexHeaderRight extends Component{
     render(){
         return(

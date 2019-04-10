@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 
-
+// 展示书籍类型图标和书籍类型名字的组件
 export default class BookType extends Component{
     static defaultProps = {
         item:{},

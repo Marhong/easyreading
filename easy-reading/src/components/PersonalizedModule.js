@@ -6,6 +6,7 @@ import MyCardDeck from "./MyCardDeck";
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
+// 展示“重磅推荐”模块书籍
 export default class PersonalizedModule extends Component{
     state = {
         current: 'mail',
