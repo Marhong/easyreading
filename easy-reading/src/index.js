@@ -9,8 +9,9 @@ import IndexHeader from "./components/IndexHeader";
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
 import IndexHeaderCenter from "./components/IndexHeaderCenter";
 import BookType from "./components/BookType";
+import BookList from "./components/BookList";
 
-ReactDOM.render(<IndexHeader />, document.getElementById('root'));
+ReactDOM.render(<BookList />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

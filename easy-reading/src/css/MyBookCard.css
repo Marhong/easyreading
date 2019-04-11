@@ -1,0 +1,72 @@
+.myBookCard{
+    width: 480px;
+    height: 160px;
+    position:relative;
+    margin-top: 2px;
+    /*background-color: gray;*/
+}
+.myBookCard .bookInfo{
+    width:340px;
+    height:160px;
+    float: left;
+    position: relative;
+    font-size: 12px;
+    margin-left: 100px;
+    /*background-color: red;*/
+}
+.bookInfo p{
+    margin-left: 10px;
+    color: #000;
+}
+.bookInfo .bookName{
+    font-size: 18px;
+    color:#262626;
+    margin-bottom: 2px;
+}
+.bookInfo .bookDesc{
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 10px;
+    height: 70px;
+    font-family: PingFangSC-Regular;
+
+}
+.myBookCard .statistics{
+    font-size: 12px;
+    color: #a6a6a6;
+    margin-bottom: 0px;
+
+}
+.myBookCard .statistics span{
+    padding-right: 10px;
+}
+.myBookCard .author{
+    font-size: 12px;
+    color:#a6a6a6;
+    margin-right: 5px;
+    margin-bottom: 15px;
+}
+.myBookCard .bookImg{
+    width:100px;
+    height:160px;
+    float: left;
+    position: absolute;
+}
+.myBookCard img{
+    width:100px;
+    height:160px;
+    max-width: 100%;
+    min-width: 100px;
+    max-height: 100%;
+    min-height: 160px;
+    float: left;
+}
+.leftName  .bookImg{
+    clear: left;
+}
+.rightTags{
+    clear:right;
+}
+.myBookCard img{
+    clear: left;
+}
