@@ -12,6 +12,7 @@ export default class LeftSelectedCard extends Component{
     }
     render(){
         const data = this.props.data;
+
         return(
            <div >
                <Menu
@@ -23,7 +24,7 @@ export default class LeftSelectedCard extends Component{
                         {this.props.moduleType}
                     </Menu.Item>
                 </Menu>
-               <hr style={{background:"black",marginTop:-2,width:1200}} />
+               <hr style={{width:(this.props.moduleType ==='热门作品') ? 250 : 1200}} />
                 <Carousel autoplay dots={false} >
                     {data.map((book) => {
                     return <MySelectedCard key={book.id} book={book}/>

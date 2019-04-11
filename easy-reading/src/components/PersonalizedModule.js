@@ -56,10 +56,8 @@ export default class PersonalizedModule extends Component{
                        datas.map((data,index) => {
                            return(
                                <MyCardDeck key={index} data={data}/>
-
                            );
                        })
-
                     }
                 </Carousel>
             </div>

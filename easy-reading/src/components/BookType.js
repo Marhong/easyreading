@@ -12,8 +12,8 @@ export default class BookType extends Component{
                 <i className={`iconfont ${this.props.item.iconName}`}/>
                 </div>
                 <div className="typeName">
-                <b>{this.props.item.name}</b>
-                <b>{this.props.item.number}</b>
+                <span>{this.props.item.name}</span>
+                <span className="bookNumber">{this.props.item.number}</span>
                 </div>
             </div>
         );

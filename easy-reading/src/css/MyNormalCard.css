@@ -1,19 +1,16 @@
 .myNormalCard{
     width: 400px;
-    height: 175px;
+    height: 100px;
     position:relative;
-
+    margin-top: 2px;
 
 }
-
 .myNormalCard .bookInfo{
     width:300px;
     height:100px;
     float: left;
     position: relative;
     font-size: 12px;
-    top:50%;
-    margin-top: -58px;
     margin-left: 70px;
 }
 .bookInfo p{
@@ -47,8 +44,6 @@
     width:70px;
     height:100px;
     float: left;
-    top:50%;
-    margin-top: -58px;
     position: absolute;
 }
 .myNormalCard img{

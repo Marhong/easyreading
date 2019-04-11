@@ -3,14 +3,69 @@
     height:450px;
     margin:0 auto;
     position: relative;
+}
+.search{
+    width: 1200px;
+    height: 80px;
+    position: relative;
+}
+.search .left{
+    width:220px;
+    height:80px;
+    float:left;
+    top:60%;
+    margin-top: -40px;
+    position:absolute;
 
+}
+.search .center{
+    width: 500px;
+    height: 50px;
+    top:60%;
+    left:50%;
+    margin-top: -25px;
+    margin-left: -250px;
+    position:absolute;
+    float:left;
+
+}
+.search .inputSearch{
+    width:400px;
+}
+.search .inputSearch .ant-btn{
+     background-color: red;
+    border-color: red;
+}
+.search .right{
+    width:300px;
+    height:50px;
+    top:60%;
+    left:100%;
+    margin-left: -300px;
+    margin-top: -25px;
+    position:absolute;
+
+}
+.search .userInfo{
+
+    background-color:#fafafa;
+    font-size: 18px;
+    text-align: center;
+}
+.search .userInfo span{
+    padding-right: 5px;
+}
+#shujia{
+    font-size: 24px;
+
+}
+.search .username{
+    color:#a6a6a6;
 }
 
 .headerMain{
     width: 1200px;
     height:300px;
-
-
 }
 .headerLeft{
     width:200px;
@@ -18,6 +73,7 @@
     float:left;
     text-align: center;
     border : 1px solid #e6e6e6;
+    background:#f7f6f2;
 }
 .headerLeft p{
     font-size: 20px;
@@ -30,15 +86,14 @@
     width: 100px;
     float:left;
     margin-left: -20px;
-}
 
+}
 .typeComponent{
     width:100px;
     height: 60px;
     position: relative;
 
 }
-
 .headerLeft .typeIcon{
     width:50%;
     height:50px;
@@ -51,7 +106,36 @@
     float:right;
     display: inline;
     margin-left: -40px;
+    margin-top: 2px;
 
+}
+.headerLeft .typeName span{
+    display: block;
+}
+.headerLeft .typeName .bookNumber{
+    font-size: 12px;
+    margin-top: -5px;
+}
+
+.headerRight{
+    width:200px;
+    height:300px;
+    float:left;
+    background:#f7f6f2;
+}
+.headerRight .headerCenter .headerLeft {
+    clear:left;
+}
+.headerRight dt{
+    text-align: center;
+    margin-top: 10px;
+}
+.headerRight dt{
+    font-size: 16px;
+    color:#262626;
+}
+.headerRight dd{
+    margin-left: 5px;
 }
 
 .headerCenter{
@@ -60,68 +144,16 @@
     float:left;
     background-color: yellow;
 }
-
-.headerRight{
-    width:200px;
-    height:300px;
-    float:left;
-    background-color: #FCFCFA;
+.headerCenter img{
+    width:800px;
+    height: 300px;
+    min-width: 800px;
+    min-height: 300px;
 }
-.headerRight .headerCenter .headerLeft {
-    clear:left;
-}
-.headerRight dl{
-    text-align: center;
-    margin-top: 10px;
-}
-.headerRight dt{
-    font-size: 16px;
-    color:#262626;
-
-}
-.search{
-    width: 1200px;
-    height: 150px;
-    margin: 0 auto;
-    position:relative;
-    background-color: red;
-}
-.search div{
-    display:inline;
-}
-.search span{
-    width:100px;
-    height:50px;
-    position: absolute;
-    top:50%;
-    left:100%;
-    margin-left: -100px;
-    margin-top: -25px;
-    font-size: 20px;
-}
-.search img{
-    width:200px;
-    height:80px;
-    position:absolute;
-    top:50%;
-    margin-top: -40px;
-
-}
-#searchComponent{
-    height: 50px;
-    width: 200px;
-    position: absolute;
-    top:50%;
-    left:50%;
-    margin-left: -100px;
-    margin-top: -25px;
-
-}
-
 .headerCenter .indexMenu{
     width:800px;
     height:50px;
-
+    background:#f7f6f2;
 }
 .indexMenu .ant-menu-item{
     text-align: center;
@@ -130,13 +162,6 @@
 .headerCenter .indexMenu .ant-menu-item{
     width:260px;
     margin: 2px;
-}
-.personModule  .slick-slide {
-    width:800px;
-    text-align: center;
-    height: 250px;
-    line-height: 160px;
-    overflow: hidden;
 }
 .headerCenter  .slick-slide {
     width:800px;
@@ -159,7 +184,13 @@
     width:1200px;
     height:300px;
 }
-
+.personModule  .slick-slide {
+    width:800px;
+    text-align: center;
+    height: 250px;
+    line-height: 160px;
+    overflow: hidden;
+}
 .personModule  .slick-slide {
     width:1200px;
     height:300px;
@@ -182,7 +213,6 @@
     margin: 10px auto -10px auto;
 }
 
-
 .finishedModule{
     width:1200px;
     height:350px;
@@ -190,17 +220,27 @@
     margin-bottom: 70px;
 
 }
+.finishedModule .ant-menu-horizontal > .ant-menu-item{
+    border-bottom: 1px;
+
+}
+.finishedModule  .slick-slide{
+    width: 250px;
+    height:350px;
+
+}
+
+.leftSelectedCards hr{
+    background:black;
+    margin:0;
+    width:1200px;
+}
 .leftSelectedCards{
     width:250px;
     height:350px;
     float:left;
 }
 
-.finishedModule  .slick-slide{
-    width: 250px;
-    height:350px;
-
-}
 .rightNormalCards{
     width:950px;
     height:350px;
@@ -214,7 +254,22 @@
     margin-left: 10px;
     list-style:none outside none;
 }
+.rightCardList{
+    width:950px;
+    height:350px;
+    float:left;
+    margin-top: 20px;
+    margin-left: -20px;
+}
+.rightCardList ul li{
+    float:left;
+    margin-left: 10px;
+    list-style:none outside none;
+}
 
+.popularModule .ant-menu-horizontal > .ant-menu-item{
+    border-bottom: 1px;
+}
 
 
 
