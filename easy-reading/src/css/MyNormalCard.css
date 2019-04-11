@@ -1,7 +1,8 @@
 .myNormalCard{
     width: 400px;
-    height: 300px;
+    height: 175px;
     position:relative;
+
 
 }
 
@@ -11,6 +12,9 @@
     float: left;
     position: relative;
     font-size: 12px;
+    top:50%;
+    margin-top: -58px;
+    margin-left: 70px;
 }
 .bookInfo p{
     margin-left: 10px;
@@ -22,6 +26,7 @@
 .bookInfo .bookDesc{
 
     color: #666666;
+    margin-top: -10px;
 }
 .myNormalCard .bookStatistics{
     width: 300px;
@@ -29,7 +34,7 @@
     bottom:0;
     margin-left: 10px;
     color: #a6a6a6;
-    background-color: red;
+
 }
 .leftName{
     float:left;
@@ -39,7 +44,12 @@
     margin-right: 10px;
 }
 .myNormalCard .bookImg{
+    width:70px;
+    height:100px;
     float: left;
+    top:50%;
+    margin-top: -58px;
+    position: absolute;
 }
 .myNormalCard img{
     width:70px;

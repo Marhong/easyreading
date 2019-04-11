@@ -16,12 +16,10 @@ export default class MySelectedCard extends Component{
             <div className="myCard" >
                 <a href={this.props.book.bookHref}>
                 <img src={this.props.book.imgSrc} alt={this.props.book.name} />
-                <h3 className="bookName">{this.props.book.name}</h3>
-                <h3 className="bookRank">200万字 8.8分</h3>
-                    <h3 className="bookFans"><span>822</span>人在追</h3>
-                <h3 className="bookDesc">{this.props.book.desc.length>27 ? `${this.props.book.desc.slice(0,27)}...` : this.props.book.desc}</h3>
-               {/* <button className="bookDetail">书籍详情</button>*/}
-                    <h3>  <Button variant="danger" className="bookDetail" size="sm">书籍详情</Button></h3>
+                <p className="bookName">{this.props.book.name}</p>
+                <p className="bookRank">200万字 8.8分</p><p > <span className="bookFans"> 822</span>人在追</p>
+                <p className="bookDesc">{this.props.book.desc.length>27 ? `${this.props.book.desc.slice(0,27)}...` : this.props.book.desc}</p>
+                    <Button variant="danger" className="bookDetail" size="sm">书籍详情</Button>
                 </a>
             </div>
         );

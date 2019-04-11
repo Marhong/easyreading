@@ -1,6 +1,7 @@
 .myCard{
-    width: 200px;
-    height: 310px;
+    width: 250px;
+    height: 350px;
+    min-height: 350px;
     padding-right: 10px;
     overflow: hidden;
     position:relative;
@@ -31,6 +32,8 @@
     font-size: 12px;
     color: #1a1a1a;
     height: 20px;
+    margin-top: 10px;
+    margin-left: 5px;
 }
 .myCard img{
     width:100px;
@@ -42,6 +45,6 @@
     margin: 10px auto 5px auto;
 }
 .myCard .bookDetail{
-    margin-top: 5px;
-    margin-bottom: 10px;
+
+    margin-top: 30px;
 }

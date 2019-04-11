@@ -1,0 +1,26 @@
+.myListCard{
+
+    width: 200px;
+    height: 200px;
+
+}
+.myListCard dt h3{
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.myListCard dd{
+    font-size: 14px;
+}
+.myListCard dd .bookType{
+    color: #808080;
+}
+.myListCard dd .bookName{
+    color: #1a1a1a;
+}
+.myListCard .first{
+    margin: 0 0 5px 0;
+    border:none;
+    height:1px;
+    background-color: black;
+}
