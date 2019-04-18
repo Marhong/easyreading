@@ -1,8 +1,7 @@
 import React,{Component,Fragment} from 'react';
 import IndexHeaderSearch from './IndexHeaderSearch';
 import IndexHeaderMain from './IndexHeaderMain';
-import '../css/IndexHeader.css';
-import '../static/iconfont.css';
+
 import PersonalizedModule from "./PersonalizedModule";
 import FinishedModule from "./FinishedModule";
 import PopularModule from "./PopularModule";

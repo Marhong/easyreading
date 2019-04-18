@@ -18,12 +18,14 @@
     color: #000;
 }
 .bookInfo .bookName{
+
     font-size: 16px;
 }
 .bookInfo .bookDesc{
 
     color: #666666;
-    margin-top: -10px;
+
+
 }
 .myNormalCard .bookStatistics{
     width: 300px;

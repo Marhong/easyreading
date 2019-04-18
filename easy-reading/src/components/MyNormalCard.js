@@ -16,7 +16,7 @@ export default class MyNormalCard extends Component{
                     </div>
                     <div className="bookInfo">
                         <p className="bookName">{this.props.book.name}</p>
-                        <p className="bookDesc">{this.props.book.desc.length>45 ? `${this.props.book.desc.slice(0,45)}...` : this.props.book.desc}</p>
+                        <p className="bookDesc">{this.props.book.desc.length>38 ? `${this.props.book.desc.slice(0,38)}...` : this.props.book.desc}</p>
                         <div className="bookStatistics">
                             <div className="leftName">
                                 <i className="iconfont icon-yonghudianji"/> {this.props.book.author}
