@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './css/IndexHeader.css';
 import './static/iconfont.css';
-import './css/BookList.css';
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
 import IndexHeaderMain from "./components/IndexHeaderMain";
 import BookList from "./components/BookList";
+import ChapterList from "./components/ChapterList";
 
 class App extends Component {
   render() {
@@ -13,7 +13,8 @@ class App extends Component {
       <div className="header">
           <IndexHeaderSearch/>
          {/* <IndexHeaderMain/>*/}
-          <BookList/>
+          {/*<BookList/>*/}
+          <ChapterList/>
       </div>
     );
   }

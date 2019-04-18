@@ -3,7 +3,6 @@ import MyBookCard from './MyBookCard';
 import {Pagination} from 'antd';
 import '../css/BookList.css';
 import NavComponent from "./NavComponent";
-import FilterItem from "./FilterItem";
 import FilterPanel from "./FilterPanel";
 export default class BookList extends Component{
 

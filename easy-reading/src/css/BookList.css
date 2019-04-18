@@ -1,14 +1,11 @@
 .main{
     width: 1200px;
-
     margin-top: 20px;
     position: relative;
 }
 .left{
     width: 200px;
-
     float:left;
-
 }
 .right{
     width: 1000px;
