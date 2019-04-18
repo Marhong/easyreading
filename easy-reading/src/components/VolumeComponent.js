@@ -25,7 +25,7 @@ export default class VolumeComponent extends Component{
                 <div className="main">
                     <ul>
                         {volume.data.map((item,index) => {
-                            return <li key={item.id}><a href={item.href}>{item.name}</a></li>
+                            return <li key={index}><a href={item.href}>{item.name}</a></li>
                         })}
 
                     </ul>

@@ -51,7 +51,7 @@ export default class ChapterList extends Component{
                 </div>
                 <div className="content">
                     {this.props.data.map((item,index) => {
-                        return <div><VolumeComponent key={index} volume={item}/></div>
+                        return <VolumeComponent key={index} volume={item}/>
                     })}
                 </div>
             </div>

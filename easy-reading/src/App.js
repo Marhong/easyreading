@@ -6,6 +6,7 @@ import IndexHeaderSearch from "./components/IndexHeaderSearch";
 import IndexHeaderMain from "./components/IndexHeaderMain";
 import BookList from "./components/BookList";
 import ChapterList from "./components/ChapterList";
+import BookDetail from "./components/BookDetail";
 
 class App extends Component {
   render() {
@@ -13,8 +14,10 @@ class App extends Component {
       <div className="header">
           <IndexHeaderSearch/>
          {/* <IndexHeaderMain/>*/}
-          {/*<BookList/>*/}
-          <ChapterList/>
+
+        {/*  <BookList/>*/}
+       {/*   <ChapterList/>*/}
+       <BookDetail/>
       </div>
     );
   }
