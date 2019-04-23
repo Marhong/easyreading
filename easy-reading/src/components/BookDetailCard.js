@@ -1,11 +1,14 @@
 import React,{Component} from 'react';
-import {Button,Tag,Rate} from 'antd';
+import {Button,Tag,Rate,Icon} from 'antd';
 import '../css/BookDetailCard.css';
 export default class BookDetailCard extends Component{
     static defaultProps = {
         book:{name:"仙宫",isFinished:false,isFree:true,author:"大眼怪",tags:["武侠","仙侠","幻想"],rankNumber:40,wordNumbers:231454545,clickedTimes:1514514,membershipClicked:8452852,recommend:525742,intro:"修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！",href:"",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013561350/180"},
     }
 
+    handleChange = (number) => {
+        alert(`选择的分值为: ${number}`);
+    }
     render(){
         let book = this.props.book;
         return(
@@ -31,7 +34,8 @@ export default class BookDetailCard extends Component{
                     <h2>8.<span className="point">5</span></h2>
                     <p className="bookRank">{book.rankNumber}人评价</p>
                     <p><stong>我要评价</stong></p>
-                    <Rate allowHalf defaultValue={2.5} />
+                    <Rate allowHalf defaultValue={2.5} onChange={this.handleChange}/>
+
                 </div>
 
 
