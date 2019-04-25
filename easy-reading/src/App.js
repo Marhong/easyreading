@@ -7,6 +7,10 @@ import IndexHeaderMain from "./components/IndexHeaderMain";
 import BookList from "./components/BookList";
 import ChapterList from "./components/ChapterList";
 import BookDetail from "./components/BookDetail";
+import FinishedModule from "./components/FinishedModule";
+import PopularModule from "./components/PopularModule";
+import PersonalizedModule from "./components/PersonalizedModule";
+import ChapterReader from "./components/ChapterReader";
 
 
 class App extends Component {
@@ -14,11 +18,15 @@ class App extends Component {
     return (
       <div className="header">
           <IndexHeaderSearch/>
-         {/* <IndexHeaderMain/>*/}
-
-        {/*  <BookList/>*/}
-       {/*   <ChapterList/>*/}
-       <BookDetail/>
+{/*         <IndexHeaderMain/>
+          <PersonalizedModule/>
+          <FinishedModule moduleType="完本精选"/>
+          <FinishedModule moduleType="火热新书"/>
+          <PopularModule moduleType="热门作品"/>*/}
+     {/*     <BookList/>*/}
+      {/*    <ChapterList/>*/}
+    {/*   <BookDetail/>*/}
+    <ChapterReader/>
       </div>
     );
   }

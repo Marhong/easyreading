@@ -46,5 +46,7 @@
 }
 .myCard .bookDetail{
 
-    margin-top: 30px;
+    margin: 30px auto;
+    width:100px;
+
 }
