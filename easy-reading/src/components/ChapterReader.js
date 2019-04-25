@@ -19,7 +19,7 @@ export default class ChapterReader extends Component{
                     </div>
                     <div className="readerBox">
                          <div className="chapInfo">
-                             <h3>第一章 醉里挑灯看剑<span style={{float:"left"}}>
+                             <h3>第一章 醉里挑灯看剑，梦回吹角连营<span style={{float:"left"}}>
 
                              </span>
                              </h3>
