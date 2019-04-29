@@ -1,0 +1,86 @@
+.wrap{
+    width:1000px;
+    margin: 20px auto;
+}
+.wrap .userInfo {
+    width: 1000px;
+    height: 150px;
+    background-color: #eee;
+
+
+}
+.userInfo img{
+    width:120px;
+    height:120px;
+    margin:15px;
+}
+.userInfoMsg{
+    width: 850px;
+    height: 120px;
+    float:right;
+    margin-top:15px;
+    font-size: 12px;
+
+}
+.userInfoMsg p{
+    margin-top: 15px;
+    margin-left: 30px;
+}
+.userTags{
+    margin-left: 30px;
+    margin-top: 15px;
+}
+.userName{
+    font-size: 16px;
+}
+.modifyInfo{
+    float:right;
+    margin-right: 8em;
+}
+.description{
+
+}
+.wrap .content{
+    width:1000px;
+    height:500px;
+    margin-top: -20px;
+}
+.menu{
+    width:150px;
+    height:500px;
+    float:left;
+    position: relative;
+    background: #e4e8ea;
+    border : 1px solid #d8d8d8;
+    margin-top: 20px;
+}
+.menu ul{
+    width: 150px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 0;
+    background: #e4e8ea;
+}
+.menu .ant-menu .ant-menu-item{
+    height:50px;
+    vertical-align: middle;
+    padding:5px;
+    font-size: 14px;
+}
+.menu .ant-menu .ant-menu-item-selected{
+    border-left: 3px solid #365060;
+    background: white;
+}
+.menu .ant-menu .ant-menu-item-selected:after{
+    border:none;
+    transform: none;
+}
+.main{
+    width:840px;
+    height:500px;
+    position:absolute;
+    margin-top: 20px;
+    margin-left: 160px;
+
+}

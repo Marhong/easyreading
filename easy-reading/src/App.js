@@ -13,6 +13,7 @@ import PopularModule from "./components/PopularModule";
 import PersonalizedModule from "./components/PersonalizedModule";
 import ChapterReader from "./components/ChapterReader";
 import Upload from "./components/Upload";
+import PersonalCenter from "./components/PersonalCenter";
 
 
 class App extends Component {
@@ -20,15 +21,16 @@ class App extends Component {
     return (
       <div className="header">
         <IndexHeaderSearch/>
-{/*         <IndexHeaderMain/>
+      {/*  <IndexHeaderMain/>
           <PersonalizedModule/>
           <FinishedModule moduleType="完本精选"/>
           <FinishedModule moduleType="火热新书"/>
-          <PopularModule moduleType="热门作品"/>*/}
+          <PopularModule moduleType="热门作品"/>*!/*/}
      {/*     <BookList/>*/}
       {/*    <ChapterList/>*/}
     {/*   <BookDetail/>*/}
-   <ChapterReader/>
+  {/* <ChapterReader/>*/}
+  <PersonalCenter/>
 {/*  <Upload/>*/}
       </div>
     );

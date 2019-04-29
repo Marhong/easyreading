@@ -33,8 +33,13 @@ export default class IndexHeaderSearch extends Component{
                             </Badge>
                          </span>
                          <span className="username"> | </span>
+
                          <span>
                              <i className="iconfont icon-shujia" id="shujia"/>
+                         </span>
+                        <span className="username"> | </span>
+                         <span>
+                             <i className="iconfont icon-shangchuan" id="upload"/>
                          </span>
                      </span>
                 </div>
