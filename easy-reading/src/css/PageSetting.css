@@ -3,9 +3,11 @@
     height: 400px;
     background-color: rgba(250,250,250,.98);
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
-    top:30px;
     position: absolute;
     padding: 0 35px;
+    top:0;
+    left:0;
+    display: none;
 
 }
 

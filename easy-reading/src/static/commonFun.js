@@ -53,3 +53,38 @@ export function timestampFormat( timestamp ) {
         }
     }
 }
+
+// 将rgb转为十六进制
+export function colorRGBToHex(color) {
+    let rgb = color.split(',');
+    let r = parseInt(rgb[0].split('(')[1]);
+    let g = parseInt(rgb[1]);
+    let b = parseInt(rgb[2].split(')')[0]);
+
+   // let hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    let hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    return hex;
+}
+// 将十六进制转为rgb格式
+export function HexToColorRGB(num) {
+    //十六进制颜色值的正则表达式
+    let reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    let sColor = num.toLowerCase();
+    if (sColor && reg.test(sColor)) {
+        if (sColor.length === 4) {
+            let sColorNew = "#";
+            for (let i = 1; i < 4; i += 1) {
+                sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+            }
+            sColor = sColorNew;
+        }
+        //处理六位的颜色值
+        let sColorChange = [];
+        for (let i = 1; i < 7; i += 2) {
+            sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+        }
+        return "RGB(" + sColorChange.join(",") + ")";
+    } else {
+        return sColor;
+    }
+}

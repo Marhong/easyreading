@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './css/IndexHeader.css';
 import './static/iconfont.css';
+import './css/Upload.css';
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
 import IndexHeaderMain from "./components/IndexHeaderMain";
 import BookList from "./components/BookList";
@@ -11,6 +12,7 @@ import FinishedModule from "./components/FinishedModule";
 import PopularModule from "./components/PopularModule";
 import PersonalizedModule from "./components/PersonalizedModule";
 import ChapterReader from "./components/ChapterReader";
+import Upload from "./components/Upload";
 
 
 class App extends Component {
@@ -26,7 +28,8 @@ class App extends Component {
      {/*     <BookList/>*/}
       {/*    <ChapterList/>*/}
     {/*   <BookDetail/>*/}
-    <ChapterReader/>
+   <ChapterReader/>
+{/*  <Upload/>*/}
       </div>
     );
   }
