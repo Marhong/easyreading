@@ -3,72 +3,30 @@
 html,body{
     width:100%;
     height:100%;
-    background: #FDF5E6;
+    background: #b9c1c9;
+}
+.readerBox{
+    width: 1200px;
+    background:#e9eff5;
+    padding:0 100px;
+
 }
 .search{
     width:100%;
     background: #FFFAFA;
 }
 .readerPage{
-
+    position:absolute;
     margin: 20px auto;
-    position:relative;
-}
-.setting{
-    width:500px;
-    height: 400px;
-    background-color: rgba(250,250,250,.98);
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
-    top:30px;
-    position: absolute;
-    padding: 0 35px;
-}
-
-.setting .title{
-    height: 30px;
-    width: 500px;
-    font-size: 18px;
-    margin-top: 20px;
-}
-.settingName{
-    float:left;
-}
-.close{
-    margin-right: 70px;
-}
-.bgColor{
-    height:50px;
-    width:500px;
 
 }
-.color1{
-    display: inline-block;
-    border-radius: 50%;
-    width:18px;
-    height:18px;
-    border:18px solid black;
-    vertical-align: middle;
-}
-.bgColor span{
-    margin-right: 20px;
-}
-.controlFont{
-    display: inline-block;
-    margin-left: 20px;
-    font-size: 18px;
-    border:1px solid red;
-    padding-right: 10px;
-}
+
+
 .readerCrumb .ant-breadcrumb {
     width: 1200px;
     margin-bottom: 10px;
 }
-.readerBox{
-    width: 1200px;
-    background:#faeed7;
-    padding:0 100px;
 
-}
 .readerBox .chapInfo{
     text-align: center;
 }

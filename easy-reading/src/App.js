@@ -17,7 +17,7 @@ class App extends Component {
   render() {
     return (
       <div className="header">
-          <IndexHeaderSearch/>
+        <IndexHeaderSearch/>
 {/*         <IndexHeaderMain/>
           <PersonalizedModule/>
           <FinishedModule moduleType="完本精选"/>

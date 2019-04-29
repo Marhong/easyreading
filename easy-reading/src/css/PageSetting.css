@@ -1,0 +1,166 @@
+.setting{
+    width:520px;
+    height: 400px;
+    background-color: rgba(250,250,250,.98);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
+    top:30px;
+    position: absolute;
+    padding: 0 35px;
+
+}
+
+.setting .title{
+    height: 30px;
+    width: 500px;
+    font-size: 18px;
+    margin-top: 20px;
+}
+.settingName{
+    float:left;
+}
+.close{
+    margin-right: 70px;
+}
+.bgColor{
+    height:50px;
+    width:500px;
+
+}
+.bgColor .selected{
+    border-color: #e84848;
+
+}
+.color7{
+    display: inline-block;
+    border-radius: 50%;
+    width:18px;
+    height:18px;
+    border:18px solid #343434;
+    vertical-align: middle;
+}
+.color1{
+    display: inline-block;
+    border-radius: 50%;
+    width:18px;
+    height:18px;
+    border:18px solid #faeed7;
+    vertical-align: middle;
+}.color2{
+     display: inline-block;
+     border-radius: 50%;
+     width:18px;
+     height:18px;
+     border:18px solid #e9eff5;
+     vertical-align: middle;
+ }.color3{
+      display: inline-block;
+      border-radius: 50%;
+      width:18px;
+      height:18px;
+      border:18px solid #e7f0e1;
+      vertical-align: middle;
+  }.color4{
+       display: inline-block;
+       border-radius: 50%;
+       width:18px;
+       height:18px;
+       border:18px solid #f2e4e9;
+       vertical-align: middle;
+   }.color5{
+        display: inline-block;
+        border-radius: 50%;
+        width:18px;
+        height:18px;
+        border:18px solid #f7f7f7;
+        vertical-align: middle;
+    }.color6{
+         display: inline-block;
+         border-radius: 50%;
+         width:18px;
+         height:18px;
+         border:18px solid #f9f7e3;
+         vertical-align: middle;
+     }
+.outer{
+    display: inline-block;
+    border-radius: 50%;
+    height: 38px;
+    width:38px;
+    border:1px solid #eee;
+    vertical-align: middle;
+    margin: 2px;
+}
+.outer:hover{
+    border-color: red;
+    cursor:pointer;
+}
+
+
+.bgColor span{
+    margin-right: 20px;
+}
+.controlFont{
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 18px;
+    border:1px solid #e6e6e6;
+    padding: 5px;
+}
+.controlFont strong{
+    margin-right: 15px;
+
+}
+.controlFont strong:hover{
+    color:#e84848;
+    font-weight: 700;
+    cursor:pointer;
+
+}
+.controlFont strong:first-child{
+    margin-left: 15px;
+}
+.setting .fontFamily .controlFontFamily span{
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 14px;
+    border:1px solid #e6e6e6;
+    padding: 5px;
+    width:70px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.setting .fontFamily .controlFontFamily span:hover{
+    color:#e84848;
+    border-color: #e84848;
+    cursor:pointer;
+}
+.setting .fontFamily .controlFontFamily .selected{
+    color:#e84848;
+    border-color: #e84848;
+}
+.setting .pageWidth .controlPageWidth span{
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 14px;
+    border:1px solid #e6e6e6;
+    padding: 5px;
+    width:70px;
+    text-align: center;
+    margin-top: 15px;
+}
+.setting .pageWidth .controlPageWidth span:hover{
+    color:#e84848;
+    border-color: #e84848;
+    cursor:pointer;
+}
+.setting .pageWidth .controlPageWidth  .selected{
+    color:#e84848;
+    border-color: #e84848;
+}
+.setting .footer{
+    margin-left: 60px;
+    margin-top: 30px;
+}
+.setting .controlSetting .ant-btn{
+    margin-left: 20px;
+}

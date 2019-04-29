@@ -1,8 +1,18 @@
 import React,{Component} from 'react';
-import {Breadcrumb,Button,Menu,Icon} from 'antd';
+import {Breadcrumb,Button,Menu,} from 'antd';
+import PageSetting from "./PageSetting";
 require('../css/ChapterReader.css');
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+const bgColors = {
+    faeed7:0xd9cdb6,
+    e9eff5:0xb9c1c9,
+    e7f0e1:0xc4ccc0,
+    f2e4e9:0xd4c7cc,
+    f7f7f7:0xccc,
+    f9f7e3:0xd6d5c1,
+    343434:0x222,
+};
 export default class ChapterReader extends Component{
     render(){
         return(
@@ -74,20 +84,8 @@ export default class ChapterReader extends Component{
                              <span className="control"> <Button>上一页</Button><Button>章节目录</Button><Button>下一页</Button></span>
                          </div>
                     </div>
-                    <div className="setting">
-                        <div className="title">
-                            <strong className="settingName">设置</strong><Icon type="close" className="close"/>
-                        </div>
-                        <hr/>
-                        <div className="bgColor">
-                    <span>阅读背景</span><span className="color1"/><span className="color1"/><span className="color1"/><span className="color1"/><span className="color1"/>
-                        </div>
-                        <div className="fontSize">
-                            <span>字体大小 </span><span className="controlFont">A- | 14 | A+</span>
-                        </div>
-                    </div>
+                    <PageSetting/>
                 </div>
-
         );
     }
 }
