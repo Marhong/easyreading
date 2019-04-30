@@ -18,7 +18,7 @@
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="287">
-              <caret line="30" column="7" lean-forward="true" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
+              <caret line="30" column="7" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -26,34 +26,71 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PersonalCenter.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PersonalCenter.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/PersonalCenter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="270" column="89" selection-start-line="270" selection-start-column="89" selection-end-line="270" selection-end-column="89" />
+            <state relative-caret-position="216">
+              <caret line="418" column="113" selection-start-line="418" selection-start-column="103" selection-end-line="418" selection-end-column="113" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
+                <element signature="e#147#492#0" />
                 <element signature="e#783#1421#0" />
+                <element signature="e#1417#2003#0" />
+                <element signature="e#1788#2108#0" />
+                <element signature="e#2161#2481#0" />
                 <element signature="e#1368#1894#0" />
                 <element signature="e#508#1096#0" />
                 <element signature="e#1914#2357#0" />
                 <element signature="e#1920#2000#0" />
                 <element signature="e#3527#4115#0" />
                 <element signature="e#4163#4751#0" />
+                <element signature="e#4413#4784#0" />
+                <element signature="e#4769#5080#0" />
+                <element signature="e#5125#5435#0" />
+                <element signature="e#5477#5787#0" />
+                <element signature="e#5831#6141#0" />
+                <element signature="e#6185#6495#0" />
                 <element signature="e#2558#3024#0" />
                 <element signature="e#2279#3422#0" />
-                <element signature="e#1430#3644#0" />
-                <element signature="e#2902#3706#0" />
+                <element signature="e#6384#7531#0" />
+                <element signature="e#6406#7022#0" />
+                <element signature="e#6944#7322#0" />
+                <element signature="e#6365#6536#0" />
+                <element signature="e#6579#6643#0" />
+                <element signature="e#6724#6847#0" />
+                <element signature="e#9668#9864#0" />
+                <element signature="e#6936#8336#0" />
+                <element signature="e#6656#6976#0" />
+                <element signature="e#7015#7276#0" />
+                <element signature="e#7310#7500#0" />
+                <element signature="e#7827#8021#0" />
+                <element signature="e#8084#8320#0" />
+                <element signature="e#1281#1397#0" />
+                <element signature="e#13818#13847#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PersonalCenter.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RegistrationForm.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/RegistrationForm.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+              <folding>
+                <element signature="e#0#79#0" expanded="true" />
+                <element signature="e#1015#1241#0" />
+                <element signature="e#1278#1534#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PersonalCenter.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/css/PersonalCenter.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
+            <state relative-caret-position="585">
+              <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -64,14 +101,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>headerMain</find>
       <find>replyContainer</find>
       <find>replyToAnother</find>
       <find>alert</find>
@@ -101,12 +137,12 @@
       <find>isSave</find>
       <find>setState</find>
       <find>shujia</find>
+      <find>validateToNextPassword</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/LeftSelectedCard.js" />
         <option value="$PROJECT_DIR$/src/css/MyListCard.css" />
         <option value="$PROJECT_DIR$/src/components/PopularModule.js" />
         <option value="$PROJECT_DIR$/src/components/PersonalizedModule.js" />
@@ -155,8 +191,9 @@
         <option value="$PROJECT_DIR$/src/css/IndexHeader.css" />
         <option value="$PROJECT_DIR$/src/static/iconfont.css" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/css/PersonalCenter.css" />
+        <option value="$PROJECT_DIR$/src/components/RegistrationForm.js" />
         <option value="$PROJECT_DIR$/src/components/PersonalCenter.js" />
+        <option value="$PROJECT_DIR$/src/css/PersonalCenter.css" />
       </list>
     </option>
   </component>
@@ -311,26 +348,26 @@
       <workItem from="1556203243396" duration="9816000" />
       <workItem from="1556215539399" duration="13000" />
       <workItem from="1556498941048" duration="39953000" />
-      <workItem from="1556584354405" duration="9965000" />
+      <workItem from="1556584354405" duration="25657000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="249781000" />
+    <option name="totallyTimeSpent" value="265473000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18097754" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18097754" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5006605" side_tool="true" weight="0.47435898" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32905984" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.116809115" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4993395" weight="0.47435898" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -350,17 +387,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/BookType.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="43" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/IndexHeaderLeft.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -596,6 +626,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
           <caret line="64" column="14" selection-start-line="64" selection-start-column="14" selection-end-line="64" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!block;n#timestampFormat#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -652,6 +685,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
           <caret line="39" column="61" selection-start-line="39" selection-start-column="61" selection-end-line="39" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -696,38 +732,73 @@
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
-          <caret line="30" column="7" lean-forward="true" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
+          <caret line="30" column="7" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/css/PersonalCenter.css">
+    <entry file="file://$PROJECT_DIR$/src/components/RegistrationForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
+        <state relative-caret-position="226">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="e#0#79#0" expanded="true" />
+            <element signature="e#1015#1241#0" />
+            <element signature="e#1278#1534#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/PersonalCenter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="270" column="89" selection-start-line="270" selection-start-column="89" selection-end-line="270" selection-end-column="89" />
+        <state relative-caret-position="216">
+          <caret line="418" column="113" selection-start-line="418" selection-start-column="103" selection-end-line="418" selection-end-column="113" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#147#492#0" />
             <element signature="e#783#1421#0" />
+            <element signature="e#1417#2003#0" />
+            <element signature="e#1788#2108#0" />
+            <element signature="e#2161#2481#0" />
             <element signature="e#1368#1894#0" />
             <element signature="e#508#1096#0" />
             <element signature="e#1914#2357#0" />
             <element signature="e#1920#2000#0" />
             <element signature="e#3527#4115#0" />
             <element signature="e#4163#4751#0" />
+            <element signature="e#4413#4784#0" />
+            <element signature="e#4769#5080#0" />
+            <element signature="e#5125#5435#0" />
+            <element signature="e#5477#5787#0" />
+            <element signature="e#5831#6141#0" />
+            <element signature="e#6185#6495#0" />
             <element signature="e#2558#3024#0" />
             <element signature="e#2279#3422#0" />
-            <element signature="e#1430#3644#0" />
-            <element signature="e#2902#3706#0" />
+            <element signature="e#6384#7531#0" />
+            <element signature="e#6406#7022#0" />
+            <element signature="e#6944#7322#0" />
+            <element signature="e#6365#6536#0" />
+            <element signature="e#6579#6643#0" />
+            <element signature="e#6724#6847#0" />
+            <element signature="e#9668#9864#0" />
+            <element signature="e#6936#8336#0" />
+            <element signature="e#6656#6976#0" />
+            <element signature="e#7015#7276#0" />
+            <element signature="e#7310#7500#0" />
+            <element signature="e#7827#8021#0" />
+            <element signature="e#8084#8320#0" />
+            <element signature="e#1281#1397#0" />
+            <element signature="e#13818#13847#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/css/PersonalCenter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
         </state>
       </provider>
     </entry>

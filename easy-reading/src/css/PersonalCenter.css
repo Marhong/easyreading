@@ -36,6 +36,7 @@
 .modifyInfo{
     float:right;
     margin-right: 8em;
+    cursor: pointer;
 }
 .description{
 
@@ -90,7 +91,7 @@
     margin-top: 0;
 }
 .main .card-container > .ant-tabs-card > .ant-tabs-content {
-    height: 300px;
+    height: auto;
     margin-top: -16px;
 
 }
@@ -98,7 +99,7 @@
 .main  .card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
     background: #fff;
     padding: 16px;
-    height: 300px;
+    height: auto;
 }
 
 .main  .card-container > .ant-tabs-card > .ant-tabs-bar {
@@ -113,5 +114,4 @@
 .main  .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
     border-color: #fff;
     background: #fff;
-
 }
