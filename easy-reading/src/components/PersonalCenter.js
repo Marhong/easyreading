@@ -49,8 +49,7 @@ const columns2 = [
     {
         title: '操作',  key: 'operation', render:() => (
             <span>
-                                        <a href="javascript:;">继续阅读</a>
-                                        <Divider type="vertical" />
+
                                         <a href="javascript:;">删除</a>
                                     </span>
         )},];

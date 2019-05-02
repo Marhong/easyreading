@@ -1,0 +1,29 @@
+.createBookList .dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all .3s;
+}
+.createBookList .dynamic-delete-button:hover {
+    color: #777;
+}
+.createBookList .dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.createBookList textarea::-webkit-input-placeholder { /* WebKit browsers */
+    color: #bfbfbf;
+}
+.createBookList textarea:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #bfbfbf;
+}
+.createBookList textarea::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #bfbfbf;
+}
+.createBookList textarea:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #bfbfbf;
+}
+

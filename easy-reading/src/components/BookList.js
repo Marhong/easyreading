@@ -1,42 +1,56 @@
 import React,{Component} from 'react';
-import MyBookCard from './MyBookCard';
-import {Pagination} from 'antd';
+import {Tabs,Icon} from 'antd';
+
 import '../css/BookList.css';
-import NavComponent from "./NavComponent";
-import FilterPanel from "./FilterPanel";
+import BookListItem from "./BookListItem";
+import {WrappedDynamicFieldSet} from './CreateBookList';
+const TabPane = Tabs.TabPane;
+const data = [
+    {
+        imgs:[{src:"https://bookcover.yuewen.com/qdbimg/349573/1013470066/180",name:"沙发书单"},{name:"考虑领料",src:"https://bookcover.yuewen.com/qdbimg/349573/1013862069/180"},{name:"我的师傅",src:"https://bookcover.yuewen.com/qdbimg/349573/1010754871/180"},{name:"三国志",src:"https://bookcover.yuewen.com/qdbimg/349573/1014127256/180"}],
+        bookList:{name:"点击量破亿的十大网文小说，你看过哪些",description:"神奇的世界，诞生了无数的种类与神话。有我们熟知的斗气大陆，斗罗大陆。也有充满灵性的天元大陆，元气大陆。   人生的旅途，不在于目的地，在于的是沿途的风景，神奇的大陆，诞生了太多让人缅怀，深陷记忆的风景。   我推荐了一条风景线给大家，一起踏上旅途吧！\n" +
+            "                       ",authorImg:"https://facepic.qidian.com/qd_face/349573/262/100",author:"小南",num:10,createTime:"1553011200",likeNum:9},
+    },
+    {
+        imgs:[{src:"https://bookcover.yuewen.com/qdbimg/349573/1013470066/180",name:"沙发书单"},{name:"考虑领料",src:"https://bookcover.yuewen.com/qdbimg/349573/1013862069/180"},{name:"我的师傅",src:"https://bookcover.yuewen.com/qdbimg/349573/1010754871/180"},{name:"三国志",src:"https://bookcover.yuewen.com/qdbimg/349573/1014127256/180"}],
+        bookList:{name:"点击量破亿的十大网文小说，你看过哪些",description:"神奇的世界，诞生了无数的种类与神话。有我们熟知的斗气大陆，斗罗大陆。也有充满灵性的天元大陆，元气大陆。   人生的旅途，不在于目的地，在于的是沿途的风景，神奇的大陆，诞生了太多让人缅怀，深陷记忆的风景。   我推荐了一条风景线给大家，一起踏上旅途吧！\n" +
+            "                       ",authorImg:"https://facepic.qidian.com/qd_face/349573/262/100",author:"小南",num:10,createTime:"1553011200",likeNum:9},
+    },
+    {
+        imgs:[{src:"https://bookcover.yuewen.com/qdbimg/349573/1013470066/180",name:"沙发书单"},{name:"考虑领料",src:"https://bookcover.yuewen.com/qdbimg/349573/1013862069/180"},{name:"我的师傅",src:"https://bookcover.yuewen.com/qdbimg/349573/1010754871/180"},{name:"三国志",src:"https://bookcover.yuewen.com/qdbimg/349573/1014127256/180"}],
+        bookList:{name:"点击量破亿的十大网文小说，你看过哪些",description:"神奇的世界，诞生了无数的种类与神话。有我们熟知的斗气大陆，斗罗大陆。也有充满灵性的天元大陆，元气大陆。   人生的旅途，不在于目的地，在于的是沿途的风景，神奇的大陆，诞生了太多让人缅怀，深陷记忆的风景。   我推荐了一条风景线给大家，一起踏上旅途吧！\n" +
+            "                       ",authorImg:"https://facepic.qidian.com/qd_face/349573/262/100",author:"小南",num:10,createTime:"1553011200",likeNum:9},
+    }
+];
+const options = [{icon:"iconfont icon-benzhouzuihuo",name:"推荐书单"},{icon:"iconfont icon-zuixin",name:"最新书单"},]
 export default class BookList extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            data: data,
+        }
+    }
+    handleOnChange = (key) =>{
 
+
+    }
     render(){
-        let data = [{id:"sm12s2",author:"天蚕土豆",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180",name:"11征服荒野",bookHref:"",desc:"我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是简介所为和司我是",type:"玄幻",isOver:false},
-            {id:"sm1d22",author:"天蚕土豆",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180",name:"11征服荒野",bookHref:"",desc:"我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是简介所为和司我是",type:"玄幻",isOver:false},
-            {id:"sm12xc2",author:"天蚕土豆",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180",name:"11征服荒野",bookHref:"",desc:"我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是简介所为和司我是",type:"玄幻",isOver:false},
-            {id:"sm12sddf2",author:"天蚕土豆",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180",name:"11征服荒野",bookHref:"",desc:"我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是简介所为和司我是",type:"玄幻",isOver:false},];
-
         return(
-            <div className="main">
-                <div className="left">
-                    <FilterPanel/>
-                </div>
-                <div className="right">
-                    <NavComponent/>
-                    <div className="content">
-                        <ul>
-                            {data.map((book,index) => {
-                                if(index>=data.length-2){
-                                    return <li key={book.id}><MyBookCard book={book}/></li>
-                                }else{
-                                    return <li key={book.id}><MyBookCard book={book}/><hr/></li>
-                                }
+            <div className="bookList">
+                <Tabs  animated={false} onChange={this.handleOnChange}>
+                    {options.map((option,index) => {
+                        return <TabPane tab={<span><i className={option.icon} />{option.name}</span>} key={index+1}>
+                            {this.state.data.map((item,index) => {
+                                return  <BookListItem imgs={item.imgs} bookList={item.bookList} key={index} />
                             })}
-                        </ul>
-                    </div>
-                    <div className="pagination">
-                        <Pagination showQuickJumper defaultCurrent={2} total={500}  />
-                    </div>
-                </div>
 
+                        </TabPane>
+                    })}
+                    <TabPane tab={<span><i className="iconfont icon-add" />创建书单</span>} key={3}>
+                        <WrappedDynamicFieldSet ref={(createList) => this.createList = createList} style={{display:"none"}}/>
+                    </TabPane>
+                </Tabs>
             </div>
-
         );
     }
 }

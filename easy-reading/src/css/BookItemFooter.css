@@ -1,0 +1,26 @@
+.authorInfo button{
+    border-radius: 10px;
+    color:red;
+    background-color: transparent;
+    border:1px solid red;
+    padding: 0 10px;
+    float:right;
+}
+.authorName{
+    margin-left: 5px;
+
+}
+
+.dataInfo{
+    font-size: 12px;
+    color:#a6a6a6;
+    margin-left: 20px;
+
+}
+.dataInfo .divider{
+   margin-right: 20px;
+}
+.authorInfo .authorImg{
+    width:22px;
+    height:22px;
+}

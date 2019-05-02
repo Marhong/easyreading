@@ -54,8 +54,8 @@ export default class IndexHeaderSearch extends Component{
                 </div>
                 <div className="right">
                     <span className="userInfo">
-                        // 这里如果已经登录就显示“你好 麦香馅饼”
-                        // 如果未登录就显示“登录”，然后点击就弹出Modal进行登录或者注册
+                       {/* // 这里如果已经登录就显示“你好 麦香馅饼”
+                        // 如果未登录就显示“登录”，然后点击就弹出Modal进行登录或者注册*/}
                         <span className="username">你好,</span><b onClick={this.showModal}>{this.props.user.username}
                 <Modal
                     title={this.state.isLogin ? "登录" : "注册"}

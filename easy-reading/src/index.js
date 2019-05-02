@@ -9,7 +9,7 @@ import IndexHeader from "./components/IndexHeader";
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
 import IndexHeaderCenter from "./components/IndexHeaderCenter";
 import BookType from "./components/BookType";
-import BookList from "./components/BookList";
+import BookCity from "./components/BookCity";
 
 ReactDOM.render(<App/>, document.getElementById('root'));
 

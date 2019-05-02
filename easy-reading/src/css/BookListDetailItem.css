@@ -1,0 +1,68 @@
+.detailItem{
+    width:700px;
+    border: 1px solid #e6e6e6;
+}
+.topInfo{
+    width:700px;
+    height:124px;
+    margin: 20px 5px 5px 20px;
+
+}
+.leftImg{
+    float:left;
+    width:93px;
+    height:124px;
+
+}
+.leftImg img{
+    width:93px;
+    height:124px;
+
+
+}
+.rightInfo{
+    width:536px;
+    height:124px;
+    margin-left: 115px;
+}
+
+.rightInfo p{
+    margin-bottom: 0px;
+}
+.rightInfo .bookName h3{
+    font-size: 18px;
+    margin:5px;
+
+}
+.rightInfo .author{
+    font-size: 12px;
+}
+.rightInfo .bookDesc{
+    height:50px;
+    width:536px;
+
+}
+.rightInfo .latestUpdate{
+    font-size: 12px;
+    color:#808080;
+}
+.detailItem .rightInfo .latestUpdateName{
+    color:#3f5a93;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 12px;
+}
+.botDesc{
+    width:700px;
+}
+.botDesc p{
+    text-indent: 2em;
+    width:616px;
+   margin-left: 40px;
+}
+.botDesc .quote i{
+    font-size: 20px;
+    color:#e5e5e5;
+    margin-right: 10px;
+
+}

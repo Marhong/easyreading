@@ -1,0 +1,17 @@
+.bookListDetail{
+    width:1000px;
+    margin: 20px auto;
+}
+.bookListDetail h3{
+    font-size: 22px;
+    margin-left:120px;
+    margin-bottom:30px;
+}
+.bookListDetail .items{
+    margin-left: 120px;
+}
+.bookListDetail .items span {
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: inline-block;
+}

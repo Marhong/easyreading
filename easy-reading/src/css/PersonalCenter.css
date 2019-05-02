@@ -77,7 +77,7 @@
     border:none;
     transform: none;
 }
-.main{
+.wrap .content .main{
     width:840px;
     height:500px;
     position:absolute;

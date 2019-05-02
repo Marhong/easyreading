@@ -1,62 +1,15 @@
-.main{
-    width: 1200px;
-    margin-top: 20px;
-    position: relative;
-}
-.left{
-    width: 200px;
-    float:left;
-}
-.right{
-    width: 1000px;
-    float:left;
-
-}
-.right .select{
-    width:960px;
-    height: 40px;
-    background-color: #f7f6f2;
-    color:#262626;
-    text-align: left;
-    margin-left: 41px;
-    vertical-align: middle;
-}
-.select a{
-    font-size: 12px;
-    display:inline-block;
-    margin-right: 20px;
-    height:40px;
-    position:relative;
-    color:#a6a6a6;
-    padding-top: 10px;
-
-}
-.select a i{
-    font-size: 12px;
-}
-.select a:active{
-    font-weight: 700;
-    color:#ed4259;
-}
-.select .act{
-    font-weight: 700;
-    color:#ed4259;
-}
-.select > a:first-child{
-    margin-left: 0;
-}
-.right .content{
+.bookList{
     width:1000px;
-    margin-top: 20px;
+    margin:20px auto;
 }
-.right .content ul li{
-    float:left;
-    list-style: none outside none;
-    padding-bottom: -10px;
-}
-.right .pagination{
-    float:right;
-    margin-top: 20px;
-    margin-bottom: 10px;
+.bookList .ant-tabs-tab{
+    font-size: 20px;
 
+}
+.bookList .ant-tabs-tab i{
+    margin-right: 5px;
+    font-size: 20px;
+}
+.bookList .ant-tabs{
+    font-size: 14px;
 }

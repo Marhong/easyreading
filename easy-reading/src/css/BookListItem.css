@@ -1,0 +1,63 @@
+.bookListItem{
+    width: 1000px;
+    height:150px;
+
+}
+.imgArray{
+    width:100px;
+    height:130px;
+    float:left;
+}
+.imgArray dl dd{
+    float:left;
+    margin:1px 1px;
+
+}
+.imgArray img{
+    width:48px;
+    height:65px;
+
+}
+.bookListInfo{
+    width:700px;
+    height:130px;
+    margin-left: 120px;
+}
+.bookListInfo p{
+    margin-bottom: 9px;
+}
+.description{
+    height:60px;
+
+}
+.authorInfo span{
+    vertical-align: middle;
+}
+.bookListInfo .authorInfo button{
+    border-radius: 10px;
+    color:red;
+    background-color: transparent;
+    border:1px solid red;
+    padding: 0 10px;
+    float:right;
+}
+.authorName{
+    margin-left: 5px;
+}
+.dataInfo{
+    font-size: 12px;
+    color:#a6a6a6;
+    margin-left: 20px;
+}
+.authorInfo .authorImg{
+    width:22px;
+    height:22px;
+}
+.bookListItem .title{
+    text-align: left;
+    font-size: 18px;
+    cursor: pointer;
+}
+.bookListItem .title:hover{
+    color:#e84848;
+}

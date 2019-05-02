@@ -5,7 +5,7 @@ import './static/iconfont.css';
 import './css/Upload.css';
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
 import IndexHeaderMain from "./components/IndexHeaderMain";
-import BookList from "./components/BookList";
+import BookCity from "./components/BookCity";
 import ChapterList from "./components/ChapterList";
 import BookDetail from "./components/BookDetail";
 import FinishedModule from "./components/FinishedModule";
@@ -14,7 +14,9 @@ import PersonalizedModule from "./components/PersonalizedModule";
 import ChapterReader from "./components/ChapterReader";
 import Upload from "./components/Upload";
 import PersonalCenter from "./components/PersonalCenter";
-
+import BookList from "./components/BookList";
+import BookListDetail from "./components/BookListDetail";
+import {WrappedDynamicFieldSet} from './components/CreateBookList';
 
 
 class App extends Component {
@@ -23,12 +25,15 @@ class App extends Component {
       <div className="header">
 
         <IndexHeaderSearch/>
-        <IndexHeaderMain/>
+        {/*<IndexHeaderMain/>
           <PersonalizedModule/>
           <FinishedModule moduleType="完本精选"/>
           <FinishedModule moduleType="火热新书"/>
-          <PopularModule moduleType="热门作品"/>
-     {/*     <BookList/>*/}
+          <PopularModule moduleType="热门作品"/>*/}
+         {/*<BookCity/>*/}
+        <BookList/>
+  {/*<WrappedDynamicFieldSet/>*/}
+       {/*<BookListDetail/>*/}
       {/*    <ChapterList/>*/}
     {/*   <BookDetail/>*/}
   {/* <ChapterReader/>*/}
