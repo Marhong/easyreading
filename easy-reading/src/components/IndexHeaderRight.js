@@ -3,8 +3,8 @@ import React,{Component} from 'react';
 // 展示站内公告
 export default class IndexHeaderRight extends Component{
     render(){
-        const news = [{id:"n1",type:"资讯",title:"悬疑征文悬疑征文悬疑征文",href:""},{id:"n1",type:"资讯",title:"2019悬疑征文",href:""},
-            {id:"n1",type:"资讯",title:"2019悬疑征文",href:""},{id:"n1",type:"资讯",title:"2019悬疑征文",href:""}];
+        const news = [{id:"n1",type:"资讯",title:"悬疑征文悬疑征文悬疑征文",href:""},{id:"n21",type:"资讯",title:"2019悬疑征文",href:""},
+            {id:"n451",type:"资讯",title:"2019悬疑征文",href:""},{id:"n231",type:"资讯",title:"2019悬疑征文",href:""}];
         return(
             <div >
                 <dl>

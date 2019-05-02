@@ -16,21 +16,23 @@ import Upload from "./components/Upload";
 import PersonalCenter from "./components/PersonalCenter";
 
 
+
 class App extends Component {
   render() {
     return (
       <div className="header">
+
         <IndexHeaderSearch/>
-      {/*  <IndexHeaderMain/>
+        <IndexHeaderMain/>
           <PersonalizedModule/>
           <FinishedModule moduleType="完本精选"/>
           <FinishedModule moduleType="火热新书"/>
-          <PopularModule moduleType="热门作品"/>*!/*/}
+          <PopularModule moduleType="热门作品"/>
      {/*     <BookList/>*/}
       {/*    <ChapterList/>*/}
     {/*   <BookDetail/>*/}
   {/* <ChapterReader/>*/}
-  <PersonalCenter/>
+{/*  <PersonalCenter/>*/}
 {/*  <Upload/>*/}
       </div>
     );

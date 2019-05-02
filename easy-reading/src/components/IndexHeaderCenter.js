@@ -29,9 +29,9 @@ export default class IndexHeaderCenter extends Component{
                     <Menu.Item key="all">
                       全部
                     </Menu.Item>
-                    <Menu.Item key="rank">
+{/*                    <Menu.Item key="rank">
                       排行
-                    </Menu.Item>
+                    </Menu.Item>*/}
                     <Menu.Item key="list">
                        书单
                     </Menu.Item>

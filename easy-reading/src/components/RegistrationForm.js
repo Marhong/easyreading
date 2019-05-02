@@ -13,7 +13,7 @@ const residences = [{
             label: '西湖区',
         }],
     }],
-}, {
+},{
     value: 'shanxi',
     label: '陕西',
     children: [{

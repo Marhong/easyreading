@@ -1,0 +1,14 @@
+.login-form {
+     max-width:300px;
+ }
+.login-form .login-form-forgot {
+    float: right;
+    font-size: 12px;
+}
+.register{
+    font-size: 12px;
+    float:right;
+}
+.register-form .ant-form-item{
+    margin-bottom: 10px;
+}

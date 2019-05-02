@@ -267,8 +267,8 @@ const postTabs = [{name:"发表的书评",dataName:"postData",columnsName:"postC
 const msgTabs = [{name:"系统消息",dataName:"sysData",columnsName:"sysColumns"},
     {name:"私信",dataName:"perData",columnsName:"perColumns"},];
 const readingRecord = [{name:"周",dataName:"weekData",columnsName:"weekColumns",key:"weekdata"},
-    {name:"月",dataName:"monthData",columnsName:"monthColumns"},
-    {name:"年",dataName:"yearData",columnsName:"yearColumns"},];
+    {name:"月",dataName:"monthData",columnsName:"monthColumns",key:"xeekdata"},
+    {name:"年",dataName:"yearData",columnsName:"yearColumns",key:"yeekdata"}];
 const perInfoTabs =  [{name:"基本信息",},
     {name:"修改密码",},];
 const columnsCollection ={
@@ -387,11 +387,10 @@ export default class PersonalCenter extends Component{
         }
     }
     handleTabChange = (key) => {
-        console.log(key);
         if(key === "weekdata"){
-            this.setState({...this.state,recordExpandedRowRender:recordExpandedRowRender})
+                this.setState({...this.state,recordExpandedRowRender:recordExpandedRowRender});
         }else{
-            this.setState({...this.state,recordExpandedRowRender:null})
+                this.setState({...this.state,recordExpandedRowRender:null});
         }
 }
     handleEditInfo(e){
@@ -449,6 +448,7 @@ export default class PersonalCenter extends Component{
                             expandedRowRender={this.state.expandedRowRender}
                             dataSource={this.state.data}
                             ref={(table) => this.table = table}
+                            pagination={{total:50,pageSize:10,defaultCurrent:1,showQuickJumper:true, }}
                         />
                         <div className="card-container" ref={(tabs) => this.tabs =tabs } style={{display:"none"}}>
                             <Tabs type="card" onChange={this.handleTabChange}>
@@ -460,6 +460,7 @@ export default class PersonalCenter extends Component{
                                                 <Table columns={columnsCollection[tab.columnsName]}
                                                        dataSource={this.state[tab.dataName]}
                                                        expandedRowRender={this.state.recordExpandedRowRender}
+                                                       pagination={{total:50,pageSize:10,defaultCurrent:1,showQuickJumper:true, }}
                                             />}
                                     </TabPane>
                                 })}
