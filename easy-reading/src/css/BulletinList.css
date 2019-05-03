@@ -1,0 +1,18 @@
+.bulletinList{
+    width: 1000px;
+    margin: 20px auto;
+}
+.bulletinList .ant-list .ant-list-item .item{
+    width:1000px;
+    font-size:16px;
+    color:#262626;
+}
+.bulletinList .ant-list .ant-list-item .item:hover{
+    color:#e84848;
+    font-weight: 700;
+    cursor: pointer;
+}
+.bulletinList .ant-list .ant-list-item .time{
+    float:right;
+    color:#a6a6a6;
+}

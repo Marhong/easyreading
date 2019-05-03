@@ -96,13 +96,16 @@
     width: 100px;
     float:left;
     margin-left: -20px;
-
 }
+
 .typeComponent{
     width:100px;
     height: 60px;
     position: relative;
-
+}
+.typeComponent:hover{
+    cursor: pointer;
+    color:#e84848;
 }
 .headerLeft .typeIcon{
     width:50%;
@@ -132,6 +135,7 @@
     height:300px;
     float:left;
     background:#f7f6f2;
+    padding-left: 5px;
 }
 .headerRight .headerCenter .headerLeft {
     clear:left;
@@ -139,13 +143,19 @@
 .headerRight dt{
     text-align: center;
     margin-top: 10px;
-}
-.headerRight dt{
-    font-size: 16px;
+    font-size: 24px;
     color:#262626;
 }
-.headerRight dd{
+.headerRight dt:hover{
+    color:#e84848;
+    font-weight: 700;
+    cursor: pointer;
+}
+.headerRight dd:hover{
     margin-left: 5px;
+    color:#e84848;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .headerCenter{
@@ -190,18 +200,21 @@
     background-color: black;
 }
 
-.personModule{
-    width:1200px;
-    height:300px;
+.heavyModule {
+    width: 1200px;
+    height: 300px;
 }
-.personModule  .slick-slide {
+.heavyModule h5{
+    margin-top: 20px;
+}
+.heavyModule  .slick-slide {
     width:800px;
     text-align: center;
     height: 250px;
     line-height: 160px;
     overflow: hidden;
 }
-.personModule  .slick-slide {
+.heavyModule  .slick-slide {
     width:1200px;
     height:300px;
 
@@ -212,6 +225,10 @@
     padding-right: 10px;
     overflow: hidden;
     position:relative;
+}
+.card-deck .card:hover{
+    cursor: pointer;
+    color:#e84848;
 }
 .card-img-top{
     width:200px;
@@ -245,6 +262,9 @@
     margin:0;
     width:1200px;
 }
+.leftSelectedCards h5{
+    margin-top: 20px;
+}
 .leftSelectedCards{
     width:250px;
     height:350px;
@@ -255,7 +275,7 @@
     width:950px;
     height:350px;
     float:left;
-    margin-top: 50px;
+    margin-top: 57px;
     margin-left: -20px;
 
 }
@@ -268,15 +288,23 @@
     width:950px;
     height:350px;
     float:left;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: -20px;
+}
+
+.rightCardList h3:hover{
+    cursor: pointer;
+    color: #e84848;
 }
 .rightCardList ul li{
     float:left;
     margin-left: 10px;
     list-style:none outside none;
 }
-
+.rightCardList  .myListCard dd span .bookName:hover{
+    cursor: pointer;
+    color: #e84848;
+}
 .popularModule .ant-menu-horizontal > .ant-menu-item{
     border-bottom: 1px;
 }

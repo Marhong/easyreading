@@ -7,17 +7,7 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 // 展示“重磅推荐”模块书籍
-export default class PersonalizedModule extends Component{
-    state = {
-        current: 'mail',
-    }
-
-    handleClick = (e) => {
-        console.log('click ', e);
-        this.setState({
-            current: e.key,
-        });
-    }
+export default class HeavyRecommend extends Component{
     render(){
         const data =[{id:"sm122",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180",name:"11征服荒野"},
             {id:"sm1232",imgSrc:"http://imgsrc.baidu.com/forum/pic/item/bfb87c22dd54564e60f2e846bdde9c82d0584f2c.jpg",name:"22征服荒野"},
@@ -40,17 +30,8 @@ export default class PersonalizedModule extends Component{
             index++;
         }
         return(
-            <div className="personModule">
-                <Menu
-                    onClick={this.handleClick}
-                    selectedKeys={[this.state.current]}
-                    mode="horizontal"
-                    className="indexMenu"
-                >
-                    <Menu.Item key="all">
-                        重磅推荐
-                    </Menu.Item>
-                </Menu>
+            <div className="heavyModule">
+                <p><h5>重磅推荐</h5></p>
                 <Carousel  autoplay  >
                     {
                        datas.map((data,index) => {

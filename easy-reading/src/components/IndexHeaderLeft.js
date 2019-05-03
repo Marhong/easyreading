@@ -17,7 +17,7 @@ export default class IndexHeaderLeft extends Component{
         const data1 = data.slice(0,data.length/2);
         const data2 = data.slice(data.length/2);
         return(
-            <div>
+            <div className="typeList">
                 <p>作品分类</p>
                 <dl>
                     {data1.map((item,index,array) => {

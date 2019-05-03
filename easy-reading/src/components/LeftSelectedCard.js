@@ -15,15 +15,7 @@ export default class LeftSelectedCard extends Component{
 
         return(
            <div >
-               <Menu
-                    onClick={this.handleClick}
-                    mode="horizontal"
-                    className="indexMenu"
-                >
-                    <Menu.Item key="all">
-                        {this.props.moduleType}
-                    </Menu.Item>
-                </Menu>
+               <p><h5> {this.props.moduleType}</h5></p>
                <hr style={{width:(this.props.moduleType ==='热门作品') ? 250 : 1200}} />
                 <Carousel autoplay dots={false} >
                     {data.map((book) => {
