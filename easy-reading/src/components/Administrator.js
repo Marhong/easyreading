@@ -1,8 +1,8 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Menu ,Divider,Tabs,Table,Modal} from 'antd';
+import { Menu ,Divider,Tabs,Table,Modal,Button} from 'antd';
 import moment from 'moment';
-import {WrappedRegistrationForm} from './RegistrationForm';
+import {WrappedBulletinForm} from './BulletinForm';
 import {formatArray} from '../static/commonFun';
 require('../css/PersonalCenter.css');
 const TabPane = Tabs.TabPane;
@@ -64,10 +64,10 @@ const postListData = [
 // 菜单项为“评论管理” > “举报信息” 时的数据
 const replyReportData = [
     {
-        key: "replyReportData1", reportedReply : '是的，楼主真贱', invalidUser : '贱人流',reportReason :"违法",  whistleBlower : '管理员XX',reportTime: '2019-02-10 14:20:20',
+        key: "replyReportData1", reportedReply : '是的，楼主真贱', reportReason :"违法", invalidUser : '贱人流', whistleBlower : '管理员XX',reportTime: '2019-02-10 14:20:20',
     },
     {
-        key: "replyReportData2", reportedReply : '楼主是不是傻了', invalidUser : '贱人流',reportReason :"违法",  whistleBlower : '管理员XX',reportTime: '2019-02-10 14:20:20',
+        key: "replyReportData2", reportedReply : '楼主是不是傻了', reportReason :"违法", invalidUser : '贱人流',  whistleBlower : '管理员XX',reportTime: '2019-02-10 14:20:20',
     },
 ];
 // 菜单项为“帖子管理” > “评论列表” 时的数据
@@ -142,25 +142,25 @@ export default class Administrator extends Component{
         this.setState({...this.state,currentDataName:key});
     }
     handleViewDetail(record,e){
-        console.log(record);
         let curData = this.state[this.state.currentDataName];
-        let index=0;
+        let selectedItem;
         for(let item of curData){
-            console.log(index,item.key,record.key);
             if(item.key === record.key){
-                alert(item.reportReason);
-                console.log("key:"+record.key,"该条record值："+item.reportReason);
+                selectedItem = item;
                 break;
-
             }
         }
-    }
-    showModal = () => {
+        let itemKeys = Object.keys(selectedItem);
         this.setState({
+            ...this.state,
             visible: true,
+            modalTitle:selectedItem[itemKeys[1]],
+            modalContent:selectedItem[itemKeys[2]],
         });
     }
-
+    handleSubmitBulletin(values){
+        console.log(values.title,values.content);
+    }
     hideModal = () => {
         this.setState({
             visible: false,
@@ -340,10 +340,10 @@ export default class Administrator extends Component{
                             mode="inline"
                         >
                             <Menu.Item key="1"><i className="iconfont icon-shujia"/> 书籍管理</Menu.Item>
-                            <Menu.Item key="2"><i className="iconfont icon-shudan"/> 公告管理</Menu.Item>
-                            <Menu.Item key="3"><i className="iconfont icon-pinglun"/> 帖子管理</Menu.Item>
-                            <Menu.Item key="4"><i className="iconfont icon-xiaoxi"/> 评论管理</Menu.Item>
-                            <Menu.Item key="5"><i className="iconfont icon-yuedujilu"/> 人员管理</Menu.Item>
+                            <Menu.Item key="2"><i className="iconfont icon-icon87"/> 公告管理</Menu.Item>
+                            <Menu.Item key="3"><i className="iconfont icon-tiezi"/> 帖子管理</Menu.Item>
+                            <Menu.Item key="4"><i className="iconfont icon-pinglun"/> 评论管理</Menu.Item>
+                            <Menu.Item key="5"><i className="iconfont icon-yonghudianji"/> 人员管理</Menu.Item>
                         </Menu>
                     </div>
                     <div className="main">
@@ -352,7 +352,7 @@ export default class Administrator extends Component{
                                 {this.state.tabs.map((tab,index) => {
                                     return <TabPane tab={tab.name} key={tab.key || index+1}>
                                         {tab.key === "publishBulletin" ?
-                                            <p>发布新闻公告</p>
+                                            <WrappedBulletinForm onSubmitBulletin={this.handleSubmitBulletin.bind(this)}/>
                                         :
                                             <Table columns={columnsCollection[tab.columnsName]}
                                             dataSource={formatArray(this.state[tab.dataName])}
@@ -360,21 +360,22 @@ export default class Administrator extends Component{
                                             />
                                         }
 
-                                        <Modal
-                                            title="详细信息"
-                                            visible={this.state.visible}
-                                            onOk={this.hideModal}
-                                            onCancel={this.hideModal}
-                                            okText="确认"
-                                            cancelText="取消"
-                                        >
-                                            <p>{this.state.modalTitle}</p>
-                                            <p>{this.state.modalContent}</p>
-                                        </Modal>
                                     </TabPane>
                                 })}
                             </Tabs>
 
+                            <Modal
+                                title="详细信息"
+                                visible={this.state.visible}
+                                onCancel={this.hideModal}
+                                footer={[
+                                    // 定义右下角 按钮的地方 可根据需要使用 一个或者 2个按钮
+                                    <Button type="primary" key="back" onClick={this.hideModal}>确认</Button>,]
+                                }
+                            >
+                                <p><strong> 标题：</strong>{this.state.modalTitle}</p>
+                                <p><strong>内容</strong>：{this.state.modalContent}</p>
+                            </Modal>
                         </div>
                     </div>
                 </div>

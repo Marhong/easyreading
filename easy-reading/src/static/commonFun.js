@@ -92,12 +92,11 @@ export function HexToColorRGB(num) {
 // 格式化数据，将只显示前10个字后面用...代替
 export function formatArray(data){
     let formatedData = deepClone(data);
-    console.log(formatedData);
     if(Array.isArray(formatedData) && formatedData.length>0){
         for(let obj of formatedData){
             if(typeof obj === "object" && obj != null){
                 for(let prop in obj){
-                    if(obj[prop].length>10 && prop !== "key"){
+                    if(obj[prop].length>10 && prop !== "key" && prop.indexOf("Time") === -1){
                         obj[prop] = obj[prop].slice(0,10)+"...";
                     }
                 }
