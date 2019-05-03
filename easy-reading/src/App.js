@@ -19,6 +19,7 @@ import BookListDetail from "./components/BookListDetail";
 import {WrappedDynamicFieldSet} from './components/CreateBookList';
 import BulletinList from "./components/BulletinList";
 import BulletinItem from "./components/BulletinItem";
+import Administrator from "./components/Administrator";
 
 
 class App extends Component {
@@ -38,9 +39,10 @@ class App extends Component {
      {/*   <BookList/>*/}
        {/*<BookListDetail/>*/}
       {/*    <ChapterList/>*/}
-       <BookDetail/>
+      {/* <BookDetail/>*/}
   {/* <ChapterReader/>*/}
-  {/*<PersonalCenter/>*/}
+ {/* <PersonalCenter/>*/}
+    <Administrator/>
 {/*  <Upload/>*/}
       </div>
     );

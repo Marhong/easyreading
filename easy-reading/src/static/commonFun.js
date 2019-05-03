@@ -88,3 +88,27 @@ export function HexToColorRGB(num) {
         return sColor;
     }
 }
+
+// 格式化数据，将只显示前10个字后面用...代替
+export function formatArray(data){
+    let formatedData = deepClone(data);
+    console.log(formatedData);
+    if(Array.isArray(formatedData) && formatedData.length>0){
+        for(let obj of formatedData){
+            if(typeof obj === "object" && obj != null){
+                for(let prop in obj){
+                    if(obj[prop].length>10 && prop !== "key"){
+                        obj[prop] = obj[prop].slice(0,10)+"...";
+                    }
+                }
+            }
+        }
+    }
+    return formatedData;
+}
+
+// 通过序列化和反序列化实现深拷贝
+export function deepClone(data){
+    let result = JSON.stringify(data);
+    return JSON.parse(result);
+}

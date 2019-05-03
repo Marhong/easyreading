@@ -4,29 +4,8 @@ import { Menu ,Divider,Tabs,Table,Select,Form,DatePicker,Input,Button,Tag} from 
 import moment from 'moment';
 import {WrappedRegistrationForm} from './RegistrationForm';
 require('../css/PersonalCenter.css');
-const { Option } = Select;
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-    },
-};
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 16,
-            offset: 8,
-        },
-    },
-};
+
+
 // 菜单项为"我的书架"的表头
 const columns = [
     { title: '书名', dataIndex: 'name', key: 'name' },
@@ -218,8 +197,7 @@ const expandedRowRender = (e) => {
             render: () => (
                 <span className="table-operation">
             <a href="javascript:;">继续阅读</a>
-                    <Divider type="vertical"/>
-            <a href="javascript:;">删除</a>
+
           </span>
             ),
         },

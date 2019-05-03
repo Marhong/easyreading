@@ -1,9 +1,9 @@
 .wrap{
-    width:1000px;
+    width:1060px;
     margin: 20px auto;
 }
 .wrap .userInfo {
-    width: 1000px;
+    width: 1060px;
     height: 150px;
     background-color: #eee;
 
@@ -16,7 +16,7 @@
 }
 
 .userInfoMsg{
-    width: 850px;
+    width: 910px;
     height: 100px;
     float:right;
     margin-top:15px;
@@ -48,7 +48,7 @@
 .wrap .content{
     width:1000px;
     height:500px;
-    margin-top: -10px;
+    margin-top: -20px;
 }
 .menu{
     width:150px;
@@ -82,7 +82,7 @@
     transform: none;
 }
 .wrap .content .main{
-    width:840px;
+    width:900px;
     height:500px;
     position:absolute;
     margin-top: 20px;
@@ -91,7 +91,7 @@
 }
 .main .card-container{
     background: #e4e8ea;
-    width:840px;
+    width:900px;
     margin-top: 0;
 }
 .main .card-container > .ant-tabs-card > .ant-tabs-content {
