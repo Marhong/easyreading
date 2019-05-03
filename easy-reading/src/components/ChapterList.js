@@ -46,7 +46,7 @@ export default class ChapterList extends Component{
                         <span>作者: 烽火戏诸侯</span>
                         <span>更新时间: 14小时前</span>
                         <span>最新章节: 第120章 友谊第一，比赛第二</span>
-                        <span onClick={this.handleChaptersSort.bind(this)}><a className="sort">倒序<i className={`iconfont ${this.state.sort}`}/></a></span>
+                        <span onClick={this.handleChaptersSort.bind(this)}><a className="sort">{this.state.sort === 'icon-shengxu' ? '正序' : '倒序'}<i className={`iconfont ${this.state.sort}`}/></a></span>
                     </p>
                 </div>
                 <div className="content">

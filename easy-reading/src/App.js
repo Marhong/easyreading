@@ -27,21 +27,20 @@ class App extends Component {
       <div className="header">
 
         <IndexHeaderSearch/>
-        <IndexHeaderMain/>
+{/*        <IndexHeaderMain/>
           <HeavyRecommend/>
           <FinishedModule moduleType="完本精选"/>
           <FinishedModule moduleType="火热新书"/>
-          <PopularModule moduleType="热门作品"/>
+          <PopularModule moduleType="热门作品"/>*/}
         {/*  <BulletinList/>*/}
          {/* <BulletinItem/>*/}
       {/*   <BookCity/>*/}
      {/*   <BookList/>*/}
-  {/*<WrappedDynamicFieldSet/>*/}
        {/*<BookListDetail/>*/}
       {/*    <ChapterList/>*/}
-    {/*   <BookDetail/>*/}
+       <BookDetail/>
   {/* <ChapterReader/>*/}
-{/*  <PersonalCenter/>*/}
+  {/*<PersonalCenter/>*/}
 {/*  <Upload/>*/}
       </div>
     );

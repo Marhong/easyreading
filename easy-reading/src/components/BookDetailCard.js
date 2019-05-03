@@ -18,11 +18,11 @@ export default class BookDetailCard extends Component{
                 </div>
                 <div className="sInf">
                     <h1>仙宫<span className="author">{book.author}著</span></h1>
-                    <p className="tags"><Tag color="blue">{book.isFree?"连载":"完结"}</Tag><Tag color="blue">{book.isFree?"免费":"VIP“"}</Tag>
+                    <div className="tags"><Tag color="blue">{book.isFree?"连载":"完结"}</Tag><Tag color="blue">{book.isFree?"免费":"VIP“"}</Tag>
                         {book.tags.map((item,index) => {
                             return <Tag color="red" key={index}>{item}</Tag>
                         })}
-                    </p>
+                    </div>
                     <p className="intro">{book.intro.length>45 ? `${book.intro.slice(0,45)}...` : book.intro }</p>
                     <p className="count">{(book.wordNumbers/10000).toFixed(2)}<span className="suffix">万字</span>
                         {(book.clickedTimes/10000).toFixed(2)}<span className="suffix">万总点击</span>
@@ -33,7 +33,7 @@ export default class BookDetailCard extends Component{
                 <div className="tRan">
                     <h2>8.<span className="point">5</span></h2>
                     <p className="bookRank">{book.rankNumber}人评价</p>
-                    <p><stong>我要评价</stong></p>
+                    <p><strong>我要评价</strong></p>
                     <Rate allowHalf defaultValue={2.5} onChange={this.handleChange}/>
 
                 </div>

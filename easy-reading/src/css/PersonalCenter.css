@@ -14,14 +14,20 @@
     height:120px;
     margin:15px;
 }
+
 .userInfoMsg{
     width: 850px;
-    height: 120px;
+    height: 100px;
     float:right;
     margin-top:15px;
     font-size: 12px;
 
 }
+.userInfoMsg .description{
+    height:40px;
+    margin-bottom: 0;
+}
+
 .userInfoMsg p{
     margin-top: 15px;
     margin-left: 30px;
@@ -38,13 +44,11 @@
     margin-right: 8em;
     cursor: pointer;
 }
-.description{
 
-}
 .wrap .content{
     width:1000px;
     height:500px;
-    margin-top: -20px;
+    margin-top: -10px;
 }
 .menu{
     width:150px;

@@ -1,8 +1,8 @@
 import React,{Component} from 'react';
 import '../css/MyPostComponent.css';
-import { Comment, Tooltip, List,Form,Button } from 'antd';
+import { Comment, Tooltip, List,Form,Button ,Modal} from 'antd';
 import {crtTimeFtt,timestampFormat} from '../static/commonFun';
-
+import {WrappedPostForm} from './PostForm';
 export default class MyPostComponent extends Component{
 
     constructor(props){
@@ -16,6 +16,7 @@ export default class MyPostComponent extends Component{
             replyToAnother: "", // 要回复的帖子或者回复的id
             currentId: 2015303094, // 当前用户ID
             isSendingMsg : false,
+            visible: false,
 
 
         }
@@ -85,6 +86,19 @@ export default class MyPostComponent extends Component{
         if(this.input){
             this.input.focus();
         }
+    }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+
+
+    handleCancel = () => {
+        console.log('Clicked cancel button');
+        this.setState({
+            visible: false,
+        });
     }
     // 切换查看帖子类型
     handleTypeChange(e){
@@ -156,6 +170,13 @@ export default class MyPostComponent extends Component{
         this.setState({ ...this.state, replyMsg:"", isReplying:true})
 
     }
+    // 发布帖子
+    handleSubmitPost(values){
+        console.log(values);
+        this.setState({
+            visible: false,
+        });
+    }
     // 格式化数据
     formatPostData(data){
         for(let post of data){
@@ -185,17 +206,25 @@ export default class MyPostComponent extends Component{
         const isReplying = this.state.isReplying;
         const postId = this.state.postId;
         const replyToAnother = this.state.replyToAnother;
-
+        const { visible } = this.state;
         return(
             <div className="postModule">
                 <div className="header">
                     <ul onClick={this.handleTypeChange.bind(this)}>
                         <li className="selected"><a>全部(368)</a></li>
                         <li className="hotposts"><a>热帖</a></li>
-                        <li><a><i className="iconfont icon-fatie"/> 我要发帖</a></li>
+                        <li onClick={this.showModal}><a><i className="iconfont icon-fatie"/> 我要发帖</a></li>
                     </ul>
                 </div>
-                <div className="content">
+                <Modal
+                    title="发布帖子"
+                    visible={this.state.visible}
+                    onCancel={this.handleCancel}
+                    footer={null}
+                >
+                    <WrappedPostForm onCancel={this.handleCancel} isCancel={this.state.visible} onSubmitPost={this.handleSubmitPost.bind(this)}/>
+                </Modal>
+                <div>
                   <List
                             className="comment-list"
                             itemLayout="horizontal"
