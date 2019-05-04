@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Menu ,Divider,Tabs,Table,Modal,Button} from 'antd';
+import { Menu ,Divider,Tabs,Table,Modal,Button,Input,Icon} from 'antd';
 import moment from 'moment';
+import Highlighter from 'react-highlight-words';
 import {WrappedBulletinForm} from './BulletinForm';
 import {formatArray} from '../static/commonFun';
 require('../css/PersonalCenter.css');
@@ -114,9 +115,71 @@ export default class Administrator extends Component{
             modalTitle:"",
             modalContent:"",
             visible:false,
+            searchText:"",
         }
     }
+    // 展示搜索框
+    getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({
+                             setSelectedKeys, selectedKeys, confirm, clearFilters,
+                         }) => (
+            <div style={{ padding: 8 }}>
+                <Input
+                    ref={node => { this.searchInput = node; }}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+                    style={{ width: 188, marginBottom: 8, display: 'block' }}
+                />
+                <Button
+                    type="primary"
+                    onClick={() => this.handleSearch(selectedKeys, confirm)}
+                    icon="search"
+                    size="small"
+                    style={{ width: 90, marginRight: 8 }}
+                >
+                    搜索
+                </Button>
+                <Button
+                    onClick={() => this.handleReset(clearFilters)}
+                    size="small"
+                    style={{ width: 90 }}
+                >
+                    重置
+                </Button>
+            </div>
+        ),
+        filterIcon: filtered => <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />,
+        onFilter: (value, record) => this.getItemByKey(record.key,dataIndex)[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+        onFilterDropdownVisibleChange: (visible) => {
+            if (visible) {
+                setTimeout(() => this.searchInput.select());
+            }
+        },
+        render: (text) => (
+            <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[this.state.searchText]}
+                autoEscape
+                textToHighlight={text.toString()}
+            />
+        ),
+    })
 
+    // 根据搜索框内关键字进行搜索
+    handleSearch = (selectedKeys, confirm) => {
+        confirm();
+        this.setState({ searchText: selectedKeys[0] });
+    }
+
+    // 重置搜索框
+    handleReset = (clearFilters) => {
+        clearFilters();
+        this.setState({ searchText: '' });
+    }
+
+    // 切换不同的菜单项
     handleClick = (e) =>{
         switch (e.key){
             case "1":
@@ -138,9 +201,11 @@ export default class Administrator extends Component{
                 break;
         }
     }
+    // 在一个菜单项内切换不同Tab
     handleTabChange(key,e){
         this.setState({...this.state,currentDataName:key});
     }
+    // 查看某条记录的详细信息
     handleViewDetail(record,e){
         let curData = this.state[this.state.currentDataName];
         let selectedItem;
@@ -158,9 +223,23 @@ export default class Administrator extends Component{
             modalContent:selectedItem[itemKeys[2]],
         });
     }
+    // 根据某条记录的key查找整条记录
+    getItemByKey(key,dataIndex){
+        let curData = this.state[this.state.currentDataName];
+        let selectedItem;
+        for(let item of curData){
+            if(item.key === key){
+                selectedItem = item;
+                break;
+            }
+        }
+        return selectedItem
+    }
+    // 发布一条公告
     handleSubmitBulletin(values){
         console.log(values.title,values.content);
     }
+    // 隐藏Modal
     hideModal = () => {
         this.setState({
             visible: false,
@@ -214,9 +293,9 @@ export default class Administrator extends Component{
                     ),
                 },],
             bookListColumns:[
-                { title: '书籍名', dataIndex: 'name', key: 'name' },
-                { title: '作者', dataIndex: 'author', key: 'author' },
-                { title: '上传者', dataIndex: 'uploader', key: 'uploader' },
+                { title: '书籍名', dataIndex: 'name', key: 'name' ,...this.getColumnSearchProps('name')},
+                { title: '作者', dataIndex: 'author', key: 'author' ,...this.getColumnSearchProps('author')},
+                { title: '上传者', dataIndex: 'uploader', key: 'uploader',...this.getColumnSearchProps('uploader') },
                 { title: '上传时间', dataIndex: 'uploadTime', key: 'uploadTime' },
                 {
                     title: '操作',
@@ -230,9 +309,9 @@ export default class Administrator extends Component{
                 </span>
                     ),
                 },],
-            bulletinListColumns:[ { title: '标题', dataIndex: 'title', key: 'title' },
-                { title: '内容', dataIndex: 'content', key: 'content' },
-                { title: '发布者', dataIndex: 'publisher', key: 'publisher' },
+            bulletinListColumns:[ { title: '标题', dataIndex: 'title', key: 'title' ,...this.getColumnSearchProps('title')},
+                { title: '内容', dataIndex: 'content', key: 'content',...this.getColumnSearchProps('content') },
+                { title: '发布者', dataIndex: 'publisher', key: 'publisher',...this.getColumnSearchProps('publisher') },
                 { title: '发布时间', dataIndex: 'publishTime', key: 'publishTime' },
                 {
                     title: '操作',
@@ -265,17 +344,17 @@ export default class Administrator extends Component{
                 </span>
                     ),
                 },],
-            postListColumns:[ { title: '标题', dataIndex: 'title', key: 'title' },
-                { title: '内容', dataIndex: 'content', key: 'content' },
-                { title: '发布者', dataIndex: 'publisher', key: 'publisher' },
+            postListColumns:[ { title: '标题', dataIndex: 'title', key: 'title' ,...this.getColumnSearchProps('title')},
+                { title: '内容', dataIndex: 'content', key: 'content' ,...this.getColumnSearchProps('content')},
+                { title: '发布者', dataIndex: 'publisher', key: 'publisher',...this.getColumnSearchProps('publisher') },
                 { title: '发布时间', dataIndex: 'publishTime', key: 'publishTime' },
                 {
                     title: '操作',
                     dataIndex: 'operation',
                     key: 'operation',
-                    render: () => (
+                    render: (text,record) => (
                         <span className="table-operation">
-                    <a href="javascript:;">查看</a>
+                    <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                     <Divider type="vertical" />
                     <a href="javascript:;">删除</a>
                 </span>
@@ -300,24 +379,24 @@ export default class Administrator extends Component{
                 </span>
                     ),
                 },],
-            replyListColumns:[ { title: '所在帖子', dataIndex: 'belongedPost', key: 'belongedPost' },
-                { title: '回复内容', dataIndex: 'content', key: 'content' },
-                { title: '发布者', dataIndex: 'name', key: 'name' },
+            replyListColumns:[ { title: '所在帖子', dataIndex: 'belongedPost', key: 'belongedPost',...this.getColumnSearchProps('belongedPost') },
+                { title: '回复内容', dataIndex: 'content', key: 'content' ,...this.getColumnSearchProps('content')},
+                { title: '发布者', dataIndex: 'name', key: 'name',...this.getColumnSearchProps('name') },
                 { title: '发布时间', dataIndex: 'replyTime', key: 'replyTime' },
                 {
                     title: '操作',
                     dataIndex: 'operation',
                     key: 'operation',
-                    render: () => (
+                    render: (text,record) => (
                         <span className="table-operation">
-                    <a href="javascript:;">查看</a>
+                    <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                     <Divider type="vertical" />
                     <a href="javascript:;">删除</a>
                 </span>
                     ),
                 },],
             userListColumns:[
-                { title: '用户名', dataIndex: 'name', key: 'name' },
+                { title: '用户名', dataIndex: 'name', key: 'name',...this.getColumnSearchProps('name')},
                 { title: '注册时间', dataIndex: 'registerTime', key: 'registerTime' },
                 {
                     title: '操作',
@@ -356,7 +435,7 @@ export default class Administrator extends Component{
                                         :
                                             <Table columns={columnsCollection[tab.columnsName]}
                                             dataSource={formatArray(this.state[tab.dataName])}
-                                            pagination={{total:this.state[tab.dataName].length,pageSize:1,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
+                                            pagination={{total:this.state[tab.dataName].length,pageSize:5,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
                                             />
                                         }
 
