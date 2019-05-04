@@ -15,7 +15,7 @@ export default class LeftSelectedCard extends Component{
 
         return(
            <div >
-               <p><h5> {this.props.moduleType}</h5></p>
+               <div><h5> {this.props.moduleType}</h5></div>
                <hr style={{width:(this.props.moduleType ==='热门作品') ? 250 : 1200}} />
                 <Carousel autoplay dots={false} >
                     {data.map((book) => {

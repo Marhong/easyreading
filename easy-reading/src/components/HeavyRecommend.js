@@ -31,7 +31,7 @@ export default class HeavyRecommend extends Component{
         }
         return(
             <div className="heavyModule">
-                <p><h5>重磅推荐</h5></p>
+                <div><h5>重磅推荐</h5></div>
                 <Carousel  autoplay  >
                     {
                        datas.map((data,index) => {

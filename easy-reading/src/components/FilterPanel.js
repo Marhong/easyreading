@@ -1,21 +1,27 @@
 import React,{Component} from 'react';
 import {Tag} from 'antd';
 import FilterItem from "./FilterItem";
-
+import {getDefaultType} from '../static/commonFun';
 export default class FilterPanel extends Component{
     static defaultProps = {
-        data :[{type:"分类",value:["全部","玄幻","修正"]},
-            {type:"状态",value:["全部","状态1","状态2"]},
-            {type:"属性",value:["全部","属性1","属性2"]},
-            {type:"字数",value:["全部","字数1","字数2"]},
-            {type:"更新时间",value:["全部","更新时间1","更新时间2"]},
-            {type:"品质",value:["全部","品质1","品质2"]},
-            {type:"标签",value:["全部","标签1","标签2"]},]
+        data :[{type:"分类",value:["全部","玄幻","奇幻","仙侠","历史","都市","科幻","军事","灵异"]},
+            {type:"状态",value:["全部","完结","未完结"]},
+            {type:"属性",value:["全部","免费","VIP"]},
+            {type:"字数",value:["全部","30万字以下","30-50万字","50-100万字","100-200万字","200万字以上"]},
+            {type:"更新时间",value:["全部","三日内","七日内","半月内","一月内"]},
+            {type:"品质",value:["全部","签约作品","精品小说"]},
+            {type:"标签",value:["全部","热血","重生","豪门","孤儿","盗贼","特工","黑客","明星","特种兵","杀手","老师","学生"]},]
     }
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        // 如果没有传递参数，则默认为“全部”
+        let defaultType = getDefaultType(this.props.defaultType);
+        let defaultSelected = [];
+        if(defaultType.value){
+            defaultSelected = [defaultType];
+        }
         this.state = {
-            selected : [],
+            selected :defaultSelected,
         }
     }
 
@@ -71,7 +77,7 @@ export default class FilterPanel extends Component{
                     }(result)}
                 </div>
                 {data.map((item,index) => {
-                    return <FilterItem key={index} onSelect={this.handleCLick.bind(this)} type={item.type} data={item.value}/>
+                    return <FilterItem key={index} onSelect={this.handleCLick.bind(this)} type={item.type} data={item.value} defaultType={getDefaultType(this.props.defaultType)}/>
                 })}
             </div>
         );

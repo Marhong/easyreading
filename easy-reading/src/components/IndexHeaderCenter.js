@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { Menu, Icon } from 'antd';
 import { Carousel } from 'antd';
-
+import { BrowserRouter as Router, Route, Link ,Switch} from "react-router-dom";
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 // 展示菜单栏和“个性化推荐”书籍
@@ -27,13 +27,13 @@ export default class IndexHeaderCenter extends Component{
                     className="indexMenu"
                 >
                     <Menu.Item key="all">
-                      全部
+                        <Link to="/bookCity">全部</Link>
                     </Menu.Item>
 {/*                    <Menu.Item key="rank">
                       排行
                     </Menu.Item>*/}
                     <Menu.Item key="list">
-                       书单
+                        <Link to="/bookList">书单</Link>
                     </Menu.Item>
 
                 </Menu>

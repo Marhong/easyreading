@@ -39,10 +39,11 @@ class DynamicFieldSet extends Component {
                 const { keys, names } = values;
                 console.log('Received values of form: ', values);
                 console.log('Merged values:', keys.map(key => names[key]));
+                this.props.form.resetFields();
+                ReactDOM.findDOMNode(this.listDescription).value = "";
             }
         });
-        this.props.form.resetFields();
-       ReactDOM.findDOMNode(this.listDescription).value = "";
+
     }
 
     render() {

@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 
 import '../css/MyListCard.css';
-
+import { Link } from "react-router-dom";
 // 自定义的Card，用于以列表形式展示“静态”书籍列表信息
 export default class MyListCard extends Component{
     static defaultProps = {
@@ -13,7 +13,7 @@ export default class MyListCard extends Component{
                 <dl>
                     <dt>
                         <span >
-                            <h3>{this.props.data.bookType}</h3>
+                            <h3><Link to={`/bookCity/${this.props.data.nickname}`}>{this.props.data.bookType}</Link></h3>
                         </span>
                         <hr  className="first"/>
                     </dt>

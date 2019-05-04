@@ -111,3 +111,38 @@ export function deepClone(data){
     let result = JSON.stringify(data);
     return JSON.parse(result);
 }
+
+ // 根据书籍类型的别名(拼音)转换为对应了书籍类型对象
+export function getDefaultType(type){
+    let  obj = {type:"分类"};
+    switch(type){
+        case  "xuanhuan" :
+            obj.value = "玄幻";
+            break;
+        case  "qihuan" :
+            obj.value = "奇幻";
+            break;
+        case  "xianxia" :
+            obj.value = "仙侠";
+            break;
+        case  "lishi" :
+            obj.value = "历史";
+            break;
+        case  "dushi" :
+            obj.value = "都市";
+            break;
+        case  "junshi" :
+            obj.value = "军事";
+            break;
+        case  "kehuan" :
+            obj.value = "科幻";
+            break;
+            // 没有传递参数，value值就为空
+        case undefined:
+            obj.value = "";
+            break;
+        default:
+            obj.value = "灵异";
+    }
+    return obj;
+}

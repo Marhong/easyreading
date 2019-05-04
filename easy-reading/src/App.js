@@ -20,7 +20,7 @@ import {WrappedDynamicFieldSet} from './components/CreateBookList';
 import BulletinList from "./components/BulletinList";
 import BulletinItem from "./components/BulletinItem";
 import Administrator from "./components/Administrator";
-
+import ModalGallery from './components/RouterIndexHeaderCenter'
 
 class App extends Component {
   render() {
@@ -28,6 +28,7 @@ class App extends Component {
       <div className="header">
 
         <IndexHeaderSearch/>
+        <ModalGallery/>
 {/*        <IndexHeaderMain/>
           <HeavyRecommend/>
           <FinishedModule moduleType="完本精选"/>
@@ -36,13 +37,13 @@ class App extends Component {
         {/*  <BulletinList/>*/}
          {/* <BulletinItem/>*/}
       {/*   <BookCity/>*/}
-     {/*   <BookList/>*/}
+        {/*<BookList/>*/}
        {/*<BookListDetail/>*/}
       {/*    <ChapterList/>*/}
      {/*  <BookDetail/>*/}
   {/* <ChapterReader/>*/}
  {/* <PersonalCenter/>*/}
-    <Administrator/>
+{/*    <Administrator/>*/}
 {/*  <Upload/>*/}
       </div>
     );
