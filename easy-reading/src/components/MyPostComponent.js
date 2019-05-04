@@ -3,6 +3,7 @@ import '../css/MyPostComponent.css';
 import { Comment, Tooltip, List,Form,Button ,Modal} from 'antd';
 import {crtTimeFtt,timestampFormat} from '../static/commonFun';
 import {WrappedPostForm} from './PostForm';
+import ReportItem from "./ReportItem";
 export default class MyPostComponent extends Component{
 
     constructor(props){
@@ -177,6 +178,11 @@ export default class MyPostComponent extends Component{
             visible: false,
         });
     }
+    // 提交举报信息
+    handleReportSubmit(values){
+        console.log("举报帖子",values);
+    }
+
     // 格式化数据
     formatPostData(data){
         for(let post of data){
@@ -234,7 +240,7 @@ export default class MyPostComponent extends Component{
                                     actions={item.actions}
                                     author={item.userId}
                                     avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                                    content={item.postTitle}
+                                    content={((item) => {return <span><span className="postTitle"><strong> {item.postTitle} </strong></span><ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/> <br/>{item.postContent}</span>})(item)}
                                     datetime={item.formatPublishedDate}>
                                     {/* 根据state的replys内容来渲染回复*/}
                                     {this.state.replys.map((reply,index) => {
@@ -243,7 +249,7 @@ export default class MyPostComponent extends Component{
                                                             actions={reply.actions}
                                                             author={reply.userId}
                                                             avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                                                            content={reply.replyContent}
+                                                            content={((item) => {return <span>{item.replyContent} <ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/></span>})(reply)}
                                                             datetime={reply.formatReplyDate}
                                             >
                                             </Comment>

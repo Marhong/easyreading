@@ -66,3 +66,9 @@
 .ant-comment-inner {
     padding: 5px 0;
 }
+.postModule .report{
+    color:white;
+}
+.postModule .postTitle{
+    font-size: 12px;
+}

@@ -9,6 +9,11 @@ class BulletinForm extends React.Component {
         super(props);
     }
 
+    // 居然无效？？
+    componentDidMount(){
+        this.props.form.resetFields();
+        ReactDOM.findDOMNode(this.content).value = "";
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -33,23 +38,32 @@ class BulletinForm extends React.Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+        const reportedItem = this.props.reportedItem;
         return (
             <div>
                 <Form onSubmit={this.handleSubmit} className="bulletin_form">
+                    {reportedItem ?
+                        <Form.Item
+                            label="举报项">
+                            {reportedItem.name || reportedItem.postTitle || reportedItem.replyContent}
+                        </Form.Item>
+                        :
+                        <Form.Item
+                            label="标题">
+                            {getFieldDecorator('title', {
+                                rules: [{ required: true, message: '请填写标题!' }],
+                            })(
+                                <Input  placeholder="填写标题" style={{  width:450}}/>
+                            )}
+                        </Form.Item>
+                    }
+
                     <Form.Item
-                        label="标题">
-                        {getFieldDecorator('title', {
-                            rules: [{ required: true, message: '请填写标题!' }],
-                        })(
-                            <Input  placeholder="填写标题" style={{  width:450}}/>
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        label="内容">
+                        label={reportedItem ? "举报原因" : "内容"}>
                         {getFieldDecorator('content', {
                             rules: [{ required: true, message: '内容不能为空!' }],
                         })(
-                            <textarea  placeholder="填写公告内容" style={{ width:450}} ref={(content) => this.content = content}/>
+                            <textarea  placeholder="填写内容" style={{ width:450}} ref={(content) => this.content = content}/>
                         )}
                     </Form.Item>
                     <Form.Item >

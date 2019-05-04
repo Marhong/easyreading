@@ -78,3 +78,7 @@
 .ant-rate{
     margin-top: -5px;
 }
+.detailCard .report{
+    color:white;
+    display: inline-block;
+}
