@@ -1,9 +1,7 @@
 import React,{Component} from 'react';
-import { Menu, Icon } from 'antd';
-import { Carousel } from 'antd';
 import {CardDeck,Card} from 'react-bootstrap';
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+import { Link } from "react-router-dom";
+
 
 // 自定义的CardDeck
 export default class MyCardDeck extends Component{
@@ -17,9 +15,9 @@ export default class MyCardDeck extends Component{
                 {data.map((book) => {
                     return(
                     <Card key={book.id}>
-                        <Card.Img variant="top" src={book.imgSrc} />
+                        <Link to={`/bookCity/books/${book.id}`}><Card.Img variant="top" src={book.imgSrc} /></Link>
                         <Card.Body>
-                            <Card.Title>{book.name}</Card.Title>
+                            <Card.Title> <Link to={`/bookCity/books/${book.id}`}>{book.name}</Link></Card.Title>
                         </Card.Body>
                     </Card>)
                 })}

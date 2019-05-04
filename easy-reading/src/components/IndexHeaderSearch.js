@@ -1,11 +1,15 @@
 import React,{Component} from 'react';
 import {Input,Badge,Icon, Modal} from 'antd';
 import {WrappedNormalLoginForm} from './LoginForm';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import IndexPageRouter from "./IndexPage";
+import PersonalCenter from "./PersonalCenter";
+import Upload from "./Upload";
 const Search = Input.Search;
 // 展示首页头部搜索模块
 export default class IndexHeaderSearch extends Component{
     static defaultProps={
-        user:{username:"书友201904111630",},
+     /*   user:{username:"书友201904111630",},*/
     };
     constructor(props){
         super(props);
@@ -39,9 +43,11 @@ export default class IndexHeaderSearch extends Component{
 
     render(){
         return(
+            <Router>
+                <div>
             <div className="search">
                 <div className="left">
-                    <img src="https://qidian.gtimg.com/qd/images/logo.beebc.png"  alt="易读中文网" />
+                    <Link to="/index"> <img src="https://qidian.gtimg.com/qd/images/logo.beebc.png"  alt="易读中文网" /></Link>
                 </div>
                 <div className="center">
                     <Search
@@ -56,37 +62,53 @@ export default class IndexHeaderSearch extends Component{
                     <span className="userInfo">
                        {/* // 这里如果已经登录就显示“你好 麦香馅饼”
                         // 如果未登录就显示“登录”，然后点击就弹出Modal进行登录或者注册*/}
-                        <span className="username">你好,</span><b onClick={this.showModal}>{this.props.user.username}
-                <Modal
-                    title={this.state.isLogin ? "登录" : "注册"}
-                    visible={this.state.visible}
-                    onOk={this.handleOk}
-                    confirmLoading={this.state.confirmLoading}
-                    onCancel={this.handleCancel}
-                    width={this.state.isLogin ? 300 : 400}
-                    footer={null}
-                >
+                        <span className="username">你好,</span>
+                        {this.props.user ?
+                            <Link to="/personalCenter"><b >{this.props.user.username}</b></Link>
+                            :
+                            <b onClick={this.showModal} style={{cursor:"pointer"}}>请登录</b>
+                        }
+
+                         <Modal
+                                            title={this.state.isLogin ? "登录" : "注册"}
+                                            visible={this.state.visible}
+                                            onOk={this.handleOk}
+                                            confirmLoading={this.state.confirmLoading}
+                                            onCancel={this.handleCancel}
+                                            width={this.state.isLogin ? 300 : 400}
+                                            footer={null}
+                                        >
                     <WrappedNormalLoginForm  isCancel={!this.state.visible} onToggleModal={this.handleToggleModal.bind(this)} isLogin={this.state.isLogin}/>
                 </Modal>
-                        </b>
                         <span className="username"> | </span>
-                         <span>
-                            <Badge count={2} dot>
-                                <Icon type="notification" />
-                            </Badge>
+                         {/*<span>
+                             <Link to="/personalCenter">
+                                <Badge count={2} dot>
+                                    <Icon type="notification" />
+                                </Badge>
+                             </Link>
                          </span>
                          <span className="username"> | </span>
 
                          <span>
                              <i className="iconfont icon-shujia" id="shujia"/>
                          </span>
-                        <span className="username"> | </span>
+                        <span className="username"> | </span>*/}
                          <span>
-                             <i className="iconfont icon-shangchuan" id="upload"/>
+                              <Link to="/uploadFile">
+                                <i className="iconfont icon-shangchuan" id="upload"/>
+                              </Link>
                          </span>
                      </span>
                 </div>
             </div>
+                <Route exact path="/" component={IndexPageRouter} />
+                <Route exact path="/index" component={IndexPageRouter} />
+                <Route exact path="/personalCenter" component={PersonalCenter} />
+                <Route exact path="/uploadFile" component={Upload} />
+            </div>
+
+            </Router>
         )
     }
 }

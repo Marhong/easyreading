@@ -234,13 +234,13 @@ export default class PersonalCenter extends Component{
                 this.setState({...this.state,tabs:msgTabs,currentDataName:"postData"});
                 break;
             case "5":
-                 this.tabs.style.display = "block";
-                 table.style.display = "none";
+                this.tabs.style.display = "block";
+                table.style.display = "none";
 
                 setTimeout(()=>{
                     this.setState({...this.state,tabs:readingRecord,recordExpandedRowRender:recordExpandedRowRender,currentDataName:"weekData"});
                 },2);
-                 break;
+                break;
 
             case "6":
                 this.tabs.style.display = "none";
@@ -257,9 +257,9 @@ export default class PersonalCenter extends Component{
     handleTabChange = (key) => {
         this.setState({...this.state,currentDataName:key});
         if(key === "weekData"){
-                this.setState({...this.state,recordExpandedRowRender:recordExpandedRowRender});
+            this.setState({...this.state,recordExpandedRowRender:recordExpandedRowRender});
         }else{
-                this.setState({...this.state,recordExpandedRowRender:null});
+            this.setState({...this.state,recordExpandedRowRender:null});
         }
     }
     // 最开始只传递该类型数据的长度，以及第一个page页面展示的数据。
@@ -318,7 +318,7 @@ export default class PersonalCenter extends Component{
         };
         const columnsCollection ={
             // 菜单项为"我的书架"的表头
-             bookShelfColumns : [
+            bookShelfColumns : [
                 { title: '书名', dataIndex: 'name', key: 'name' },
                 { title: '作者', dataIndex: 'author', key: 'author' },
                 { title: '最新章节', dataIndex: 'chapter', key: 'chapter' },
@@ -333,22 +333,22 @@ export default class PersonalCenter extends Component{
                     )},],
             // 菜单项为“我的书单”的表头
             bookListColumns : [
-            { title: '书单名', dataIndex: 'name', key: 'name' },
-            { title: '作者', dataIndex: 'author', key: 'author' },
-            { title: '创建时间', dataIndex: 'createTime', key: 'createTime' },
-            {
-                title: '操作',  key: 'operation', render:(text,record) => (
-                    <span>
+                { title: '书单名', dataIndex: 'name', key: 'name' },
+                { title: '作者', dataIndex: 'author', key: 'author' },
+                { title: '创建时间', dataIndex: 'createTime', key: 'createTime' },
+                {
+                    title: '操作',  key: 'operation', render:(text,record) => (
+                        <span>
 
                                         <a href="javascript:;" onClick={this.handleDeleteBookList.bind(this,record)}>删除</a>
                                     </span>
-                )},],
-             // 菜单项为“上传记录”的表头
+                    )},],
+            // 菜单项为“上传记录”的表头
             uploadRecordColumns : [
-            { title: '书名', dataIndex: 'name', key: 'name' },
-            { title: '作者', dataIndex: 'author', key: 'author' },
-            { title: '类型', dataIndex: 'bookType', key: 'bookType' },
-            { title: '上传时间', dataIndex: 'uploadTime', key: 'uploadTime' },],
+                { title: '书名', dataIndex: 'name', key: 'name' },
+                { title: '作者', dataIndex: 'author', key: 'author' },
+                { title: '类型', dataIndex: 'bookType', key: 'bookType' },
+                { title: '上传时间', dataIndex: 'uploadTime', key: 'uploadTime' },],
             postColumns:[
                 { title: '帖子', dataIndex: 'post', key: 'post' },
                 { title: '是否精华', dataIndex: 'isEssence', key: 'isEssence' },
@@ -427,12 +427,12 @@ export default class PersonalCenter extends Component{
                                 {this.state.tabs.map((tab,index) => {
                                     return <TabPane tab={tab.name} key={tab.key || index+1}>
                                         {(tab.name === "基本信息") || (tab.name === "修改密码") ?
-                                                <WrappedRegistrationForm user={user} type={tab.name}/>
+                                            <WrappedRegistrationForm user={user} type={tab.name}/>
                                             :
-                                                <Table columns={columnsCollection[tab.columnsName]}
-                                                       dataSource={this.state[tab.dataName]}
-                                                       expandedRowRender={this.state.recordExpandedRowRender}
-                                                       pagination={{total:this.state[tab.dataName].length,pageSize:1,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
+                                            <Table columns={columnsCollection[tab.columnsName]}
+                                                   dataSource={this.state[tab.dataName]}
+                                                   expandedRowRender={this.state.recordExpandedRowRender}
+                                                   pagination={{total:this.state[tab.dataName].length,pageSize:1,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
                                             />}
                                     </TabPane>
                                 })}

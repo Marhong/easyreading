@@ -4,23 +4,9 @@ import './css/IndexHeader.css';
 import './static/iconfont.css';
 import './css/Upload.css';
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
-import IndexHeaderMain from "./components/IndexHeaderMain";
-import BookCity from "./components/BookCity";
-import ChapterList from "./components/ChapterList";
-import BookDetail from "./components/BookDetail";
-import FinishedModule from "./components/FinishedModule";
-import PopularModule from "./components/PopularModule";
-import HeavyRecommend from "./components/HeavyRecommend";
-import ChapterReader from "./components/ChapterReader";
-import Upload from "./components/Upload";
+
+import IndexPageRouter from './components/IndexPage'
 import PersonalCenter from "./components/PersonalCenter";
-import BookList from "./components/BookList";
-import BookListDetail from "./components/BookListDetail";
-import {WrappedDynamicFieldSet} from './components/CreateBookList';
-import BulletinList from "./components/BulletinList";
-import BulletinItem from "./components/BulletinItem";
-import Administrator from "./components/Administrator";
-import ModalGallery from './components/RouterIndexHeaderCenter'
 
 class App extends Component {
   render() {
@@ -28,7 +14,7 @@ class App extends Component {
       <div className="header">
 
         <IndexHeaderSearch/>
-        <ModalGallery/>
+        {/*<IndexPageRouter/>*/}
 {/*        <IndexHeaderMain/>
           <HeavyRecommend/>
           <FinishedModule moduleType="完本精选"/>
@@ -42,7 +28,7 @@ class App extends Component {
       {/*    <ChapterList/>*/}
      {/*  <BookDetail/>*/}
   {/* <ChapterReader/>*/}
- {/* <PersonalCenter/>*/}
+  {/*<PersonalCenter/>*/}
 {/*    <Administrator/>*/}
 {/*  <Upload/>*/}
       </div>

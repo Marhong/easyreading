@@ -18,7 +18,7 @@ export default class MyListCard extends Component{
                         <hr  className="first"/>
                     </dt>
                     {this.props.data.books.map((book) => {
-                        return <dd key={book.id}> <span className="itemInfo"><span className="bookType">[{book.type}]</span> <span className="bookName"> {book.name}</span></span></dd>
+                        return  <Link to={`/bookCity/books/${book.id}`} key={book.id}><dd > <span className="itemInfo"><span className="bookType">[{book.type}]</span> <span className="bookName"> {book.name}</span></span></dd></Link>
                     })}
                 </dl>
             </div>

@@ -1,8 +1,7 @@
 import React,{Component} from 'react';
 import MySelectedCard from "./MySelectedCard";
 import { Carousel } from 'antd';
-import { Menu, Icon } from 'antd';
-import {CardDeck,Card,Button} from 'react-bootstrap';
+
 
 // 展示“完本精选模块”书籍的组件
 export default class LeftSelectedCard extends Component{

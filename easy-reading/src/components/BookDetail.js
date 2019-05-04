@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {Breadcrumb,Tabs} from 'antd';
 import BookDetailCard from "./BookDetailCard";
 import '../css/BookDetail.css';
+import { Link } from "react-router-dom";
 import MyPostComponent from "./MyPostComponent";
 const TabPane = Tabs.TabPane;
 export default class BookDetail extends Component{
@@ -10,9 +11,9 @@ export default class BookDetail extends Component{
            <div className="bookDetail">
                <div className="header">
                    <Breadcrumb separator=">" >
-                       <Breadcrumb.Item href="">首页</Breadcrumb.Item>
-                       <Breadcrumb.Item href="">武侠仙侠</Breadcrumb.Item>
-                       <Breadcrumb.Item href="">剑来</Breadcrumb.Item>
+                       <Breadcrumb.Item ><Link to="/index">首页</Link></Breadcrumb.Item>
+                       <Breadcrumb.Item ><Link to="/bookCity">书城</Link></Breadcrumb.Item>
+                       <Breadcrumb.Item ><Link to={`/bookCity/books/${this.props.match.params.id}`}>剑来</Link></Breadcrumb.Item>
                    </Breadcrumb>
                </div>
                <div className="content">

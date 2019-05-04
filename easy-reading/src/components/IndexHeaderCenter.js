@@ -41,7 +41,7 @@ export default class IndexHeaderCenter extends Component{
                 {personalizedBooks.map((book) =>{
                     return(
                         <div key={book.id}>
-                            <img alt={book.name} src={book.imgSrc} />
+                            <Link to={`/bookCity/books/${book.id}`} key={book.id}> <img alt={book.name} src={book.imgSrc} /></Link>
                         </div>
                     );
                 })}
