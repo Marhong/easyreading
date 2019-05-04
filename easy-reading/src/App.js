@@ -39,9 +39,9 @@ class App extends Component {
      {/*   <BookList/>*/}
        {/*<BookListDetail/>*/}
       {/*    <ChapterList/>*/}
-       <BookDetail/>
+     {/*  <BookDetail/>*/}
   {/* <ChapterReader/>*/}
- {/* <PersonalCenter/>*/}
+  <PersonalCenter/>
     {/*<Administrator/>*/}
 {/*  <Upload/>*/}
       </div>

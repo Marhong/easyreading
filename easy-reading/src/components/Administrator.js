@@ -170,8 +170,8 @@ export default class Administrator extends Component{
     // 如pagesize为5，总共有22条数据。初始化时只传递25和前5条数据
     // 切换page,根据page值向服务器请求新page页面的数据
     // 需要判断table展示的什么类型的数据(书籍、公告、帖子、评论等)
-    onChange(page,pageSize){
-
+    onChange(page,pageSize,e){
+        console.log(page,pageSize,this.state.currentDataName);
     }
     render(){
         const columnsCollection ={
@@ -356,7 +356,7 @@ export default class Administrator extends Component{
                                         :
                                             <Table columns={columnsCollection[tab.columnsName]}
                                             dataSource={formatArray(this.state[tab.dataName])}
-                                            pagination={{total:this.state[tab.dataName].length,pageSize:1,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange }}
+                                            pagination={{total:this.state[tab.dataName].length,pageSize:1,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
                                             />
                                         }
 
