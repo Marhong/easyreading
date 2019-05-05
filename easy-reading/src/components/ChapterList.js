@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {Breadcrumb} from 'antd';
 import '../css/ChapterList.css';
 import VolumeComponent from "./VolumeComponent";
-
+import {Link} from 'react-router-dom';
 export default class ChapterList extends Component{
     static defaultProps = {
         data :[{name:"卷一 大城小事",count:24,wordNumbers:524561245,data:
@@ -25,15 +25,16 @@ export default class ChapterList extends Component{
         this.setState({sort:this.state.sort==="icon-shengxu" ? "icon-jiangxu" : "icon-shengxu"});
     }
     render(){
-
+        const book = {id:"562323"};
         return(
             <div className="chapterList">
                 <div className="header">
-                    <div className="left">
+                    <div className="left" style={{width:300}}>
                         <Breadcrumb separator=">" >
-                            <Breadcrumb.Item href="">首页</Breadcrumb.Item>
-                            <Breadcrumb.Item href="">书籍列表</Breadcrumb.Item>
-                            <Breadcrumb.Item href="">剑来</Breadcrumb.Item>
+                            <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item ><Link to={`/bookCity`} >书城</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}`} >剑来</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}/chapterList`} style={{color:"#40a9ff"}}>章节列表</Link></Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
 {/*                    <div className="right">

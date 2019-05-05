@@ -14,7 +14,7 @@ export default class BulletinItem extends Component{
                 <Breadcrumb separator=">" >
                     <Breadcrumb.Item ><Link to={`/index`} >首页</Link></Breadcrumb.Item>
                     <Breadcrumb.Item ><Link to={`/bulletinList`} >公告列表</Link></Breadcrumb.Item>
-                    <Breadcrumb.Item ><Link to={`/bulletinList/${this.props.match.params.id}`} >公告详情</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item ><Link to={`/bulletinList/${this.props.match.params.id}`} style={{color:"#40a9ff"}}>公告详情</Link></Breadcrumb.Item>
                 </Breadcrumb>
                 <h2 style={{fontSize:24,marginTop:10}}> {bulletin.title}</h2>
                 <p><i className="iconfont icon-shijian"/> {moment(bulletin.time*1000).format('YYYY-MM-DD HH:mm:ss')}</p>

@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import {Tabs,Icon} from 'antd';
-
+import {Tabs,Breadcrumb} from 'antd';
+import {Link} from 'react-router-dom';
 import '../css/BookList.css';
 import BookListItem from "./BookListItem";
 import {WrappedDynamicFieldSet} from './CreateBookList';
@@ -40,6 +40,10 @@ export default class BookList extends Component{
     render(){
         return(
             <div className="bookList">
+                <Breadcrumb separator=">" >
+                    <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item > <Link to={`/bookList`} style={{color:"#40a9ff"}}>书单列表</Link></Breadcrumb.Item>
+                </Breadcrumb>
                 <Tabs  animated={false} onChange={this.handleOnChange}>
                     {options.map((option,index) => {
                         return <TabPane tab={<span><i className={option.icon} />{option.name}</span>} key={index+1}>

@@ -21,7 +21,7 @@ class IndexPage extends  Component{
                     <Route path="/bookCity/:type" component={BookCityPageRouter} />
                     <Route path="/bookCity" component={BookCityPageRouter} />
                     <Route path="/bulletinList" component={BulletinListPageRouter} />
-                    <Route path="/bulletinList/:id" component={BookListPageRouter} />
+                    <Route path="/bulletinList/:id" component={BulletinListPageRouter} />
                 </Switch>
             </div>
         );

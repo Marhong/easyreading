@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link ,Switch} from "react-router-dom";
 import BookDetailPageRouter from "./BookDetailPage";
 import BookCity from "./BookCity";
 import IndexPageRouter from "./IndexPage";
+import MainContent from "./MainContent";
 
 class BookCityPage extends  Component{
 
@@ -14,6 +15,7 @@ class BookCityPage extends  Component{
                     <Route exact path="/bookCity" component={BookCity} />
                     <Route exact path="/bookCity/:type" component={BookCity} />
                     <Route  exact path="/bookCity/books/:id" component={BookDetailPageRouter} />
+                    <Route  path="/index" component={IndexPageRouter} />
                 </Switch>
             </div>
         );

@@ -2,13 +2,14 @@ import React,{Component} from 'react';
 import {findDOMNode} from 'react-dom';
 import {Breadcrumb,Button,Menu,} from 'antd';
 import PageSetting from "./PageSetting";
+import {Link} from 'react-router-dom';
 require('../css/ChapterReader.css');
 
 
 export default class ChapterReader extends Component{
     static defaultProps = {
         style : {fontSize:14,bgColor:"rgb(250, 238, 215)",pageBgColor:"RGB(217,205,182)",pageWidth:1200,fontFamily:"SimSun"},
-        chapter:{name:"第一章 醉里挑灯看剑，梦回吹角连营",author:"烽火戏诸侯",words:5012,updateTime:"2019-04-25"}
+        chapter:{id:"4531313",name:"第一章 醉里挑灯看剑，梦回吹角连营",author:"烽火戏诸侯",words:5012,updateTime:"2019-04-25"}
     }
     constructor(props){
         super(props);
@@ -54,15 +55,24 @@ export default class ChapterReader extends Component{
         }
     }
     render(){
+        const book = {id:"65232"};
+        const chapter = this.props.chapter;
         return(
                 <div className="readerPage">
-                    <div className="readerCrumb">
+                    <div className="readerCrumb" style={{width:300}}>
                     <Breadcrumb separator=">" >
                         <Breadcrumb.Item href="">首页</Breadcrumb.Item>
                         <Breadcrumb.Item href="">武侠仙侠</Breadcrumb.Item>
                         <Breadcrumb.Item href="">剑来</Breadcrumb.Item>
                         <Breadcrumb.Item href="">正文</Breadcrumb.Item>
                     </Breadcrumb>
+                        <Breadcrumb separator=">" >
+                            <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item ><Link to={`/bookCity`} >书城</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}`} >剑来</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}/chapterList`} >章节列表</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}/chapterList/${chapter.id}`} style={{color:"#40a9ff"}}>{chapter.name}</Link></Breadcrumb.Item>
+                        </Breadcrumb>
                     </div>
 
                     <div className="readerBox" ref={(readBox) => this.readBox = readBox}>

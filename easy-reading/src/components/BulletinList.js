@@ -75,7 +75,7 @@ export default class BulletinList extends Component{
             <div className="bulletinList">
                     <Breadcrumb separator=">" >
                         <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
-                        <Breadcrumb.Item > <Link to={`/bulletinList`} >公告列表</Link></Breadcrumb.Item>
+                        <Breadcrumb.Item > <Link to={`/bulletinList`} style={{color:"#40a9ff"}}>公告列表</Link></Breadcrumb.Item>
                     </Breadcrumb>
                 <h2 style={{fontSize:24,marginTop:10}}>最新动态</h2>
 

@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import MyBookCard from './MyBookCard';
-import {Pagination} from 'antd';
+import {Pagination,Breadcrumb} from 'antd';
+import {Link} from 'react-router-dom';
 import '../css/BookCity.css';
 import NavComponent from "./NavComponent";
 import FilterPanel from "./FilterPanel";
@@ -18,6 +19,10 @@ export default class BookCity extends Component{
 
         return(
             <div className="main">
+                <Breadcrumb separator=">" style={{marginBottom:20}}>
+                    <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item > <Link to={`/bookCity`} style={{color:"#40a9ff"}}>书城</Link></Breadcrumb.Item>
+                </Breadcrumb>
                 <div className="left">
                     <FilterPanel defaultType={this.props.match.params.type}/>
                 </div>

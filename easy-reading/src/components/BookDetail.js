@@ -13,7 +13,7 @@ export default class BookDetail extends Component{
                    <Breadcrumb separator=">" >
                        <Breadcrumb.Item ><Link to="/index">首页</Link></Breadcrumb.Item>
                        <Breadcrumb.Item ><Link to="/bookCity">书城</Link></Breadcrumb.Item>
-                       <Breadcrumb.Item ><Link to={`/bookCity/books/${this.props.match.params.id}`}>剑来</Link></Breadcrumb.Item>
+                       <Breadcrumb.Item ><Link to={`/bookCity/books/${this.props.match.params.id}`} style={{color:"#40a9ff"}}>剑来</Link></Breadcrumb.Item>
                    </Breadcrumb>
                </div>
                <div className="content">

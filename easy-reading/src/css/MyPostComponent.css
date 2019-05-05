@@ -9,8 +9,7 @@
 }
 .postModule .header ul{
    position:absolute;
-    top:50%;
-    transform: translateY(-50%);
+  margin-top: 5px;
 }
 .postModule .header ul li{
     float:left;

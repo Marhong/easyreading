@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
 import '../css/BookListDetail.css';
 import BookListDetailItem from "./BookListDetailItem";
-
 import BookItemFooter from "./BookItemFooter";
+import {Breadcrumb} from 'antd';
+import { Link } from "react-router-dom";
 // 书单的数据
 const bookListItem =     {
     imgs:[{src:"https://bookcover.yuewen.com/qdbimg/349573/1013470066/180",name:"沙发书单"},{name:"考虑领料",src:"https://bookcover.yuewen.com/qdbimg/349573/1013862069/180"},{name:"我的师傅",src:"https://bookcover.yuewen.com/qdbimg/349573/1010754871/180"},{name:"三国志",src:"https://bookcover.yuewen.com/qdbimg/349573/1014127256/180"}],
@@ -20,6 +21,11 @@ export default class BookListDetail extends Component{
         const bookList = bookListItem.bookList;
         return(
             <div className="bookListDetail">
+                <Breadcrumb separator=">" style={{marginBottom:20}} >
+                    <Breadcrumb.Item ><Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item ><Link to={`/bookList`} >书单列表</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item ><Link to={`/bookList/${this.props.match.params.id}`} style={{color:"#40a9ff"}}>书单</Link></Breadcrumb.Item>
+                </Breadcrumb>
                 <h3 ><strong>想念书单#想念出品</strong></h3>
                 <div className="bookListInfo">
                     <p>{bookList.description}</p>

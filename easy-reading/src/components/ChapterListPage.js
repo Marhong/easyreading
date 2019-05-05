@@ -7,33 +7,34 @@ import BookListDetail from "./BookListDetail";
 import BookList from "./BookList";
 import BookDetail from "./BookDetail";
 import BookCity from "./BookCity";
-import ChapterListPageRouter from "./ChapterListPage";
+import ChapterList from "./ChapterList";
 import ChapterReaderPageRouter from "./ChapterReaderPage";
 
-class BookDetailPage extends  Component{
+class ChapterListPage extends  Component{
 
     render() {
         console.log(this.props.match.params.id);
         return (
             <div>
                 <Switch >
-                    <Route  exact path="/bookCity/books/:id" component={BookDetail} />
+
                     <Route exact path="/index" component={IndexPageRouter} />
                     <Route exact path="/bookCity" component={BookCity} />
-                    <Route exact path="/bookCity/books/:id/chapterList" component={ChapterListPageRouter} />
-                    <Route exact path="/bookCity/books/:id/chapterList/:id" component={ChapterReaderPageRouter} />
+                    <Route  exact path="/bookCity/books/:id" component={BookDetail} />
+                    <Route exact path="/bookCity/books/:id/chapterList/id" component={ChapterReaderPageRouter} />
+                    <Route exact path="/bookCity/books/:id/chapterList" component={ChapterList} />
                 </Switch>
             </div>
         );
     }
 }
 
-function BookDetailPageRouter() {
+function ChapterListPageRouter() {
     return (
         <Router >
-            <Route component={BookDetailPage} />
+            <Route component={ChapterListPage} />
         </Router>
     );
 }
 
-export default BookDetailPageRouter;
+export default ChapterListPageRouter;
