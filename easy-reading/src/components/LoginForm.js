@@ -85,21 +85,24 @@ class NormalLoginForm extends React.Component {
             <div>
                 {this.state.isLogin ?
             <Form onSubmit={this.handleSubmit} className="login-form" >
-                <Form.Item>
+                <Form.Item
+                    hasFeedback>
                     {getFieldDecorator('userName', {
                         rules: [{ required: true, message: '请输入用户名!' }],
                     })(
                         <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
                     )}
                 </Form.Item>
-                <Form.Item>
+                <Form.Item
+                    hasFeedback>
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message: '请输入密码!' }],
                     })(
                         <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
                     )}
                 </Form.Item>
-                <Form.Item>
+                <Form.Item
+                    >
                     {getFieldDecorator('remember', {
                         valuePropName: 'checked',
                         initialValue: true,
@@ -119,6 +122,7 @@ class NormalLoginForm extends React.Component {
                 <Form {...formItemLayout} onSubmit={this.handleSubmit} className="register-form" >
                     <Form.Item
                         label="用户名"
+                        hasFeedback
                     >
                         {getFieldDecorator('userName', {
                             rules: [{
@@ -130,6 +134,7 @@ class NormalLoginForm extends React.Component {
                     </Form.Item>
                     <Form.Item
                         label="密码"
+                        hasFeedback
                     >
                         {getFieldDecorator('password', {
                             rules: [{
@@ -143,6 +148,7 @@ class NormalLoginForm extends React.Component {
                     </Form.Item>
                     <Form.Item
                         label="确认密码"
+                        hasFeedback
                     >
                         {getFieldDecorator('confirm', {
                             rules: [{

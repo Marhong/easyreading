@@ -44,12 +44,14 @@ class BulletinForm extends React.Component {
                 <Form onSubmit={this.handleSubmit} className="bulletin_form">
                     {reportedItem ?
                         <Form.Item
-                            label="举报项">
+                            label="举报项"
+                            hasFeedback>
                             {reportedItem.name || reportedItem.postTitle || reportedItem.replyContent}
                         </Form.Item>
                         :
                         <Form.Item
-                            label="标题">
+                            label="标题"
+                            hasFeedback>
                             {getFieldDecorator('title', {
                                 rules: [{ required: true, message: '请填写标题!' }],
                             })(
@@ -59,7 +61,8 @@ class BulletinForm extends React.Component {
                     }
 
                     <Form.Item
-                        label={reportedItem ? "举报原因" : "内容"}>
+                        label={reportedItem ? "举报原因" : "内容"}
+                        hasFeedback>
                         {getFieldDecorator('content', {
                             rules: [{ required: true, message: '内容不能为空!' }],
                         })(

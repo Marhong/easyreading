@@ -72,6 +72,7 @@ class DynamicFieldSet extends Component {
                 label={index === 0 ? '选择的书籍' : ''}
                 required={true}
                 key={k}
+                hasFeedback
             >
                 {getFieldDecorator(`names[${k}]`, {
                     validateTrigger: ['onChange', 'onBlur'],
@@ -96,7 +97,8 @@ class DynamicFieldSet extends Component {
             <div className="createBookList">
             <Form onSubmit={this.handleSubmit}>
                 <Form.Item {...formItemLayout}
-                label="书单名">
+                label="书单名"
+                           hasFeedback>
                     {getFieldDecorator('listName', {
                         rules: [{ required: true, message: '请填写书单名!' }],
                     })(
@@ -104,7 +106,8 @@ class DynamicFieldSet extends Component {
                     )}
                 </Form.Item>
                 <Form.Item {...formItemLayout}
-                    label="书单介绍">
+                    label="书单介绍"
+                           hasFeedback>
                     {getFieldDecorator('listDescription', {
                         rules: [{ required: true, message: '请填写书单介绍!' }],
                     })(
@@ -113,6 +116,7 @@ class DynamicFieldSet extends Component {
                 </Form.Item>
                 {formItems}
                 <Form.Item {...formItemLayoutWithOutLabel}
+
                 >
                     <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
                         <Icon type="plus" /> 添加书籍

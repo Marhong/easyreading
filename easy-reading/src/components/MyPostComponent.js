@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import '../css/MyPostComponent.css';
-import { Comment, Tooltip, List,Form,Button ,Modal} from 'antd';
+import { Comment, Tooltip, List,Icon,Button ,Modal} from 'antd';
 import {crtTimeFtt,timestampFormat} from '../static/commonFun';
 import {WrappedPostForm} from './PostForm';
 import ReportItem from "./ReportItem";
@@ -33,6 +33,8 @@ export default class MyPostComponent extends Component{
                 postTitle: "图书馆比自习室环境好",
                 postContent:"星礼卡大师傅爱上了对方卡萨丁阿萨德雷锋咖啡拉水电费拉水电费拉考试得分撒撒旦法.",
                 userId:1,
+                likeNum:10,
+                hasClickedLike:false,
                 postReply:[
                     {
                         replyId: 562323,
@@ -68,6 +70,8 @@ export default class MyPostComponent extends Component{
                 postTitle: "实验室比自习室还要差",
                 postContent:"星礼卡大师傅爱上了对方卡萨丁阿萨德雷锋咖啡拉水电费拉水电费拉考试得分撒撒旦法.",
                 userId:5,
+                likeNum:15,
+                hasClickedLike:false,
                 postReply:[
                     {
                         replyId: 5623234,
@@ -116,6 +120,21 @@ export default class MyPostComponent extends Component{
 
         this.setState({...this.state,isReplying:!this.state.isReplying,postId:id,replyToAnother:arguments[1]});
 
+    }
+    // 给帖子点赞
+    clickLike(postId,e){
+        let posts = this.state.posts;
+        for(let post of posts){
+            if(post.postId === postId){
+                if(!post.hasClickedLike){
+                    console.log(postId);
+                    post.hasClickedLike = true;
+                    post.likeNum += 1;
+                    this.setState({...this.state,posts:this.formatPostData(posts)});
+                }
+                break;
+            }
+        }
     }
     // 显示某个帖子的所有回复
     handleView(postId,e){
@@ -188,7 +207,10 @@ export default class MyPostComponent extends Component{
         for(let post of data){
             let viewAll = post.postReply.length > 0 ? `查看所有(${post.postReply.length})` : "";
             post.actions = [<span onClick={this.handleView.bind(this,post.postId)} className="view">{viewAll}</span>,
-                <span onClick={this.handleReplyPost.bind(this,post.postId,post.userId)} className="reply">回复</span>];
+                <span onClick={this.handleReplyPost.bind(this,post.postId,post.userId)} className="reply">回复</span>,
+                <span onClick={this.clickLike.bind(this,post.postId)}>
+                    <i className="iconfont icon-dianzan11"> {post.likeNum}</i>
+                </span>];
             // 将每个帖子的发布日期转换为“刚刚、N分钟前、今天几时几分”的形式
             let date = post.publishedDate;
             post.formatPublishedDate = ( <Tooltip title={crtTimeFtt(date)}>

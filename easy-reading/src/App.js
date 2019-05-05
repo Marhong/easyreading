@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './css/IndexHeader.css';
 import './static/iconfont.css';
-import './css/Upload.css';
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
 
-import IndexPageRouter from './components/IndexPage'
-import PersonalCenter from "./components/PersonalCenter";
 
 class App extends Component {
   render() {
@@ -30,7 +27,6 @@ class App extends Component {
   {/* <ChapterReader/>*/}
   {/*<PersonalCenter/>*/}
 {/*    <Administrator/>*/}
-{/*  <Upload/>*/}
       </div>
     );
   }

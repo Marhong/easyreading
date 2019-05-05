@@ -108,6 +108,7 @@ class RegistrationForm extends Component {
               </Tooltip>
             </span>
                         )}
+                        hasFeedback
                     >
                         {getFieldDecorator('nickname', {
                             rules: [{ required: true, message: '昵称不能为空!', whitespace: true }],
@@ -116,7 +117,8 @@ class RegistrationForm extends Component {
                         )}
                     </Form.Item>
                     <Form.Item
-                        label="性别">
+                        label="性别"
+                        hasFeedback>
                         <Select defaultValue={user.gender}>
                             <Option value="male">男</Option>
                             <Option value="female">女</Option>
@@ -124,6 +126,7 @@ class RegistrationForm extends Component {
                     </Form.Item>
                     <Form.Item
                         label="现居地"
+                        hasFeedback
                     >
                         {getFieldDecorator('residence', {
                             initialValue: [user.address.split(",")[0],user.address.split(",")[1],user.address.split(",")[2]],
@@ -134,6 +137,7 @@ class RegistrationForm extends Component {
                     </Form.Item>
                     <Form.Item
                         label="E-mail"
+                        hasFeedback
                     >
                         {getFieldDecorator('email', {
                             rules: [{
@@ -147,6 +151,7 @@ class RegistrationForm extends Component {
                     </Form.Item>
                     <Form.Item
                         label="手机号码"
+                        hasFeedback
                     >
                         {getFieldDecorator('phone', {
                             rules: [{  message: '请输入手机号码!' ,type:'number'}],
@@ -156,6 +161,7 @@ class RegistrationForm extends Component {
                     </Form.Item>
                     <Form.Item
                         label="个人简介"
+                        hasFeedback
 
                     >
                         {getFieldDecorator('description', {

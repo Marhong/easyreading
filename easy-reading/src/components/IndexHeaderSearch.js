@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Input,Badge,Icon, Modal,Divider} from 'antd';
+import {Input,Badge,Icon, Modal,Menu,Dropdown} from 'antd';
 import {WrappedNormalLoginForm} from './LoginForm';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import IndexPageRouter from "./IndexPage";
@@ -59,7 +59,16 @@ export default class IndexHeaderSearch extends Component{
     handleSubmitBook(values){
         console.log(values);
     }
+    // 退出当前账号
+    handleSignOut = (key) => {
+        console.log(key);
+    }
     render(){
+        const menu = (
+            <Menu onClick={this.handleSignOut.bind(this)}>
+                <Menu.Item key="signout">退出</Menu.Item>
+            </Menu>
+        );
         return(
             <Router>
                 <div>
@@ -84,7 +93,9 @@ export default class IndexHeaderSearch extends Component{
                        // 如果未登录就显示“登录”，然后点击就弹出Modal进行登录或者注册*/}
                         <span className="username">你好,</span>
                         {this.props.user ?
-                           <Link to="/personalCenter"><b >{this.props.user.username}</b></Link>
+                            <Dropdown overlay={menu}>
+                                <Link to="/personalCenter"><b >{this.props.user.username}</b></Link>
+                            </Dropdown>
                             :
                             <b onClick={this.showModal} style={{cursor:"pointer"}}>请登录</b>
                         }

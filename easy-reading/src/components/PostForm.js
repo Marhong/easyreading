@@ -42,7 +42,8 @@ class PostForm extends React.Component {
             <div>
                 <Form onSubmit={this.handleSubmit} className="post_form">
                     <Form.Item
-                               label="标题">
+                               label="标题"
+                               hasFeedback>
                         {getFieldDecorator('postTitle', {
                             rules: [{ required: true, message: '请填写标题!' }],
                         })(
@@ -50,7 +51,8 @@ class PostForm extends React.Component {
                         )}
                     </Form.Item>
                     <Form.Item
-                               label="内容">
+                               label="内容"
+                               hasFeedback>
                         {getFieldDecorator('postContent', {
                             rules: [{ required: true, message: '内容不能为空!' }],
                         })(
