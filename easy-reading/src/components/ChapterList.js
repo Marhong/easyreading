@@ -21,6 +21,10 @@ export default class ChapterList extends Component{
             sort : "icon-shengxu",
         }
     }
+    componentDidMount(){
+        document.documentElement.style.backgroundColor = "white";
+        document.body.style.backgroundColor = "white";
+    }
     handleChaptersSort(){
         this.setState({sort:this.state.sort==="icon-shengxu" ? "icon-jiangxu" : "icon-shengxu"});
     }

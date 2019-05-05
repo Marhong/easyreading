@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import MyPostComponent from "./MyPostComponent";
 const TabPane = Tabs.TabPane;
 export default class BookDetail extends Component{
+    componentDidMount(){
+        document.documentElement.style.backgroundColor = "white";
+        document.body.style.backgroundColor = "white";
+    }
     render(){
        return(
            <div className="bookDetail">

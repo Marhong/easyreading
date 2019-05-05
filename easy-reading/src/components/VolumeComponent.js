@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-
+import {Link} from 'react-router-dom';
 export default class VolumeComponent extends Component{
     static defaultProps = {
         volume : {name:"卷一 大城小事",count:24,wordNumber:524561245,data:
@@ -8,6 +8,7 @@ export default class VolumeComponent extends Component{
                 ]}
     }
     render(){
+        const book ={id:"86523"};
         let volume = this.props.volume;
         for(let i=0,len=50;i<len;i++){
             volume.data.splice(volume.data.length,0,{id:i,name:`第${i}章 好好学习，天天向上`,href:""})
@@ -25,7 +26,7 @@ export default class VolumeComponent extends Component{
                 <div className="main">
                     <ul>
                         {volume.data.map((item,index) => {
-                            return <li key={index}><a href={item.href}>{item.name}</a></li>
+                            return <li key={index}><Link to={`/bookCity/books/${book.id}/chapterList/${item.id}`}>{item.name}</Link></li>
                         })}
 
                     </ul>

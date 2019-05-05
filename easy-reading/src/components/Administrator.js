@@ -11,10 +11,10 @@ const TabPane = Tabs.TabPane;
 // 菜单项为“书籍管理” > “书籍审核” 时的数据
 const uploadedBooksData = [
     {
-        key: "uploadedBooksData1", name : '癞蛤蟆想吃天鹅肉', author : '烽火戏诸侯', uploader : '王小二', uploadTime : '2019-02-10 14:20:20'
+        key: "uploadedBooksData1", name : '癞蛤蟆想吃天鹅肉', author : '烽火戏诸侯',type:"都市", uploader : '王小二', uploadTime : '2019-02-10 14:20:20'
     },
     {
-        key: "uploadedBooksData2", name : '桃花', author : '烽火戏诸侯', uploader : '王小二', uploadTime : '2019-02-10 14:24:20'
+        key: "uploadedBooksData2", name : '桃花', author : '烽火戏诸侯', type:"玄幻",uploader : '王小二', uploadTime : '2019-02-10 14:24:20'
     },
 ];
 // 菜单项为“书籍管理” > “举报信息” 时的数据
@@ -257,6 +257,7 @@ export default class Administrator extends Component{
             uploadedBooksColumns:[
                 { title: '书籍名', dataIndex: 'name', key: 'name' },
                 { title: '作者', dataIndex: 'author', key: 'author' },
+                { title: '类型', dataIndex: 'type', key: 'type' },
                 { title: '上传者', dataIndex: 'uploader', key: 'uploader' },
                 { title: '上传时间', dataIndex: 'uploadTime', key: 'uploadTime' },
                 {

@@ -7,6 +7,10 @@ import PopularModule from "./PopularModule";
 import HeavyRecommend from "./HeavyRecommend";
 
 export default class MainContent extends Component {
+    componentDidMount(){
+        document.documentElement.style.backgroundColor = "white";
+        document.body.style.backgroundColor = "white";
+    }
     render() {
         return (
             <div >

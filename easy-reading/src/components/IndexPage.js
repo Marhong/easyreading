@@ -7,6 +7,7 @@ import BulletinList from "./BulletinList";
 import BulletinListPageRouter from "./BulletinListPage";
 import BookListPageRouter from "./BookListPage";
 import BookCityPageRouter from "./BookCityPage";
+import BookDetailPageRouter from "./BookDetailPage";
 
 class IndexPage extends  Component{
 
@@ -16,12 +17,13 @@ class IndexPage extends  Component{
             <div>
                 <Switch >
                     <Route exact path="/" component={MainContent} />
-                    <Route  path="/index" component={MainContent} />
-                    <Route path="/bookList" component={BookListPageRouter} />
-                    <Route path="/bookCity/:type" component={BookCityPageRouter} />
-                    <Route path="/bookCity" component={BookCityPageRouter} />
-                    <Route path="/bulletinList" component={BulletinListPageRouter} />
-                    <Route path="/bulletinList/:id" component={BulletinListPageRouter} />
+                    <Route  exact path="/index" component={MainContent} />
+                    <Route exact path="/bookList" component={BookListPageRouter} />
+                    <Route exact path="/bookCity/:type" component={BookCityPageRouter} />
+                    <Route exact path="/bookCity" component={BookCityPageRouter} />
+                    <Route  exact path="/bookCity/books/:id" component={BookDetailPageRouter} />
+                    <Route exact path="/bulletinList" component={BulletinListPageRouter} />
+                    <Route exact path="/bulletinList/:id" component={BulletinListPageRouter} />
                 </Switch>
             </div>
         );

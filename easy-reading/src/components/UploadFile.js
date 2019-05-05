@@ -1,124 +1,86 @@
-import React, { PureComponent } from 'react'
+import {Upload, Button, Icon, message,} from 'antd';
+import React,{Component} from 'react';
+import reqwest from 'reqwest';
 
-export default class UploadFile extends PureComponent {
+export default class UploadFile extends Component {
     state = {
-        name: '',
-        path: '',
-        preview: null,
-        data: null,
-        progress:0,
-    }
-    componentWillUnmount() {
-        this.xhr.upload.removeEventListener('progress', this.uploadProgress, false)
-    }
-    changeName = (e) => {
-        this.setState({ name: e.target.value })
+        fileList: [],
+        uploading: false,
     }
 
-    changePath = (e) => {
-        const file = e.target.files[0];
-        if (!file) {
-            return;
-        }
+    // 点击上传按钮
+    handleUpload = () => {
+        const { fileList } = this.state;
+        const formData = new FormData();
+        fileList.forEach((file) => {
+            formData.append('files[]', file);
+        });
 
-        let src,preview,type=file.type;
-        if (/^image\/\S+$/.test(type)) {
+        this.setState({
+            uploading: true,
+        });
 
-            src = URL.createObjectURL(file)
-            preview = <img src={src} alt='' />
-
-        } else if (/^video\/\S+$/.test(type)) {
-
-            src = URL.createObjectURL(file)
-            preview = <video src={src} autoPlay loop controls />
-
-        } else if (/^text\/\S+$/.test(type)) {
-            const self = this;
-            const reader = new FileReader();
-            reader.readAsText(file,"utf-8");
-            //注：onload是异步函数，此处需独立处理
-            reader.onload = function (e) {
-                preview = <textarea value={this.result} readOnly></textarea>
-                self.setState({ path: file.name, data: file, preview: preview,progress:0 })
-            }
-            return;
-        }
-        this.setState({ path: file.name, data: file, preview: preview ,progress:0})
-    }
-
-    upload = () => {
-        const data = this.state.data;
-        if (!data) {
-            console.log('未选择文件');
-            return;
-        }
-        const url = 'http://localhost:3000/api/upload';  // 此处的url应该是服务端提供的上传文件api
-        const form = new FormData();
-
-        form.append('file', data);  // 此处的file字段由上传的api决定，可以是其它值
-
-        // fetch方式暂不支持progress events事件
-
-        /*  fetch(url, {
-            method: 'POST',
-            body: form
-        }).then(res => {
-            console.log(res)
-        }) */
-
-        // 改为使用ajax实现上传并添加显示进度条功能
-
-        const xhr = new XMLHttpRequest();
-        this.xhr = xhr
-        xhr.upload.addEventListener('progress', this.uploadProgress, false);  // 第三个参数为useCapture?，是否使用事件捕获/冒泡
-
-        // xhr.addEventListener('load',uploadComplete,false);
-        // xhr.addEventListener('error',uploadFail,false);
-        // xhr.addEventListener('abort',uploadCancel,false)
-
-        xhr.open('POST', url, true);  // 第三个参数为async?，异步/同步
-        xhr.send(form);
-    }
-
-    uploadProgress = (e) => {
-        if (e.lengthComputable) {
-            const progress = Math.round((e.loaded / e.total) * 100);
-            this.setState({ progress: progress })
-        }
-    }
-
-
-
-    cancel = () => {
-        this.props.closeOverlay();
+        // You can use any AJAX library you like
+        reqwest({
+            url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+            method: 'post',
+            processData: false,
+            data: formData,
+            success: () => {
+                this.setState({
+                    fileList: [],
+                    uploading: false,
+                });
+                message.success('upload successfully.');
+            },
+            error: () => {
+                this.setState({
+                    uploading: false,
+                });
+                message.error('upload failed.');
+            },
+        });
     }
 
     render() {
-        const { name, path, preview } = this.state;
+        const { uploading, fileList } = this.state;
+        const props = {
+            onRemove: (file) => {
+                this.setState((state) => {
+                    const index = state.fileList.indexOf(file);
+                    const newFileList = state.fileList.slice();
+                    newFileList.splice(index, 1);
+                    return {
+                        fileList: newFileList,
+                    };
+                });
+            },
+            beforeUpload: (file) => {
+                this.setState(state => ({
+                    fileList: [...state.fileList, file],
+                }));
+                return false;
+            },
+            fileList,
+        };
+
         return (
             <div>
-                <h4>上传文件</h4>
-                <div className='row'>
-                    <label>文件名称</label>
-                    <input type='text' placeholder='请输入文件名' value={name} onChange={this.changeName} />
-                </div>
-                <div className='row'>
-                    <label>文件路径</label>
-                    <div className='row-input'>
-                        <span>{path ? path : '请选择文件路径'}</span>
-                        <input type='file' accept='video/*,image/*,text/plain' onChange={this.changePath} />
-                    </div>
-                </div>
-                <div className='media'>
-                    {preview}
-                </div>
-                <div className='progressWrap'>
-                    <div className='progress' style={{ width: `${this.state.progress}%` }} />
-                    <span className='progress-text' style={{left:`${this.state.progress}%`}}>{this.state.progress}%</span>
-                </div>
-                <button className='primary upload' onClick={this.upload}>上传</button>
-                <button className='primary cancel' onClick={this.cancel}>取消</button>
+                <Upload {...props}>
+                    <Button>
+                        <Icon type="upload" /> 选择文件
+                    </Button>
+                </Upload>
+                <Button
+                    type="primary"
+                    onClick={this.handleUpload}
+                    disabled={fileList.length === 0}
+                    loading={uploading}
+                    style={{ marginTop: 16 }}
+                >
+                    {uploading ? '正在上传' : '开始上传' }
+                </Button>
             </div>
-        )
+        );
     }
 }

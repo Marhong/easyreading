@@ -9,7 +9,10 @@ export default class BookCity extends Component{
     constructor(props){
         super(props);
     }
-
+    componentDidMount(){
+        document.documentElement.style.backgroundColor = "white";
+        document.body.style.backgroundColor = "white";
+    }
     render(){
         console.log("当前默认类型为: ",this.props.match.params.type)
         let data = [{id:"sm12s2",author:"天蚕土豆",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180",name:"11征服荒野",bookHref:"",desc:"我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是简介所为和司我是",type:"玄幻",isOver:false},

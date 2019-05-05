@@ -60,12 +60,6 @@ export default class ChapterReader extends Component{
         return(
                 <div className="readerPage">
                     <div className="readerCrumb" style={{width:300}}>
-                    <Breadcrumb separator=">" >
-                        <Breadcrumb.Item href="">首页</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">武侠仙侠</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">剑来</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">正文</Breadcrumb.Item>
-                    </Breadcrumb>
                         <Breadcrumb separator=">" >
                             <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity`} >书城</Link></Breadcrumb.Item>
@@ -74,7 +68,6 @@ export default class ChapterReader extends Component{
                             <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}/chapterList/${chapter.id}`} style={{color:"#40a9ff"}}>{chapter.name}</Link></Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
-
                     <div className="readerBox" ref={(readBox) => this.readBox = readBox}>
                          <PageSetting onSetting={this.handleSetting.bind(this)} ref="setting"/>
                          <div className="chapInfo">
@@ -83,7 +76,7 @@ export default class ChapterReader extends Component{
                                 <span>作者: {this.props.chapter.author}</span>
                                 <span>字数: {this.props.chapter.words}</span>
                                 <span>更新时间: {this.props.chapter.updateTime}</span>
-                                 <span className="control" onClick={this.handleControl.bind(this)}> <span className="viewChapList"><i className="iconfont icon-mulu"/> 章节目录</span><span ><i className="iconfont icon-shezhi"/> 设置</span></span>
+                                 <span className="control" onClick={this.handleControl.bind(this)}><Link to={`/bookCity/books/${book.id}/chapterList`} > <span className="viewChapList"><i className="iconfont icon-mulu"/> 章节目录</span></Link><span ><i className="iconfont icon-shezhi"/> 设置</span></span>
                              </p>
                          </div>
                         <div className="content" ref={(content) => this.content = content}>
@@ -129,7 +122,7 @@ export default class ChapterReader extends Component{
                             <p>许多有个性、有才华的学生，正是在那些垃圾老师的淫威之下，才失去了灵性和自我，变成泯然众人矣。</p>
                         </div>
                         <div className="readerFooter">
-                             <span className="control"> <Button>上一章</Button><Button>章节目录</Button><Button>下一章</Button></span>
+                            <span className="control"> <Button>上一章</Button><Link to={`/bookCity/books/${book.id}/chapterList`} ><Button>章节目录</Button></Link><Button>下一章</Button></span>
                         </div>
                     </div>
                 </div>
