@@ -17,6 +17,11 @@ export default class IndexHeaderCenter extends Component{
         });
     }
     render(){
+        // 这里展示的用户每日的个性化推荐
+        // 从服务器获取当天的个性化推荐书籍列表
+        // 服务器应该在每晚23:59时生成第二天的个性化推荐列表
+        // 从服务器端获取数据的url：localhost:3000/easyreading/books/personalBooks
+        // 这里只需要获取每本书籍的id,name,img即可
         const personalizedBooks = [{id:"w1",name:"兴街镇吧",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180"},{id:"w2",name:"兴街镇吧",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180"}];
         return(
             <div>

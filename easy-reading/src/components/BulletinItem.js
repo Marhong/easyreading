@@ -3,12 +3,17 @@ import {Breadcrumb} from 'antd';
 import moment from 'moment';
 import '../css/BulletinItem.css';
 import { Link } from "react-router-dom";
-export default class BulletinItem extends Component{
+import {withRouter} from 'react-router';
+class BulletinItem extends Component{
     componentDidMount(){
+
+        // 可以获取从BulletinList传递过来的bulletin对象，不需要再从服务器获取数据
+        console.log("传递的对象为：",this.props.location.query);
         console.log("当前公告ID:",this.props.match.params.id);
     }
     render(){
-        const bulletin = this.props.bulletin || {title:"阅文侠之精神征文大赛",time:1556676000,content:"侠者，不惜身，不惜财，敢为常人所不敢为之事。义者，天下公理，道德共识。简而言之，侠是行为，义为准则。如果没有义字当先，行为是否能称为侠，就值得三思了，毕竟不惜身，不惜财，敢为常人所不敢为之事，邪魔外道亦是如此。"};
+        const bulletin =JSON.parse(sessionStorage.getItem("bulletin"));
+       // const bulletin = JSON.parse(sessionStorage.getItem("bulletin")) || this.props.location.state || {title:"阅文侠之精神征文大赛",time:1556676000,content:"侠者，不惜身，不惜财，敢为常人所不敢为之事。义者，天下公理，道德共识。简而言之，侠是行为，义为准则。如果没有义字当先，行为是否能称为侠，就值得三思了，毕竟不惜身，不惜财，敢为常人所不敢为之事，邪魔外道亦是如此。"};
         return(
             <div className="bulletinItem">
                 <Breadcrumb separator=">" >
@@ -25,3 +30,4 @@ export default class BulletinItem extends Component{
         );
     }
 }
+export default withRouter(BulletinItem)

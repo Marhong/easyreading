@@ -12,7 +12,11 @@ import BookDetailPageRouter from "./BookDetailPage";
 class IndexPage extends  Component{
 
     render() {
-        console.log(this.props.match.params.id);
+        let bulletin = this.props.location.bulletin;
+        console.log("IndexPage",bulletin);
+        if(bulletin){
+            sessionStorage.setItem("bulletin",JSON.stringify(bulletin));
+        }
         return (
             <div>
                 <Switch >
@@ -23,7 +27,7 @@ class IndexPage extends  Component{
                     <Route exact path="/bookCity" component={BookCityPageRouter} />
                     <Route  exact path="/bookCity/books/:id" component={BookDetailPageRouter} />
                     <Route exact path="/bulletinList" component={BulletinListPageRouter} />
-                    <Route exact path="/bulletinList/:id" component={BulletinListPageRouter} />
+                    <Route exact path="/bulletinList/:id/" component={BulletinListPageRouter} />
                 </Switch>
             </div>
         );

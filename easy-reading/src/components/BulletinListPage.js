@@ -7,13 +7,18 @@ import IndexPageRouter from "./IndexPage";
 class BulletinListPage extends  Component{
 
     render() {
-        console.log(this.props.match.params.id);
+
+        let bulletin = this.props.location.bulletin;
+        console.log("BulletinListPage",bulletin);
+        if(bulletin){
+            sessionStorage.setItem("bulletin",JSON.stringify(bulletin));
+        }
         return (
             <div>
                 <Switch >
                     <Route exact path="/index" component={IndexPageRouter} />
                     <Route exact path="/bulletinList" component={BulletinList} />
-                    <Route path="/bulletinList/:id" component={BulletinItem} />
+                    <Route path="/bulletinList/:id/" component={BulletinItem} />
 
                 </Switch>
             </div>
