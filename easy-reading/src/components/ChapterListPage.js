@@ -16,6 +16,11 @@ class ChapterListPage extends  Component{
 
     render() {
         console.log(this.props.match.params.id);
+        let chapter = this.props.location.chapter;
+        console.log("BulletinListPage",chapter);
+        if(chapter){
+            sessionStorage.setItem("chapter",JSON.stringify(chapter));
+        }
         return (
             <div>
                 <Switch >

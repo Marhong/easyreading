@@ -7,28 +7,35 @@ require('../css/ChapterReader.css');
 
 
 export default class ChapterReader extends Component{
-    static defaultProps = {
-        style : {fontSize:14,bgColor:"rgb(250, 238, 215)",pageBgColor:"RGB(217,205,182)",pageWidth:1200,fontFamily:"SimSun"},
-        chapter:{id:"4531313",name:"第一章 醉里挑灯看剑，梦回吹角连营",author:"烽火戏诸侯",words:5012,updateTime:"2019-04-25"}
-    }
+
     constructor(props){
         super(props);
+        this.state = {
+            chapter :JSON.parse(sessionStorage.getItem("chapter")),
+            style:{},
+        }
 
+    }
+    // 在渲染组件前先从服务器端获取数据
+    componentWillMount(){
+        // 从服务器端获取当前用户的个人阅读界面设置.url: localhost:3000/easyreading/readingSetting/:id/detail
+        this.setState({...this.state,style:{fontSize:14,bgColor:"rgb(250, 238, 215)",pageBgColor:"RGB(217,205,182)",pageWidth:1200,fontFamily:"SimSun"}});
     }
     // 默认的阅读界面设置
     componentDidMount(){
-        document.documentElement.style.backgroundColor = this.props.style.pageBgColor;
-        document.body.style.backgroundColor = this.props.style.pageBgColor;
-        this.readBox.style.background = this.props.style.bgColor;
-        this.readBox.style.fontSize = this.props.style.fontSize+"px";
-        this.content.style.width = this.props.style.pageWidth-200+"px";
+        let style = this.state.style;
+        document.documentElement.style.backgroundColor = style.pageBgColor;
+        document.body.style.backgroundColor = style.pageBgColor;
+        this.readBox.style.background = style.bgColor;
+        this.readBox.style.fontSize = style.fontSize+"px";
+        this.content.style.width = style.pageWidth-200+"px";
     }
     // 根据用户选择设置阅读界面
     handleSetting(personalStyle){
 
         let style;
         if(personalStyle == null){
-            style = this.props.style;
+            style = this.state.style;
         }else{
             style = personalStyle;
         }
@@ -44,9 +51,11 @@ export default class ChapterReader extends Component{
         this.readBox.style.width = style.pageWidth+"px";
         this.content.style.width = style.pageWidth-200+"px";
         this.content.style.fontFamily = style.fontFamily;
+        this.setState({...this.state,style:style});
+        // 将新的readingSetting上传到服务器更新。url: localhost:3000/easyreading/readingSetting/:id/update
     }
     handleControl(e){
-        let pageSetting =findDOMNode(this.refs.setting);
+        let pageSetting =findDOMNode(this.setting);
         let clickSpan = e.target;
         if(clickSpan.classList.contains("viewChapList")){
 
@@ -54,34 +63,49 @@ export default class ChapterReader extends Component{
             pageSetting.style.display = "block";
         }
     }
+    // 切换到上一章节
+    handlePreChapter(e){
+        // 从服务器获取当前章节的前一章。url: localhost:3000/easyreading/chapters/:id/preChapter
+        let preChapter = {...this.state.chapter,name:"我是上一章"};
+        this.setState({...this.state,chapter:preChapter});
+    }
+    // 切换到下一章节
+    handleNextChapter(e){
+        // 从服务器获取当前章节的下一章。url: localhost:3000/easyreading/chapters/:id/nextChapter
+        let nextChapter = {...this.state.chapter,name:"我是下一章"};
+        this.setState({...this.state,chapter:nextChapter});
+    }
     render(){
-        const book = {id:"65232"};
-        const chapter = this.props.chapter;
+        console.log("章节id:",this.props.match.params.id);
+        const book = JSON.parse(sessionStorage.getItem("book"));
+        const chapter = this.state.chapter;
         return(
                 <div className="readerPage">
                     <div className="readerCrumb" style={{width:300}}>
                         <Breadcrumb separator=">" >
                             <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity`} >书城</Link></Breadcrumb.Item>
-                            <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}`} >剑来</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}`} >{book.name}</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}/chapterList`} >章节列表</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}/chapterList/${chapter.id}`} style={{color:"#40a9ff"}}>{chapter.name}</Link></Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
                     <div className="readerBox" ref={(readBox) => this.readBox = readBox}>
-                         <PageSetting onSetting={this.handleSetting.bind(this)} ref="setting"/>
+                         <PageSetting onSetting={this.handleSetting.bind(this)} ref={(setting) => this.setting =setting}/>
                          <div className="chapInfo">
-                             <h3>{this.props.chapter.name}</h3>
+                             <h3>{chapter.name}</h3>
                              <p>
-                                <span>作者: {this.props.chapter.author}</span>
-                                <span>字数: {this.props.chapter.words}</span>
-                                <span>更新时间: {this.props.chapter.updateTime}</span>
+                                <span>作者: {book.author}</span>
+                                <span>字数: {chapter.numbers}</span>
+                                <span>更新时间: {chapter.time}</span>
                                  <span className="control" onClick={this.handleControl.bind(this)}><Link to={`/bookCity/books/${book.id}/chapterList`} > <span className="viewChapList"><i className="iconfont icon-mulu"/> 章节目录</span></Link><span ><i className="iconfont icon-shezhi"/> 设置</span></span>
                              </p>
                          </div>
                         <div className="content" ref={(content) => this.content = content}>
-                            {/*<iframe src="../static/chapterOne.html" className="htmlFrame" scrolling="no" frameBorder="0" height="100%" width="100%"/>*/}
-                            <p>听到刘老怪唤陆梦麟上台翻译这些英语诗，班上同学们顿时爆发出一阵欢快的讥笑声。</p>
+                           {/* // 这里应该展示的就是chapter.link的内容。chapter.link是一个html地址*/}
+                            {chapter.link ? <iframe src="../static/chapterOne.html" className="htmlFrame" scrolling="no" frameBorder="0" height="100%" width="100%"/>
+                            :
+                            `<p>听到刘老怪唤陆梦麟上台翻译这些英语诗，班上同学们顿时爆发出一阵欢快的讥笑声。</p>
                             <p>因为所有人都知道，以陆梦麟的英语“造诣”，别说翻译这种程度的英文了，他大概连写的啥都看不懂吧！他可是能考“五分”的猛人啊！</p>
                             <p>陆梦麟愣了一愣，有点不习惯的缓缓站起了身，在他的记忆中，已经很久很久没有回到课堂了，对于老师点名和上台解题这种事情，确实有点迟钝。</p>
                             <p>而这位教英语的刘老师，在陆梦麟的印象中，是一个相当猥琐的油腻男人。</p><p>他在教女生解题的时候，会刻意的将身子俯得很低，用老鹰捉小鸡式的呵护，将那些可怜的女生笼罩在怀中。</p>
@@ -119,10 +143,10 @@ export default class ChapterReader extends Component{
                             <p>事实上，对于这个年纪的高中生而言，老师的影响和煽动性太强了，如果老师不喜欢哪个学生，大家都会似有若无的孤立他，而他本身也会承受巨大的心理压力。</p>
                             <p>不过，这些垃圾话对于拥有成年人灵魂的陆梦麟来说，却完全可以不当一回事。</p>
                             <p>如果按照走出社会后的标准来看，面前的这位刘老师只不过是一名普通的高中老师而已，而且还是人品不怎么样的那种，实在算不得什么了不起的人物，他的恶毒攻击并不能撼动陆梦麟的心神，反而只是觉得有些可笑。</p>
-                            <p>许多有个性、有才华的学生，正是在那些垃圾老师的淫威之下，才失去了灵性和自我，变成泯然众人矣。</p>
+                            <p>许多有个性、有才华的学生，正是在那些垃圾老师的淫威之下，才失去了灵性和自我，变成泯然众人矣。</p>`}
                         </div>
                         <div className="readerFooter">
-                            <span className="control"> <Button>上一章</Button><Link to={`/bookCity/books/${book.id}/chapterList`} ><Button>章节目录</Button></Link><Button>下一章</Button></span>
+                            <span className="control"> <Button onClick={this.handlePreChapter.bind(this)}>上一章</Button><Link to={`/bookCity/books/${book.id}/chapterList`} ><Button>章节目录</Button></Link><Button onClick={this.handleNextChapter.bind(this)}>下一章</Button></span>
                         </div>
                     </div>
                 </div>

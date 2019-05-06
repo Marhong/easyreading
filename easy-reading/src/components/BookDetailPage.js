@@ -15,6 +15,11 @@ class BookDetailPage extends  Component{
 
     render() {
         console.log(this.props.match.params.id);
+        let book = this.props.location.book;
+        console.log("IndexPage",book);
+        if(book){
+            sessionStorage.setItem("book",JSON.stringify(book));
+        }
         return (
             <div>
                 <Switch >

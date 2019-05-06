@@ -25,7 +25,7 @@ class ChapterReaderPage extends  Component{
                     <Route exact path="/bookCity" component={BookCityPageRouter} />
                     <Route  exact path="/bookCity/books/:id" component={BookDetailPageRouter} />
                     <Route exact path="/bookCity/books/:id/chapterList" component={ChapterListPageRouter} />
-                    <Route exact path="/bookCity/books/:id/chapterList/:id" component={ChapterReader} />
+                    <Route exact path="/bookCity/books/:bookId/chapterList/:id" component={ChapterReader} />
 
                 </Switch>
             </div>
