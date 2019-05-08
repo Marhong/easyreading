@@ -21,7 +21,7 @@ export default class VolumeComponent extends Component{
                     <ul>
                         {volume.chapterList.map((item,index) => {
 
-                            return <li key={index}> <Link to={{ pathname: `/bookCity/books/${bookId}/chapterList/${item.id}`, chapter:item}}>{item.name}</Link></li>
+                            return <li key={index}> <Link to={`/bookCity/books/${bookId}/chapterList/${item.id}`}>{item.name}</Link></li>
                         })}
 
                     </ul>

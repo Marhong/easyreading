@@ -38,7 +38,7 @@ export default class BookDetailCard extends Component{
                        {/* 目前暂不统计非登录人员点击次数，所以会员点击量==总点击*/}
                         {(book.clickedNumbers/10000).toFixed(2)}<span className="suffix">万会员点击</span>
                         {(book.recommendNumbers/10000).toFixed(2)}<span className="suffix">万总推荐</span></p>
-                    <p className="buttons"><Link to={`/bookCity/books/${book.id}/chapterList/1`}><Button >开始阅读</Button></Link> <Button >加入书架</Button> <Button >投推荐票</Button> <Button > <Link to={{ pathname: `/bookCity/books/${book.id}/chapterList`, book:book}}>全部目录</Link></Button><ReportItem item={this.props.book} onSubmit={this.handleSubmit.bind(this)}/> </p>
+                    <p className="buttons"><Link to={`/bookCity/books/${book.id}/chapterList/1`}><Button >开始阅读</Button></Link> <Button >加入书架</Button> <Button >投推荐票</Button> <Button > <Link to={`/bookCity/books/${book.id}/chapterList`}>全部目录</Link></Button><ReportItem item={this.props.book} onSubmit={this.handleSubmit.bind(this)}/> </p>
                 </div>
                 <div className="tRan">
                     <h2>{Math.floor(book.score)}.<span className="point">{String(book.score).split(".")[1]}</span></h2>

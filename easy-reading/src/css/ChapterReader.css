@@ -46,6 +46,7 @@ html,body{
 
 .readerBox .content{
     width: 1000px;
+    height:auto;
     font-family: SimSum;
 }
 .readerBox .content p{
@@ -76,9 +77,5 @@ html,body{
     font-weight: 700;
 }
 .htmlFrame{
-    width: 100%;
-    height:100%;
-    overflow-scrolling: unset;
-
-
+    overflow: hidden;
 }

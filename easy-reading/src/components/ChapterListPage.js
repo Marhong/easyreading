@@ -16,11 +16,6 @@ class ChapterListPage extends  Component{
 
     render() {
         console.log(this.props.match.params.id);
-        let chapter = this.props.location.chapter;
-        console.log("BulletinListPage",chapter);
-        if(chapter){
-            sessionStorage.setItem("chapter",JSON.stringify(chapter));
-        }
         return (
             <div>
                 <Switch >
@@ -29,7 +24,7 @@ class ChapterListPage extends  Component{
                     <Route exact path="/bookCity" component={BookCityPageRouter} />
                     <Route  exact path="/bookCity/books/:id" component={BookDetailPageRouter} />
                     <Route exact path="/bookCity/books/:id/chapterList" component={ChapterList} />
-                    <Route exact path="/bookCity/books/:id/chapterList/:id" component={ChapterReaderPageRouter} />
+                    <Route exact path="/bookCity/books/:bookId/chapterList/:id" component={ChapterReaderPageRouter} />
                 </Switch>
             </div>
         );
