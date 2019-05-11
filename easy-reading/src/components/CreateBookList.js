@@ -64,7 +64,7 @@ class DynamicFieldSet extends Component {
                 sm: { span: 20, offset: 4 },
             },
         };
-        getFieldDecorator('keys', { initialValue: [1] });
+        getFieldDecorator('keys', { initialValue: [] });
         const keys = getFieldValue('keys');
         const formItems = keys.map((k, index) => (
             <Form.Item
@@ -72,7 +72,6 @@ class DynamicFieldSet extends Component {
                 label={index === 0 ? '选择的书籍' : ''}
                 required={true}
                 key={k}
-                hasFeedback
             >
                 {getFieldDecorator(`names[${k}]`, {
                     validateTrigger: ['onChange', 'onBlur'],

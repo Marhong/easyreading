@@ -16,13 +16,12 @@ a{
 
 }
 .search .left{
-    width:220px;
-    height:80px;
-    float:left;
-    top:60%;
-    margin-top: -48px;
+    display:inline-block;
+    height:40px;
     position:absolute;
-    background-color: #fff;
+    top:50%;
+    margin-top: -20px;
+
 
 }
 .search .center{
@@ -230,6 +229,7 @@ a{
     padding-right: 10px;
     overflow: hidden;
     position:relative;
+    text-align: center;
 }
 .card-deck .card:hover{
 

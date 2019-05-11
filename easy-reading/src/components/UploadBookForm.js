@@ -2,7 +2,11 @@ import {Form,  Input, Button, Select,Upload,Icon} from 'antd';
 import React,{Component} from 'react';
 import reqwest from "reqwest";
 import {message} from "antd/lib/index";
-const { Option } = Select;
+
+const Option = Select.Option;
+
+
+
 class UploadBookForm extends Component {
     constructor(props){
         super(props);
@@ -33,6 +37,10 @@ class UploadBookForm extends Component {
         if(this.props.onUploadCancel){
             this.props.onUploadCancel();
         }
+    }
+    // 选择关键字发生变化
+    handleKeyWordsChange(value) {
+        console.log(`selected ${value}`);
     }
     // 上传文件状态发生变化
     handleChange = (info) => {
@@ -112,6 +120,11 @@ class UploadBookForm extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         const { uploading, fileList } = this.state;
+        const keywords=["热血","重生","豪门","孤儿","盗贼","特种兵","特工","黑客","明星"];
+        const children = [];
+        for (let i = 0; i < keywords.length; i++) {
+            children.push(<Option key={i.toString(36) + i}>{keywords[i]}</Option>);
+        }
         const props = {
             onRemove: (file) => {
                 this.setState((state) => {
@@ -147,7 +160,8 @@ class UploadBookForm extends Component {
                     <Form.Item
                         label="书名"
                         hasFeedback
-                        {...formItemLayout}>
+                        {...formItemLayout}
+                        style={{marginBottom:5,}}>
                         {getFieldDecorator('name', {
                             rules: [{ required: true, message: '请填写书籍名称!' }],
                         })(
@@ -157,7 +171,9 @@ class UploadBookForm extends Component {
                     <Form.Item
                         label="作者"
                         hasFeedback
-                        {...formItemLayout}>
+                        {...formItemLayout}
+                        style={{marginBottom:5,}}>
+
                         {getFieldDecorator('author', {
                             rules: [{ required: true, message: '请填写书籍作者!' }],
                         })(
@@ -168,6 +184,7 @@ class UploadBookForm extends Component {
                         label="书籍类型"
                         hasFeedback
                         {...formItemLayout}
+                        style={{marginBottom:5,}}
                     >
                         {getFieldDecorator('type', {
                             rules: [
@@ -187,8 +204,78 @@ class UploadBookForm extends Component {
                         )}
                     </Form.Item>
                     <Form.Item
+                        label="地域"
+                        hasFeedback
+                        {...formItemLayout}
+                        style={{marginBottom:5,}}
+                    >
+                        {getFieldDecorator('distribute', {
+                            rules: [
+                                {  message: '请选择书籍类型!' },
+                            ],
+                        })(
+                            <Select placeholder="请选择合适的地域" style={{width:200}}>
+                                <Option value="xuanhuan">中国</Option>
+                                <Option value="qihuan">美国</Option>
+                                <Option value="xianxia">俄罗斯</Option>
+                                <Option value="lishi">英国</Option>
+                                <Option value="dushi">法国</Option>
+                                <Option value="kehuan">德国</Option>
+                                <Option value="junshi">日本</Option>
+                                <Option value="lingyi">加拿大</Option>
+                            </Select>
+                        )}
+                    </Form.Item>
+                    <Form.Item
+                        label="朝代"
+                        hasFeedback
+                        {...formItemLayout}
+                        style={{marginBottom:5,}}
+                    >
+                        {getFieldDecorator('dynasty', {
+                            rules: [
+                                {  message: '请选择书籍对应朝代!' },
+                            ],
+                        })(
+                            <Select placeholder="请选择合适的朝代" style={{width:200}}>
+                                <Option value="xuanhuan">夏朝</Option>
+                                <Option value="qihuan">商朝</Option>
+                                <Option value="xianxia">周朝</Option>
+                                <Option value="lishi">秦朝</Option>
+                                <Option value="dushi">汉朝</Option>
+                                <Option value="kehuan">晋朝</Option>
+                                <Option value="junshi">隋朝</Option>
+                                <Option value="lingyi">唐朝</Option>
+                            </Select>
+                        )}
+                    </Form.Item>
+                    <Form.Item
+                        label="关键字"
+                        hasFeedback
+                        {...formItemLayout}
+                        style={{marginBottom:5,}}
+                    >
+                        {getFieldDecorator('keywords', {
+                            rules: [
+                                {  required:true,message: '请选择书籍关键字!' },
+                            ],
+                        })(
+                            <Select
+                                mode="multiple"
+                                placeholder="请选择书籍关键字，可多选"
+                                defaultValue={['a10', 'c12']}
+                                onChange={this.handleKeyWordsChange}
+                                style={{width:200}}
+                            >
+                                {children}
+                            </Select>
+                        )}
+                    </Form.Item>
+
+                    <Form.Item
                         label="上传文件"
                         {...formItemLayout}
+                        style={{marginBottom:5,}}
                     >
                         {getFieldDecorator('upload', {
                             rules: [
@@ -204,7 +291,20 @@ class UploadBookForm extends Component {
                             </Upload>
                         )}
                     </Form.Item>
-                    <Form.Item style={{float:"right",marginTop:-25,marginRight:20,marginBottom:20}} >
+                    <Form.Item
+                        label="书籍简介"
+                        hasFeedback
+                        {...formItemLayout}
+                        style={{marginBottom:5,}}>
+
+                        {getFieldDecorator('description', {
+                            rules: [{ required: true, message: '请填写书籍简介!' }],
+                        })(
+                            <Input  placeholder="填写书籍简介" style={{width:200}} />
+                        )}
+                    </Form.Item>
+
+                    <Form.Item style={{float:"right",marginTop:-15,marginBottom:10}} >
                         <Button   onClick={this.handleCancel.bind(this)}>取消</Button>
                         <Button
                         htmlType="submit"

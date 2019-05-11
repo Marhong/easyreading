@@ -12,7 +12,7 @@ export default class ChapterReader extends Component{
         super(props);
         this.state = {
             // 通过chapterId从服务器去获取chapter
-            chapter :JSON.parse(sessionStorage.getItem("chapter")),
+            chapter :{},
             style:{},
         }
 
@@ -79,7 +79,7 @@ export default class ChapterReader extends Component{
         this.setState({...this.state,chapter:nextChapter});
     }
     // 加载显示章节html页面
-    loadChapter(link) {
+    loadChapter() {
        // this.content.innerHTML = `<object type="text/html" data=${link} width="100%" height="100%"></object>`;
         return  `<p>听到刘老怪唤陆梦麟上台翻译这些英语诗，班上同学们顿时爆发出一阵欢快的讥笑声。</p>
 <p>因为所有人都知道，以陆梦麟的英语“造诣”，别说翻译这种程度的英文了，他大概连写的啥都看不懂吧！他可是能考“五分”的猛人啊！</p>
@@ -125,8 +125,16 @@ export default class ChapterReader extends Component{
     render(){
         console.log("章节id:",this.props.match.params.id);
         // 通过bookId从服务器去获取book
-        const book = JSON.parse(sessionStorage.getItem("book"));
-        const chapter = this.state.chapter;
+        const book = {id:"book2019010011",name:"仙宫",isFinished:false,isFree:true,author:"大眼怪",score:8.2,type:["武侠","仙侠","幻想"],rankNumber:40,numbers:231454545,clickedNumbers:1514514,membershipClicked:8452852,recommendNumbers:525742,description:"修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013561350/180",preface:`"冤有头，债有主，你我往日无怨，近日无仇，在下职责所在，奉命行事，得罪了。”
+                               王腾念了一遍工作语，一刀斩下犯人头颅。
+                               然后，一个白色光团从囚犯身体里冒出。
+                               他的目光不由看向这个白色光团。
+                               基础刀法！
+                               在这光团上面，还有着‘拾取’字样。
+                               “拾取！”
+                               王腾意念一动。`,latestChapter:{id:"86523",volumeId:"8566",bookId:"book2019010011",name:"第八百九十章 露出笑脸",time:1494562220,numbers:3000,isFree:true,link:""}};
+
+        const chapter = book.latestChapter;
         chapter.link = this.loadChapter();
         return(
                 <div className="readerPage">

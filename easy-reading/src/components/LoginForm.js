@@ -1,8 +1,9 @@
 import {
-    Form, Icon, Input, Button, Checkbox,
+    Form, Icon, Input, Button, Checkbox,Select,Cascader
 } from 'antd';
 import React,{Component} from 'react';
 import '../css/LoginForm.css';
+const { Option } = Select;
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -25,6 +26,29 @@ const tailFormItemLayout = {
         },
     },
 };
+const residences = [{
+    value: 'zhejiang',
+    label: '浙江',
+    children: [{
+        value: 'hangzhou',
+        label: '杭州',
+        children: [{
+            value: 'xihu',
+            label: '西湖区',
+        }],
+    }],
+},{
+    value: 'shanxi',
+    label: '陕西',
+    children: [{
+        value: 'xian',
+        label: '西安',
+        children: [{
+            value: 'lianhu',
+            label: '莲湖区',
+        }],
+    }],
+}];
 class NormalLoginForm extends React.Component {
     constructor(props){
         super(props);
@@ -81,6 +105,7 @@ class NormalLoginForm extends React.Component {
     }
     render() {
         const { getFieldDecorator } = this.props.form;
+        const defaultGender = "male";
         return (
             <div>
                 {this.state.isLogin ?
@@ -158,6 +183,61 @@ class NormalLoginForm extends React.Component {
                             }],
                         })(
                             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="确认密码" onBlur={this.handleConfirmBlur}/>
+                        )}
+                    </Form.Item>
+                    <Form.Item
+                        label="性别"
+                        hasFeedback
+                    >
+                            <Select defaultValue={defaultGender}>
+                                <Option value="male">男</Option>
+                                <Option value="female">女</Option>
+                            </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="现居地"
+                        hasFeedback
+                    >
+                        {getFieldDecorator('residence', {
+                            initialValue: ["shanxi","xian","lianhu"],
+                            rules: [{ type: 'array',  message: '请选择现居地!' }],
+                        })(
+                            <Cascader options={residences} />
+                        )}
+                    </Form.Item>
+                    <Form.Item
+                        label="E-mail"
+                        hasFeedback
+                    >
+                        {getFieldDecorator('email', {
+                            rules: [{
+                                type: 'email', message: '邮箱格式错误!',
+                            }, {
+                                message: '请输入邮箱!',
+                            }],
+                        })(
+                            <Input placeholder="邮箱"/>
+                        )}
+                    </Form.Item>
+                    <Form.Item
+                        label="手机号码"
+                        hasFeedback
+                    >
+                        {getFieldDecorator('phone', {
+                            rules: [{  message: '请输入手机号码!' ,type:'number'}],
+                        })(
+                            <Input  placeholder="联系电话"/>
+                        )}
+                    </Form.Item>
+                    <Form.Item
+                        label="个人简介"
+                        hasFeedback
+
+                    >
+                        {getFieldDecorator('description', {
+                            rules: [{  message: '请输入个人简介!', whitespace: true }],
+                        })(
+                            <Input placeholder="个人简介"/>
                         )}
                     </Form.Item>
                     <Form.Item {...tailFormItemLayout}>

@@ -388,12 +388,12 @@ export default class PersonalCenter extends Component{
                     <img className="userImg" src="http://static.zongheng.com/userimage/default/image_120_120.gif"/>
                     <div className="userInfoMsg">
                         <p><span className="userName"><strong>麦香馅饼和肉夹馍</strong></span><span className="modifyInfo" onClick={this.handleEditInfo.bind(this)}><i className="iconfont icon-xiugai"/> 个人资料修改</span></p>
-                        <p className="description">我是个阿斯蒂芬阿斯蒂芬啊啊士大夫阿斯蒂芬</p>
+                        <p className="description">喜欢历史穿越小说</p>
 
-                        <span className="userTags"><Tag color="magenta">magenta</Tag>
-                                <Tag color="red">red</Tag>
-                                <Tag color="volcano">volcano</Tag>
-                                <Tag color="orange">orange</Tag>
+                        <span className="userTags"><Tag color="magenta">新人成就</Tag>
+                                <Tag color="red">读书达人</Tag>
+                                <Tag color="volcano">情节分析课代表</Tag>
+                                <Tag color="orange">贴吧红人</Tag>
                             </span>
 
                     </div>

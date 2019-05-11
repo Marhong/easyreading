@@ -8,6 +8,7 @@ export default class MyBookCard extends Component{
         book: {id:"sm122",author:"天蚕土豆",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013451202/180",name:"11征服荒野",bookHref:"",desc:"我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是我是简介所为和司我是简介所为和司我是",type:"玄幻",isOver:false},
     }
     render(){
+        const book = this.props.book;
         return(
             <div className="myBookCard" >
                     <div className="bookImg">
@@ -17,7 +18,7 @@ export default class MyBookCard extends Component{
                         <p className="bookName"><Link to={`/bookCity/books/${this.props.book.id}`} >{this.props.book.name}</Link></p>
                         <p className="author"><i className="iconfont icon-yonghudianji" />{this.props.book.author} |  {this.props.book.type} | {this.props.book.isOver ? "完结" : "连载中"}</p>
                         <p className="bookDesc">{this.props.book.desc.length>70 ? `${this.props.book.desc.slice(0,70)}...` : this.props.book.desc}</p>
-                        <p className="statistics"><span className="fans"> 200万人气</span><span className="secondTag">200万字</span></p>
+                        <p className="statistics"><span className="fans">{Math.ceil(book.clickedNumbers/10000)}万人气</span><span className="secondTag">{Math.ceil(book.numbers/10000)}万字</span></p>
                     </div>
             </div>
         );

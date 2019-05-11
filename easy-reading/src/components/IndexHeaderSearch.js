@@ -10,7 +10,7 @@ const Search = Input.Search;
 // 展示首页头部搜索模块
 export default class IndexHeaderSearch extends Component{
     static defaultProps={
-        user:{username:"书友201904111630",isAdministrator:true,},
+        user:{username:"麦香馅饼和肉夹馍",isAdministrator:true,},
     };
     constructor(props){
         super(props);
@@ -76,11 +76,12 @@ export default class IndexHeaderSearch extends Component{
                 <div className="left">
                    {/*   实际上应该无论在哪个页面只要点击了网站图标都能返回首页，但是这样写实现不了，干脆就去掉点击返回首页功能
                    <Link to="/index"> <img src="https://qidian.gtimg.com/qd/images/logo.beebc.png"  alt="易读中文网" /></Link>*/}
-                    <Link to="/index"> <img src="https://qidian.gtimg.com/qd/images/logo.beebc.png"  alt="易读中文网" /></Link>
+                   {/* <Link to="/index"> <img src="https://qidian.gtimg.com/qd/images/logo.beebc.png"  alt="易读中文网" /></Link>*/}
+                    <Link to="/index"><h2>易读中文网</h2></Link>
                </div>
                <div className="center">
                    <Search
-                       placeholder="input search text"
+                       placeholder="输入书名、作者名或者关键字"
                        enterButton="Search"
                        size="large"
                        onSearch={value => console.log(value)}
@@ -139,7 +140,7 @@ export default class IndexHeaderSearch extends Component{
                        {/* // 如果账号为管理员就显示“管理员”按钮
                        // 如果为普通用户就不显示*/}
                        <span className="username"> | </span>
-                       {this.props.user.isAdministrator ?
+                       {this.props.user&&this.props.user.isAdministrator ?
                            <Link to="/administrator"><i className="iconfont icon-admin" /></Link>
                            :
                            ""
