@@ -10,7 +10,7 @@ const Search = Input.Search;
 // 展示首页头部搜索模块
 export default class IndexHeaderSearch extends Component{
     static defaultProps={
-        user:{username:"麦香馅饼和肉夹馍",isAdministrator:true,},
+      /*  user:{username:"麦香馅饼和肉夹馍",isAdministrator:true,},*/
     };
     constructor(props){
         super(props);
@@ -19,9 +19,13 @@ export default class IndexHeaderSearch extends Component{
             uploadVisible:false,
             confirmLoading: false,
             isLogin:true,
+            user:JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user")),
         }
     }
+    // 初始化界面
+    componentDidMount(){
 
+    }
     // 关闭登录/注册Modal
     handleCancel = () => {
         console.log('Clicked cancel button');
@@ -62,11 +66,22 @@ export default class IndexHeaderSearch extends Component{
     // 退出当前账号
     handleSignOut = (key) => {
         console.log(key);
+        if(key.key === "signout"){
+            localStorage.setItem("user",null);
+            sessionStorage.setItem("user",null);
+        }
+        this.setState({...this.state,user:null});
+    }
+    // 用户登录
+    handleLogin = (user) => {
+        console.log(user);
+        this.setState({...this.state,user:user});
+        this.handleCancel();
     }
     render(){
         const menu = (
             <Menu onClick={this.handleSignOut.bind(this)}>
-                <Menu.Item key="signout">退出</Menu.Item>
+                 <Menu.Item key="signout">退出</Menu.Item>
             </Menu>
         );
         return(
@@ -93,9 +108,9 @@ export default class IndexHeaderSearch extends Component{
                       {/* // 这里如果已经登录就显示“你好 麦香馅饼”
                        // 如果未登录就显示“登录”，然后点击就弹出Modal进行登录或者注册*/}
                         <span className="username">你好,</span>
-                        {this.props.user ?
+                        {this.state.user ?
                             <Dropdown overlay={menu}>
-                                <Link to="/personalCenter"><b >{this.props.user.username}</b></Link>
+                                <Link to="/personalCenter"><b >{this.state.user.name}</b></Link>
                             </Dropdown>
                             :
                             <b onClick={this.showModal} style={{cursor:"pointer"}}>请登录</b>
@@ -110,7 +125,7 @@ export default class IndexHeaderSearch extends Component{
                                             width={this.state.isLogin ? 300 : 400}
                                             footer={null}
                                         >
-                    <WrappedNormalLoginForm  isCancel={!this.state.visible} onToggleModal={this.handleToggleModal.bind(this)} isLogin={this.state.isLogin}/>
+                    <WrappedNormalLoginForm onLogin={this.handleLogin.bind(this)} isCancel={!this.state.visible} onToggleModal={this.handleToggleModal.bind(this)} isLogin={this.state.isLogin}/>
                 </Modal>
                         <span className="username"> | </span>
                          {/*<span>
@@ -140,7 +155,7 @@ export default class IndexHeaderSearch extends Component{
                        {/* // 如果账号为管理员就显示“管理员”按钮
                        // 如果为普通用户就不显示*/}
                        <span className="username"> | </span>
-                       {this.props.user&&this.props.user.isAdministrator ?
+                       {this.state.user&&this.state.user.type ===1 ?
                            <Link to="/administrator"><i className="iconfont icon-admin" /></Link>
                            :
                            ""

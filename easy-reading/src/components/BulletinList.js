@@ -5,7 +5,7 @@ import moment from 'moment';
 import '../css/BulletinList.css';
 import { Link } from "react-router-dom";
 const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
+const fakeDataUrl = `http://localhost:5000/bulletin/bulletinBoard/${count}`;
 export default class BulletinList extends Component{
     constructor(props){
         super(props);
@@ -21,15 +21,18 @@ export default class BulletinList extends Component{
                 {id:"n451sd",type:"资讯",title:"我是三国霸道男!",content:"今天星期一",time:15556676000},{id:"nsd231",type:"资讯",title:"二次元樱花祭征文",content:"感觉膝盖更疼了",time:1555676000}],
         }
     }
-/*    componentDidMount() {
-        this.getData((res) => {
-            this.setState({
-                initLoading: false,
-                data: res.results,
-                list: res.results,
-            });
-        });
-    }*/
+   componentDidMount() {
+        reqwest({
+            url:'http://localhost:5000/easyreading/bulletin/bulletinBoard/80',
+            type:'json',
+            method:'get',
+            contentType: 'application/json',
+            success: (res) => {
+                console.log(res);
+
+            },
+        })
+    }
 
     // 获取json数据
     getData = (callback) => {
@@ -39,6 +42,7 @@ export default class BulletinList extends Component{
             method: 'get',
             contentType: 'application/json',
             success: (res) => {
+                console.log(res);
                 callback(res);
             },
         });

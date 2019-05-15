@@ -2,6 +2,7 @@ import {
     Form, Icon, Input, Button, Checkbox,Select,Cascader
 } from 'antd';
 import React,{Component} from 'react';
+import reqwest from 'reqwest';
 import '../css/LoginForm.css';
 const { Option } = Select;
 const formItemLayout = {
@@ -49,6 +50,7 @@ const residences = [{
         }],
     }],
 }];
+const userUrl = "http://localhost:5000/easyreading/user";
 class NormalLoginForm extends React.Component {
     constructor(props){
         super(props);
@@ -69,7 +71,63 @@ class NormalLoginForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                reqwest({
+                    url: `${userUrl}/login`,
+                    type:'json',
+                    method:'post',
+                    data:values,
+                    error:function(err){
+                      console.log(err);
+                    },
+                    success: (res) => {
+                        if(!res){
+                            this.props.form.setFields({
+                                    password:{
+                                        value:"",
+                                        errors:[new Error("用户名或密码错误")],
+                                    }
+                                }
+                            )
+
+                        }else{
+                            console.log(res);
+                            if(values.remember){
+                                localStorage.setItem("user",JSON.stringify(res));
+                            }else{
+                                sessionStorage.setItem('user',JSON.stringify(res));
+                            }
+                            if(this.props.onLogin){
+                                this.props.onLogin(res);
+                            }
+                        }
+                    },
+                })
                 console.log('Received values of form: ', values);
+            }
+        });
+    }
+    handleRegister = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log("填写的信息:"+values.register_userName);
+                reqwest({
+                    url: `${userUrl}/signUp/add`,
+                    type:'json',
+                    method:'post',
+                    data:{name:values.register_userName,password:values.register_password,gender:values.gender,address:values.residence.join(","),email:values.email,phone:values.phone,description:values.description,},
+                    error:function(err){
+                        console.log(err);
+                    },
+                    success: (res) => {
+                        if(res.user){
+                            localStorage.setItem("user",JSON.stringify(res.user));
+                            if(this.props.onLogin){
+                                this.props.onLogin(res.user);
+                            }
+                        }
+                    },
+                })
             }
         });
     }
@@ -89,7 +147,7 @@ class NormalLoginForm extends React.Component {
 
     compareToFirstPassword = (rule, value, callback) => {
         const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
+        if (value && value !== form.getFieldValue('register_password')) {
             callback('两次输入密码不一致!');
         } else {
             callback();
@@ -102,6 +160,24 @@ class NormalLoginForm extends React.Component {
             form.validateFields(['confirm'], { force: true });
         }
         callback();
+    }
+    validateUserName = (rule,value,callback) => {
+       reqwest({
+            url:`${userUrl}/signUp/isExist`,
+            type:'json',
+            method:'post',
+            data:{name:value},
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log(res);
+                if(res.isExist){
+                    callback("该用户名已被注册");
+                }else{
+                    callback();
+                }
+            }
+        });
+
     }
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -144,15 +220,21 @@ class NormalLoginForm extends React.Component {
                 </Form.Item>
             </Form>
                     :
-                <Form {...formItemLayout} onSubmit={this.handleSubmit} className="register-form" >
+                <Form {...formItemLayout} onSubmit={this.handleRegister} className="register-form" >
                     <Form.Item
                         label="用户名"
                         hasFeedback
                     >
-                        {getFieldDecorator('userName', {
+                        {getFieldDecorator('register_userName', {
                             rules: [{
                                 required: true, message: '请输入用户名!',
-                            }],
+                            },
+                            {max:16,message:"用户名长度不能超多16"},
+                                {
+                                    validator: this.validateUserName,
+                                }
+                            ],
+
                         })(
                             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
                         )}
@@ -161,12 +243,16 @@ class NormalLoginForm extends React.Component {
                         label="密码"
                         hasFeedback
                     >
-                        {getFieldDecorator('password', {
+                        {getFieldDecorator('register_password', {
                             rules: [{
                                 required: true, message: '请输入密码!',
-                            }, {
+                            },
+                            {min:6,message:"密码长度至少为6"},
+                            {max:20,message:"密码长度不能超过20"},
+                            {
                                 validator: this.validateToNextPassword,
-                            }],
+                            },
+                            ],
                         })(
                             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
                         )}
@@ -189,10 +275,15 @@ class NormalLoginForm extends React.Component {
                         label="性别"
                         hasFeedback
                     >
-                            <Select defaultValue={defaultGender}>
+                        {getFieldDecorator('gender', {
+                            initialValue: 'male',
+                        })(
+                            <Select  >
                                 <Option value="male">男</Option>
                                 <Option value="female">女</Option>
                             </Select>
+                        )}
+
                     </Form.Item>
                     <Form.Item
                         label="现居地"
@@ -212,9 +303,7 @@ class NormalLoginForm extends React.Component {
                         {getFieldDecorator('email', {
                             rules: [{
                                 type: 'email', message: '邮箱格式错误!',
-                            }, {
-                                message: '请输入邮箱!',
-                            }],
+                            },],
                         })(
                             <Input placeholder="邮箱"/>
                         )}
@@ -224,7 +313,7 @@ class NormalLoginForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('phone', {
-                            rules: [{  message: '请输入手机号码!' ,type:'number'}],
+                            rules: [{  message: '请输入手机号码!' ,pattern:/[0-9]{11}/}],
                         })(
                             <Input  placeholder="联系电话"/>
                         )}
@@ -235,7 +324,8 @@ class NormalLoginForm extends React.Component {
 
                     >
                         {getFieldDecorator('description', {
-                            rules: [{  message: '请输入个人简介!', whitespace: true }],
+                            rules: [{  message: '请输入个人简介!', whitespace: true },
+                                {max:50,message:"个人简介长度不能超过50"}],
                         })(
                             <Input placeholder="个人简介"/>
                         )}
