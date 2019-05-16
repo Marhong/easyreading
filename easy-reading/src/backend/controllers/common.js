@@ -46,7 +46,7 @@ exports.parseUploadBookCallBack = async (err,res,book) =>{
 }
 async function analyseTxtFile(id,url,bookId) {
     console.log(url);
- let fRead = fs.createReadStream(url);
+ let fRead = fs.createReadStream(url,{highWaterMark:65536});
     fRead.setEncoding("utf-8");
      let objReadline = readline.createInterface({
          input: fRead
@@ -66,7 +66,7 @@ async function analyseTxtFile(id,url,bookId) {
          let line = lineText.trim();
          // 去掉空白行
          if(line.length >0 ){
-            
+
              let volumeResult = volume.exec(line);
              let chapterResult = chapter.exec(line);
              if(volumeResult != null){
