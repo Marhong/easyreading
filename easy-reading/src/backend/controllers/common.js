@@ -40,10 +40,12 @@ exports.parseUploadBookCallBack = async (err,res,book) =>{
                   })
               }
               res.send(true);
+
           });
       analyseTxtFile(book.id,book.fileUrl,book.id);
 }
 async function analyseTxtFile(id,url,bookId) {
+    console.log(url);
  let fRead = fs.createReadStream(url);
     fRead.setEncoding("utf-8");
      let objReadline = readline.createInterface({
@@ -64,6 +66,7 @@ async function analyseTxtFile(id,url,bookId) {
          let line = lineText.trim();
          // 去掉空白行
          if(line.length >0 ){
+            
              let volumeResult = volume.exec(line);
              let chapterResult = chapter.exec(line);
              if(volumeResult != null){
@@ -73,13 +76,21 @@ async function analyseTxtFile(id,url,bookId) {
                  volumeIndex ++;
 
              }else if(chapterResult != null){
-                 if(curVolume != null){
+                 if(curVolume == null) {
+                     curVolume = {};
+                    curVolume.id = Date.now();
+                    curVolume.name = "第一卷";
+                    curVolume.bookId = bookId;
+                    curVolume.isFree = true;
+                    curVolume.startTime = Date.now();
+                    volumeList[volumeIndex] = curVolume;
+                 }
                      numbers = 0;
                      let newChapter = {id:Date.now(),bookId:bookId,volumeId:curVolume.id,name:chapterResult.input,numbers:0,isFree:true,time:Date.now(),content:""};
                      curChapter = newChapter;
                      chapterList[chapterIndex] = newChapter;
                      chapterIndex ++;
-                 }
+
 
              }else  if(curChapter != null){
                {
@@ -93,12 +104,10 @@ async function analyseTxtFile(id,url,bookId) {
          //console.log('line:'+ line);
      });
      objReadline.on('close', function () {
-         console.log(volumeList.length ,chapterList.length,chapterIndex);
+         console.log(volumeList ,chapterList,chapterIndex);
         console.log(arr.length);
        /*  callback(arr);*/
      });
-
-
 }
 // 将文件编码格式转为utf-8
 exports.changeEncoding=(fileName) => {
