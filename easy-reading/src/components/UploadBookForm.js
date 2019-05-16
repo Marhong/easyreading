@@ -104,6 +104,8 @@ class UploadBookForm extends Component {
             contentType: false,   // 告诉JSLite不要去设置Content-Type请求头
             data: formData,
             url: url,
+            encoding:'utf-8',
+            scriptCharset: 'utf-8',
             success: function (data) {
                 data = JSON.parse(data);
                 callBack(data);

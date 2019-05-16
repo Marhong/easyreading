@@ -1,4 +1,0 @@
-1.进入到 C:\Users\wangbin\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets
-2.在地址栏输入cmd,回车
-3.输入ren *.* *.jpg(可以是jpeg,png等任意格式图片)
-

@@ -1,16 +1,17 @@
 let poolModule = require('./pool');
 let pool = poolModule.pool;
+let common = require('./common');
 let BookSQL = poolModule.BookSQL;
 let BookTypesSQL = poolModule.BookTypesSQL;
 let BookTypeSQL = poolModule.BookTypeSQL;
 let readImage = require("./readImage");
 let formidable = require('formidable');
-let callback = require('./common').parseUploadBookCallBack;
-
+let callback = common.parseUploadBookCallBack;
+let changeEncoding = common.changeEncoding;
+let fs = require('fs');
 
 // 由 POST 处理书籍上传操作
 exports.addBook = (req, res) => {
-
     let book = {};
     book.id = Date.now();
     book.startTime = Date.now();
@@ -23,10 +24,11 @@ exports.addBook = (req, res) => {
     book.imgUrl=0;
     // 创建上传表单对象
     let form = new formidable.IncomingForm({
-        encoding:"utf-8", // 编码格式
+        encoding:"UTF-8", // 编码格式
         uploadDir:"./public/upload",  //文件上传地址
         keepExtensions:true  //保留后缀
     });
+    form.encoding = "UTF-8";
     // 解析表单
     form.parse(req, function(err, fields, files){
         Object.keys(fields).forEach(function(name) {  //文本
@@ -35,13 +37,19 @@ exports.addBook = (req, res) => {
         });
         Object.keys(files).forEach(function(name) {  //文件
             let path = files[name].path;
-            //console.log('name:' + name+";file:"+path);
+            console.log('name:' + name+";file:"+path);
+            console.log(files[name].name);
+            let newPath = `public/upload/${files[name].name}`;
+            fs.renameSync(path,newPath);
+            changeEncoding(files[name].name);
             if(path.split(".")[1] === "txt"){
-                book.fileUrl = path
+                book.fileUrl = newPath
             }else{
-                book.imgUrl = path;
+                book.imgUrl = newPath;
             }
+
         });
+
         return callback(err,res,book);
     });
 };

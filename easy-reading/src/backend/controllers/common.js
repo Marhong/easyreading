@@ -3,8 +3,15 @@ let pool = poolModule.pool;
 let BookSQL = poolModule.BookSQL;
 let BookTypesSQL = poolModule.BookTypesSQL;
 let BookTypeSQL = poolModule.BookTypeSQL;
+let fs = require('fs');
+var iconv = require('iconv-lite');
+var readline = require('readline');
+var chardet = require('chardet');
+var jschardet = require('jschardet');
+var encoding = require('encoding');
 // 解析表单后将数据插入数据库
-exports.parseUploadBookCallBack = (err,res,book) =>{
+exports.parseUploadBookCallBack = async (err,res,book) =>{
+
     // 将book对象属性值插入数据库
       pool.query(BookSQL.insert,[book.id,book.userId,book.author,book.distribute,book.dynasty,book.name,book.startTime,book.description,
               book.clickNumbers,book.isFinished,book.keywords,book.preface,book.latestChapter,book.isValid,book.isFree,book.imgUrl,book.fileUrl,book.type]
@@ -34,4 +41,57 @@ exports.parseUploadBookCallBack = (err,res,book) =>{
               }
               res.send(true);
           });
+      analyseTxtFile(book.id,book.fileUrl,(data) => console.log(data));
+}
+function analyseTxtFile(id,url,callback) {
+ let fRead = fs.createReadStream(url);
+    fRead.setEncoding("utf-8");
+     let objReadline = readline.createInterface({
+         input: fRead
+     });
+     let arr = new Array();
+
+     objReadline.on('line', function (line) {
+         arr.push(line);
+         //console.log('line:'+ line);
+     });
+     objReadline.on('close', function () {
+         console.log(arr);
+       /*  callback(arr);*/
+     });
+
+
+}
+// 将文件编码格式转为utf-8
+exports.changeEncoding=(fileName) => {
+    let filePath = 'public/upload/'+fileName;
+    let stats = fs.statSync(filePath);
+
+    if (stats.isFile()) {
+        let buff = fs.readFileSync(filePath);
+        if (buff.length && buff[0].toString(16).toLowerCase() == "ef" && buff[1].toString(16).toLowerCase() == "bb" && buff[2].toString(16).toLowerCase() == "bf") {
+            //EF BB BF 239 187 191
+            console.log('\n发现BOM文件：', filePath, "\n");
+
+            buff = buff.slice(3);
+            fs.writeFile(filePath, buff.toString(), "utf8", function(err, written, buffer) {});
+        }
+
+        // { encoding: 'UTF-8', confidence: 0.99 }
+        // var charset = chardet.detectFileSync(filePath);
+        let info = jschardet.detect(buff);
+
+        if (info.encoding === "GB2312" || info.encoding === "ascii") {
+            let resultBuffer = encoding.convert(buff, "UTF-8", info.encoding);
+            fs.writeFile(filePath, resultBuffer, "utf8", function(err, written, buffer) {});
+        }
+        else if (info.encoding !== "UTF-8" && chardet.detectFileSync(filePath) !== "UTF-8")
+        {
+            if (buff.toString().indexOf("\r\n") > -1)
+            {
+                let resultBuffer = encoding.convert(buff, "UTF-8", "GBK");
+                fs.writeFile(filePath, resultBuffer, "utf8", function(err, written, buffer) {});
+            }
+        }
+    }
 }
