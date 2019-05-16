@@ -41,22 +41,60 @@ exports.parseUploadBookCallBack = async (err,res,book) =>{
               }
               res.send(true);
           });
-      analyseTxtFile(book.id,book.fileUrl,(data) => console.log(data));
+      analyseTxtFile(book.id,book.fileUrl,book.id);
 }
-function analyseTxtFile(id,url,callback) {
+async function analyseTxtFile(id,url,bookId) {
  let fRead = fs.createReadStream(url);
     fRead.setEncoding("utf-8");
      let objReadline = readline.createInterface({
          input: fRead
      });
      let arr = new Array();
+        let index =0;
+        let volume = /第([0-9|一|二|三|四|五|六|七|八|九|十|百|千|万]+)?[卷|集|部]/;
+        let chapter = /第([0-9|一|二|三|四|五|六|七|八|九|十|百|千|万]+)?[章|篇|回|节]/;
+        let volumeList = [];
+        let chapterList = [];
+        let volumeIndex = 0;
+        let chapterIndex = 0;
+        let curVolume = null;
+        let curChapter = null;
+        let numbers = 0;
+     objReadline.on('line', function (lineText) {
+         let line = lineText.trim();
+         // 去掉空白行
+         if(line.length >0 ){
+             let volumeResult = volume.exec(line);
+             let chapterResult = chapter.exec(line);
+             if(volumeResult != null){
+                 let newVolume = {id:Date.now(),bookId:bookId,name:volumeResult.input,isFree:true,startTime:Date.now(),};
+                 volumeList[volumeIndex] = newVolume;
+                 curVolume = newVolume;
+                 volumeIndex ++;
 
-     objReadline.on('line', function (line) {
-         arr.push(line);
+             }else if(chapterResult != null){
+                 if(curVolume != null){
+                     numbers = 0;
+                     let newChapter = {id:Date.now(),bookId:bookId,volumeId:curVolume.id,name:chapterResult.input,numbers:0,isFree:true,time:Date.now(),content:""};
+                     curChapter = newChapter;
+                     chapterList[chapterIndex] = newChapter;
+                     chapterIndex ++;
+                 }
+
+             }else  if(curChapter != null){
+               {
+                    curChapter.content += "<p>"+line+"</p>";
+                    curChapter.numbers += line.length;
+                }
+
+             }
+         }
+        /* arr.push(line);*/
          //console.log('line:'+ line);
      });
      objReadline.on('close', function () {
-         console.log(arr);
+         console.log(volumeList.length ,chapterList.length,chapterIndex);
+        console.log(arr.length);
        /*  callback(arr);*/
      });
 

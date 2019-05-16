@@ -40,6 +40,7 @@ exports.addBook = (req, res) => {
             console.log('name:' + name+";file:"+path);
             console.log(files[name].name);
             let newPath = `public/upload/${files[name].name}`;
+            // 好像没必要改名字
             fs.renameSync(path,newPath);
             changeEncoding(files[name].name);
             if(path.split(".")[1] === "txt"){
