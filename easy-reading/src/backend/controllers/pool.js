@@ -17,3 +17,14 @@ exports.BookshelfSQL = {
 exports.ReadingSettingSQL = {
     insert:'INSERT INTO reading_setting(id,userId,fontSize,pageWidth,fontFamily,bgColor,pageBgColor,lastModifiedTime) VALUES(?,?,?,?,?,?,?,?)',
 };
+exports.BookSQL = {
+  insert :'INSERT INTO book (id,userId,author,distribute,dynasty,name,startTime,description,' +
+  'clickNumbers,isFinished,keywords,preface,latestChapter,isValid,isFree,imgUrl,fileUrl,type) VALUES ' +
+  '(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+};
+exports.BookTypeSQL = {
+    updateUseTimes : 'UPDATE booktype set useTimes = useTimes+1 where id = ?',
+};
+exports.BookTypesSQL = {
+    insert :'INSERT INTO book_types(bookId,bookTypeId) VALUES (?,?)',
+};

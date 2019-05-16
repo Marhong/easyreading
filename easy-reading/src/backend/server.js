@@ -5,7 +5,7 @@ var cors = require('cors');
 // 引入easyreadingRouter
 const easyreadingRouter = require('./routes/easyreading');
 var app = express();
-
+app.use(express.static('./public/upload'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());

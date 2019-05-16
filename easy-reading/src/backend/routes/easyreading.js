@@ -41,20 +41,24 @@ router.post('/user/signUp/add',user_controller.addUser);
 // GET 按时间排序获取最近的num条公告
 router.get('/bulletin/bulletinBoard/:num',bulletin_controller.getTopNumBulletins);
 
-/*/// Book书籍路由 ///
+// Book书籍路由 ///
 
-// 获取用户每天的个性化推荐书籍列表
+// POST 用户上传书籍
+router.post('/book/add',book_controller.addBook);
+
+/*// 获取用户每天的个性化推荐书籍列表
 router.get('/books/personalBooks',book_controller.book_getPersonalBooks);
 // GET 通过书籍id获取某一书籍详细信息
 router.get('/books/:id/detail',book_controller.book_getBookById);
 // GET 获取书籍的最近更新章节
 router.get('/books/:id/latestChapter',book_controller.book_getLatestChapter);
 // GET 通过书籍id获取某一书籍的所有章节
-router.get('/books/:id/volumes',book_controller.book_getAllVolumesById);
-
+router.get('/books/:id/volumes',book_controller.book_getAllVolumesById);*/
+// 图片路由
+router.get('/book/image/:url',book_controller.getImageByUrl);
 /// Chapter章节路由 ///   用户每次切换章节都会更新对应书籍的最后阅读章节属性
 
-// GET通过章节id获取某一章节详细信息
+/*// GET通过章节id获取某一章节详细信息
 router.get('/chapters/:id/detail',chapter_controller.chapter_getChapterById);
 // GET 通过章节id获取该章节的上一章
 router.get('/chapters/:id/preChapter',chapter_controller.getPreChapter);
