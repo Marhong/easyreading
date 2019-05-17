@@ -8,7 +8,7 @@ exports.userLogin = (req,res) => {
     let {userName,password} = req.body;
     let isRight = false;
     let curUser;
-    pool.query(`SELECT * FROM user `,(err,rows) => {
+    pool.query(UserSQL.selectAll,(err,rows) => {
         if(err) throw err;
         if(rows.length >0){
            for(let user of rows){
@@ -47,9 +47,8 @@ exports.addUser = (req,res) => {
 // 验证用户名是否已被注册
 exports.isExist = (req,res) => {
     let name = req.body.name;
-    console.log(name+"sdfsdfsd");
     let isExist = false;
-    pool.query(`SELECT * FROM user`,(err,rows) =>{
+    pool.query(UserSQL.selectAll,(err,rows) =>{
         if(err)throw err;
         if(rows.length>0){
             for(let user of rows){
@@ -62,3 +61,4 @@ exports.isExist = (req,res) => {
         res.send({isExist:isExist});
     })
 }
+

@@ -22,6 +22,7 @@ exports.addBook = (req, res) => {
     book.isFree = true;
     book.fileUrl=0;
     book.imgUrl=0;
+    book.numbers = 0;
     // 创建上传表单对象
     let form = new formidable.IncomingForm({
         encoding:"UTF-8", // 编码格式

@@ -35,11 +35,17 @@ router.post('/user/signUp/add',user_controller.addUser);
 
 /// Bulletin公告路由 ///
 
+// POST 发布公告
+router.post('/bulletin/add',bulletin_controller.addBulletin);
+// GET 获取所有公告
+router.get('/bulletin/all',bulletin_controller.getAllBulletins);
+// POST 删除某条公告
+router.post('/bulletin/delete',bulletin_controller.deleteBulletin);
 // GET 每次获取10条公告,请求应该包含一个参数
 // start 起始索引，初始化时start为0，之后每请求一次start+=10
 /*router.get('/bulletinList/:start',bulletin_controller.bulletin_getTenBulletins);*/
 // GET 按时间排序获取最近的num条公告
-router.get('/bulletin/bulletinBoard/:num',bulletin_controller.getTopNumBulletins);
+/*router.get('/bulletin/bulletinBoard/:num',bulletin_controller.getTopNumBulletins);*/
 
 // Book书籍路由 ///
 

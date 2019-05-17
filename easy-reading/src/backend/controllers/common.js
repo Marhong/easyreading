@@ -3,18 +3,21 @@ let pool = poolModule.pool;
 let BookSQL = poolModule.BookSQL;
 let BookTypesSQL = poolModule.BookTypesSQL;
 let BookTypeSQL = poolModule.BookTypeSQL;
+let VolumeSQL = poolModule.VolumeSQL;
+let ChapterSQL = poolModule.ChapterSQL;
+let VolumeChaptersSQL = poolModule.VolumeChaptersSQL;
+let BookVolumesSQL = poolModule.BookVolumesSQL;
 let fs = require('fs');
-var iconv = require('iconv-lite');
-var readline = require('readline');
-var chardet = require('chardet');
-var jschardet = require('jschardet');
-var encoding = require('encoding');
+let readline = require('readline');
+let chardet = require('chardet');
+let jschardet = require('jschardet');
+let encoding = require('encoding');
 // 解析表单后将数据插入数据库
 exports.parseUploadBookCallBack = async (err,res,book) =>{
 
     // 将book对象属性值插入数据库
       pool.query(BookSQL.insert,[book.id,book.userId,book.author,book.distribute,book.dynasty,book.name,book.startTime,book.description,
-              book.clickNumbers,book.isFinished,book.keywords,book.preface,book.latestChapter,book.isValid,book.isFree,book.imgUrl,book.fileUrl,book.type]
+              book.clickNumbers,book.isFinished,book.keywords,book.preface,book.latestChapter,book.isValid,book.isFree,book.imgUrl,book.fileUrl,book.type,book.numbers]
           ,(err,rows) => {
               if(err){
                   res.send(err);
@@ -42,26 +45,29 @@ exports.parseUploadBookCallBack = async (err,res,book) =>{
               res.send(true);
 
           });
-      analyseTxtFile(book.id,book.fileUrl,book.id);
+      analyseTxtFile(res,book.fileUrl,book.id);
 }
-async function analyseTxtFile(id,url,bookId) {
-    console.log(url);
- let fRead = fs.createReadStream(url,{highWaterMark:65536});
-    fRead.setEncoding("utf-8");
+async function analyseTxtFile(res,url,bookId) {
+    // 创建文件读取流。一次最多可读取64M。设置读取流的编码方式为utf-8
+     let fRead = fs.createReadStream(url,{highWaterMark:65536});
+     fRead.setEncoding("utf-8");
+    // 根据文件读取流创建逐行读取数据接口
      let objReadline = readline.createInterface({
          input: fRead
      });
-     let arr = new Array();
-        let index =0;
-        let volume = /第([0-9|一|二|三|四|五|六|七|八|九|十|百|千|万]+)?[卷|集|部]/;
-        let chapter = /第([0-9|一|二|三|四|五|六|七|八|九|十|百|千|万]+)?[章|篇|回|节]/;
-        let volumeList = [];
-        let chapterList = [];
-        let volumeIndex = 0;
-        let chapterIndex = 0;
-        let curVolume = null;
-        let curChapter = null;
-        let numbers = 0;
+        // 匹配卷的正则表达式
+        let volume = /(^[正文|第])([0-9|一|二|三|四|五|六|七|八|九|十|百|千|万]+)?(.[卷|集|部])/;
+        // 匹配章节的正则表达式
+        let chapter = /(^[正文|第])([0-9|一|二|三|四|五|六|七|八|九|十|百|千|万]+)?(.[章|篇|回|节])/;
+
+        let volumeList = []; // 卷列表
+        let chapterList = []; // 章节列表
+        let volumeIndex = 0;  // 卷索引
+        let chapterIndex = 0; // 章节索引
+        let curVolume = null; // 当前卷
+        let curChapter = null; // 当前章节
+        let numbers = 0; // 书籍总字数
+     // 开始逐行读取数据
      objReadline.on('line', function (lineText) {
          let line = lineText.trim();
          // 去掉空白行
@@ -70,7 +76,14 @@ async function analyseTxtFile(id,url,bookId) {
              let volumeResult = volume.exec(line);
              let chapterResult = chapter.exec(line);
              if(volumeResult != null){
-                 let newVolume = {id:Date.now(),bookId:bookId,name:volumeResult.input,isFree:true,startTime:Date.now(),};
+
+                 let newVolumeId =0;
+                 if(curVolume != null){
+                     newVolumeId = curVolume.id +1;
+                 }else{
+                     newVolumeId = Date.now();
+                 }
+                 let newVolume = {id:newVolumeId,bookId:bookId,name:volumeResult.input,isFree:true,startTime:Date.now(),numbers:0};
                  volumeList[volumeIndex] = newVolume;
                  curVolume = newVolume;
                  volumeIndex ++;
@@ -83,10 +96,16 @@ async function analyseTxtFile(id,url,bookId) {
                     curVolume.bookId = bookId;
                     curVolume.isFree = true;
                     curVolume.startTime = Date.now();
+                    curVolume.numbers = 0;
                     volumeList[volumeIndex] = curVolume;
                  }
-                     numbers = 0;
-                     let newChapter = {id:Date.now(),bookId:bookId,volumeId:curVolume.id,name:chapterResult.input,numbers:0,isFree:true,time:Date.now(),content:""};
+                 let newChapterId =0;
+                 if(curChapter != null){
+                     newChapterId = curChapter.id +1;
+                 }else{
+                     newChapterId = Date.now();
+                 }
+                     let newChapter = {id:newChapterId,bookId:bookId,volumeId:curVolume.id,name:chapterResult.input,numbers:0,isFree:true,time:Date.now(),content:"",link:""};
                      curChapter = newChapter;
                      chapterList[chapterIndex] = newChapter;
                      chapterIndex ++;
@@ -95,19 +114,65 @@ async function analyseTxtFile(id,url,bookId) {
              }else  if(curChapter != null){
                {
                     curChapter.content += "<p>"+line+"</p>";
-                    curChapter.numbers += line.length;
+                    let length = line.length;
+                    curChapter.numbers += length;
+                    curVolume.numbers += length;
+                    numbers += length;
                 }
 
              }
          }
-        /* arr.push(line);*/
-         //console.log('line:'+ line);
+
      });
      objReadline.on('close', function () {
-         console.log(volumeList ,chapterList,chapterIndex);
-        console.log(arr.length);
-       /*  callback(arr);*/
+         console.log(volumeList.length ,chapterList.length);
+        // 解析完txt文件后，将相应数据插入数据库
+         insertBookData(res,volumeList,chapterList,numbers,bookId);
      });
+}
+// 将volume、chapter、volumeChapters、bookVolumes插入数据库，修改book的numbers和latestChapter
+async function insertBookData(res,volumeList,chapterList,numbers,bookId){
+    // 将volume插入数据库
+    for(let i=0,len=volumeList.length;i<len;i++){
+        let volume = volumeList[i];
+        pool.query(VolumeSQL.insert,[volume.id,bookId,volume.name,volume.isFree,volume.startTime,volume.numbers],(err) =>{
+            if(err){
+                res.send(err);
+                throw err;
+            }
+            // 每插入一个volume,就插入一个bookVolumes
+            pool.query(BookVolumesSQL.insert,[bookId,volume.id],(err) => {
+                if(err){
+                    res.send(err);
+                    throw err;
+                }
+            })
+        })
+    }
+    // 将chapter插入数据库
+    for(let i=0,len=chapterList.length;i<len;i++){
+        let chapter = chapterList[i];
+        pool.query(ChapterSQL.insert,[chapter.id,chapter.volumeId,bookId,chapter.name,chapter.numbers,chapter.link,chapter.isFree,chapter.time,chapter.content],(err)=>{
+            if(err){
+                res.send(err);
+                throw err;
+            }
+            // 每插入一个chapter,就插入一个volumeChapters
+            pool.query(VolumeChaptersSQL.insert,[chapter.volumeId,chapter.id],(err) =>{
+                if(err){
+                    res.send(err);
+                    throw err;
+                }
+            })
+        })
+    }
+    // update书籍的number和latestChapter
+    pool.query(BookSQL.updateNumbersAndLatestChapter,[numbers,chapterList[chapterList.length-1].id,bookId],(err) => {
+        if(err){
+            res.send(err);
+            throw err;
+        }
+    })
 }
 // 将文件编码格式转为utf-8
 exports.changeEncoding=(fileName) => {

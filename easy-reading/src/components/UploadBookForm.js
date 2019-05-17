@@ -3,7 +3,6 @@ import React,{Component} from 'react';
 import reqwest from "reqwest";
 import {message} from "antd/lib/index";
 import $ from 'jquery';
-import Image from "./Image";
 const Option = Select.Option;
 const bookUrl = "http://localhost:5000/easyreading/book";
 const keywords=["热血","重生","豪门","孤儿","盗贼","特种兵","特工","黑客","明星"];
@@ -20,16 +19,10 @@ class UploadBookForm extends Component {
     // 点击提交
     handleSubmit = (e) => {
         e.preventDefault();
-        let userId = (localStorage.getItem("user") || sessionStorage.getItem("user")).id;
-        if (userId == null || userId == "") {
-            userId = Date.now();
-        }
-        let selectedKeyWords = "";
 
         this.props.form.validateFields((err, values) => {
             if (!err) {
 
-                 console.log(values);
                 let data = new FormData($('#addForm')[0]);  //获取表单内容
                 data.append("name",values.name);
                 data.append("author",values.author);
@@ -41,20 +34,11 @@ class UploadBookForm extends Component {
                 data.append("description",values.description);
                 let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
                 data.append("userId",user.id);
-                console.log("userId:"+user.id);
-/*                reqwest({
-                    url:`${bookUrl}/add`,
-                    method:'post',
-                    type:'json',
-                    data:data,
-                    error:(err)=>console.log(err),
-                    success:(res)=>{
-                        console.log(res);
-                }
-                });*/
+                let uploadClass = this;
                 this.ajaxFormPost(`${bookUrl}/add`, data, function (data) {  //ajax提交表单
-                    console.log("formidable处理结果:", data);
-                    alert(data.code + ":" + data.msg);
+                    if(data){
+                        uploadClass.handleCancel();
+                    }
 
                 });
             }
@@ -63,7 +47,7 @@ class UploadBookForm extends Component {
     }
 
     // 点击取消按钮
-    handleCancel(e) {
+     handleCancel(e) {
         this.props.form.resetFields();
         if (this.props.onUploadCancel) {
             this.props.onUploadCancel();
@@ -71,7 +55,7 @@ class UploadBookForm extends Component {
     }
 
     // 选择关键字发生变化
-    handleKeyWordsChange(value) {
+     handleKeyWordsChange(value) {
         console.log(`selected ${value}`);
     }
 
@@ -107,10 +91,11 @@ class UploadBookForm extends Component {
             encoding:'utf-8',
             scriptCharset: 'utf-8',
             success: function (data) {
-                data = JSON.parse(data);
+                message.success('上传书籍成功!');
                 callBack(data);
             },
             error: function (data) {
+                message.error('上传书籍成功!');
                 console.log('error:', data)
                 callBack(data);
             }

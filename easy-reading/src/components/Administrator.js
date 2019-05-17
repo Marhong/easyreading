@@ -1,11 +1,15 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Menu ,Divider,Tabs,Table,Modal,Button,Input,Icon} from 'antd';
+import { Menu ,Divider,Tabs,Table,Modal,Button,Input,Icon,Popconfirm} from 'antd';
 import moment from 'moment';
 import Highlighter from 'react-highlight-words';
 import {WrappedBulletinForm} from './BulletinForm';
 import {formatArray} from '../static/commonFun';
+import reqwest from "reqwest";
+import {message} from "antd/lib/index";
+const bulletinUrl = "http://localhost:5000/easyreading/bulletin";
 require('../css/PersonalCenter.css');
+
 const TabPane = Tabs.TabPane;
 
 // 菜单项为“书籍管理” > “书籍审核” 时的数据
@@ -116,7 +120,11 @@ export default class Administrator extends Component{
             modalContent:"",
             visible:false,
             searchText:"",
+
         }
+    }
+    componentDidMount(){
+
     }
     // 展示搜索框
     getColumnSearchProps = (dataIndex) => ({
@@ -186,7 +194,20 @@ export default class Administrator extends Component{
                 this.setState({...this.state,tabs:bookTabs,currentDataName:"bookReportData"});
                 break;
             case "2":
-                this.setState({...this.state,tabs:bulletinTabs,currentDataName:"bulletinListData"});
+                    let bulletinList = [];
+                // 从服务器获取所有bulletin
+                reqwest({
+                    url:`${bulletinUrl}/all`,
+                    type:'json',
+                    method:'get',
+                    error:(err)=>console.log(err),
+                    success:(res)=>{
+                        for(let item of res){
+                            bulletinList.push({...item});
+                        }
+                    }
+                });
+                this.setState({...this.state,tabs:bulletinTabs,currentDataName:"bulletinListData",bulletinListData:bulletinList});
                 break;
             case "3":
 
@@ -203,6 +224,7 @@ export default class Administrator extends Component{
     }
     // 在一个菜单项内切换不同Tab
     handleTabChange(key,e){
+        console.log(key);
         this.setState({...this.state,currentDataName:key});
     }
     // 查看某条记录的详细信息
@@ -222,6 +244,37 @@ export default class Administrator extends Component{
             modalTitle:selectedItem[itemKeys[1]],
             modalContent:selectedItem[itemKeys[2]],
         });
+    }
+    // 删除某条数据
+    handleDeleteItem(record,e){
+        let curData = this.state[this.state.currentDataName];
+        let selectedItem;
+        for(let i=0;i<curData.length;i++) {
+            let item = curData[i];
+            if (item.key === record.key) {
+                selectedItem = item;
+                curData.splice(i, 1);
+                break;
+            }
+        }
+        // 向服务器发送请求删除该bulletin
+
+        reqwest({
+            url:`${bulletinUrl}/delete`,
+            type:'json',
+            method:'post',
+            data:{id:selectedItem.key},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                    message.success("删除公告成功！");
+                }
+            }
+        });
+        this.setState({...this.state,tabs:bulletinTabs,currentDataName:"bulletinListData",bulletinListData:curData});
     }
     // 根据某条记录的key查找整条记录
     getItemByKey(key,dataIndex){
@@ -322,7 +375,15 @@ export default class Administrator extends Component{
                         <span className="table-operation">
                     <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                     <Divider type="vertical" />
-                    <a href="javascript:;">删除</a>
+                              <Popconfirm
+                                  title="确定要删除该条数据吗?"
+                                  onConfirm={this.handleDeleteItem.bind(this,record)}
+                                  okText="Yes"
+                                  cancelText="No"
+                              >
+                                <a href="javascript:;" >删除</a>
+                                </Popconfirm>
+
                 </span>
                     ),
                 },],
@@ -357,7 +418,7 @@ export default class Administrator extends Component{
                         <span className="table-operation">
                     <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                     <Divider type="vertical" />
-                    <a href="javascript:;">删除</a>
+                    <a href="javascript:;" onClick={this.handleDeleteItem.bind(this,record)}>删除</a>
                 </span>
                     ),
                 },],

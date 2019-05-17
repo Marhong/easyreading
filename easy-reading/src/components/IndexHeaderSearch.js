@@ -19,7 +19,7 @@ export default class IndexHeaderSearch extends Component{
             uploadVisible:false,
             confirmLoading: false,
             isLogin:true,
-            user:JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user")),
+            user:(JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user")) || null),
         }
     }
     // 初始化界面
