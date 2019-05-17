@@ -6,6 +6,13 @@ exports.pool = mysql.createPool({
     password: '123456',
     database: 'easyreading',
 });
+exports.compare = (property) => {
+    return function(a,b){
+        let value1 = a[property];
+        let value2 = b[property];
+        return value1 - value2;
+    }
+};
 exports.UserSQL = {
     insert:'INSERT INTO user(id,name,password,gender,address,email,phone,description,type,signUpTime) VALUES(?,?,?,?,?,?,?,?,?,?)',
     selectAll:'SELECT * FROM user',
@@ -56,15 +63,19 @@ exports.BookTypesSQL = {
 };
 exports.VolumeSQL = {
   insert : 'INSERT INTO volume (id,bookId,name,isFree,startTime,numbers) VALUES (?,?,?,?,?,?)',
+    selectOneById : 'SELECT * FROM volume WHERE id = ?',
 };
 exports.ChapterSQL = {
-    insert :'INSERT INTO chapter (id,volumeId,bookId,name,numbers,link,isFree,time,content) VALUES (?,?,?,?,?,?,?,?,?)'
+    insert :'INSERT INTO chapter (id,volumeId,bookId,name,numbers,link,isFree,time,content) VALUES (?,?,?,?,?,?,?,?,?)',
+    selectOneById : 'SELECT * FROM chapter WHERE id = ?',
 };
 exports.VolumeChaptersSQL = {
   insert : 'INSERT INTO volume_chapters (volumeId,chapterId) VALUES (?,?)',
+    selectAll : 'SELECT * FROM volume_chapters WHERE volumeId = ?',
 };
 exports.BookVolumesSQL = {
     insert : 'INSERT INTO book_volumes (bookId,volumeId) VALUES (?,?)',
+    selectAll : 'SELECT * FROM book_volumes WHERE bookId = ? order by volumeId',
 };
 exports.BulletinSQL = {
     insert :'INSERT INTO bulletin (id,userId,title,content,type,time) VALUES (?,?,?,?,?,?)',

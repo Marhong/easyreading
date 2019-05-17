@@ -70,6 +70,14 @@ router.post('/book/recommend',recommend_record_controller.addRecommendRecord);
 router.post('/book/rank',rank_record_controller.addOrUpdateRankRecord);
 /// Chapter章节路由 ///   用户每次切换章节都会更新对应书籍的最后阅读章节属性
 
+// GET通过章节id获取某一章节详细信息
+router.get('/chapter/:id',chapter_controller.getChapterById);
+// GET 通过卷id获取该卷的所有章节
+router.get('/chapter/:id/all',chapter_controller.getChaptersByVolumeId);
+// GET 通过卷id获取某一卷详细信息
+router.get('/volume/:id',volume_controller.getVolumeById);
+// GET 通过书籍id获取该书籍的所有卷
+router.get('/volume/:id/all',volume_controller.getAllVolumes);
 /*// GET通过章节id获取某一章节详细信息
 router.get('/chapters/:id/detail',chapter_controller.chapter_getChapterById);
 // GET 通过章节id获取该章节的上一章

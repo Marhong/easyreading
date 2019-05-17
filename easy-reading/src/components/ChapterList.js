@@ -4,17 +4,65 @@ import '../css/ChapterList.css';
 import VolumeComponent from "./VolumeComponent";
 import {Link} from 'react-router-dom';
 import {timestampFormat} from "../static/commonFun";
+import reqwest from "reqwest";
+import moment from 'moment';
+const bookUrl = "http://localhost:5000/easyreading/book";
+const chapterUrl = "http://localhost:5000/easyreading/chapter";
+const volumeUrl = "http://localhost:5000/easyreading/volume";
 export default class ChapterList extends Component{
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             sort : "icon-shengxu",
+            book:{},
+            volumes:[],
+            latestChapter:{},
         }
     }
     componentDidMount(){
         document.documentElement.style.backgroundColor = "white";
         document.body.style.backgroundColor = "white";
+        let bookId = this.props.match.params.id;
+        console.log("书籍id:"+this.props.match.params.id);
+        // 通过bookId从服务器获取书籍
+        reqwest({
+            url:`${bookUrl}/${bookId}`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                this.setState({...this.state,book:res,latestChapter:res.latestChapter});
+            }
+        });
+        // 通过bookId，从服务器获取该书籍对应的所有卷
+        reqwest({
+            url:`${volumeUrl}/${bookId}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                let volumes = res;
+               // this.setState({...this.state,volumes:res});
+                // 通过volumeId，获取对应的chapterList
+
+                for(let i=0,len=volumes.length;i<len;i++){
+                    let volume = volumes[i];
+
+                    reqwest({
+                        url:`${chapterUrl}/${volume.id}/all`,
+                        type:'json',
+                        method:'get',
+                        error:(err)=>console.log(err),
+                        success:(res)=>{
+                            volume.count = res.count;
+                            volume.chapterList = res.chapterList;
+                        }
+                    });
+                }
+                this.setState({...this.state,volumes:volumes});
+            }
+        });
     }
     handleChaptersSort(){
         this.setState({sort:this.state.sort==="icon-shengxu" ? "icon-jiangxu" : "icon-shengxu"});
@@ -22,7 +70,7 @@ export default class ChapterList extends Component{
     render(){
         console.log("传递的bookId:",this.props.match.params.id);
         // 通过bookId获取该书籍的所有卷。从服务器获取书籍卷的url: localhost:3000/easyreading/books/:id/volumes
-        const volumes = [{name:"卷一 大城小事",count:24,numbers:524561245,chapterList:
+       /* const volumes = [{name:"卷一 大城小事",count:24,numbers:524561245,chapterList:
                 [{id:45112,name:"第一章 有朋字远方来，尚能饭否",href:""},
                 ]},
             {name:"卷二 小城大事",count:24,numbers:524561245,chapterList:
@@ -30,16 +78,17 @@ export default class ChapterList extends Component{
                     ]},
             {name:"卷三 城里无事",count:24,numbers:524561245,chapterList:
                     [{id:45112,name:"第一章 三人行必有我师焉",href:""},
-                    ]},];
-        const book = {id:"book2019010011",name:"仙宫",isFinished:false,isFree:true,author:"大眼怪",score:8.2,type:["武侠","仙侠","幻想"],rankNumber:40,numbers:231454545,clickedNumbers:1514514,membershipClicked:8452852,recommendNumbers:525742,description:"修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013561350/180",preface:`"冤有头，债有主，你我往日无怨，近日无仇，在下职责所在，奉命行事，得罪了。”
+                    ]},];*/
+/*        const book = {id:"book2019010011",name:"仙宫",isFinished:false,isFree:true,author:"大眼怪",score:8.2,type:["武侠","仙侠","幻想"],rankNumber:40,numbers:231454545,clickedNumbers:1514514,membershipClicked:8452852,recommendNumbers:525742,description:"修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013561350/180",preface:`"冤有头，债有主，你我往日无怨，近日无仇，在下职责所在，奉命行事，得罪了。”
                                王腾念了一遍工作语，一刀斩下犯人头颅。
                                然后，一个白色光团从囚犯身体里冒出。
                                他的目光不由看向这个白色光团。
                                基础刀法！
                                在这光团上面，还有着‘拾取’字样。
                                “拾取！”
-                               王腾意念一动。`,latestChapter:{id:"86523",volumeId:"8566",bookId:"book2019010011",name:"第八百九十章 露出笑脸",time:1494562220,numbers:3000,isFree:true,link:""}};
-
+                               王腾意念一动。`,latestChapter:{id:"86523",volumeId:"8566",bookId:"book2019010011",name:"第八百九十章 露出笑脸",time:1494562220,numbers:3000,isFree:true,link:""}};*/
+        const book = this.state.book;
+        const volumes = this.state.volumes;
         // 这里还要展示最新章节的信息，所以还要通过该book获取到他的最新章节
         // 先看book有无latestChapter属性，没有的话就从服务器获取最新章节的url: localhost:3000/easyreading/books/:id/latestChapter
         const latestChapter = book.latestChapter || {id:"86523",volumeId:"8566",bookId:book.id,name:"第八百九十章 露出笑脸",time:1494562220,numbers:3000,isFree:true,link:""};
@@ -64,7 +113,7 @@ export default class ChapterList extends Component{
                     <p>
                         <span>作者: {book.author}</span>
 
-                        <span>更新时间: {timestampFormat(latestChapter.time)}</span>
+                        <span>更新时间: {moment(latestChapter.time).format('YYYY-MM-DD HH:mm:ss')}</span>
                         <span>最新章节: {latestChapter.name}</span>
                         <span onClick={this.handleChaptersSort.bind(this)}><a className="sort">{this.state.sort === 'icon-shengxu' ? '正序' : '倒序'}<i className={`iconfont ${this.state.sort}`}/></a></span>
                     </p>

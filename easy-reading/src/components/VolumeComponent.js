@@ -1,12 +1,20 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 export default class VolumeComponent extends Component{
-    render(){
-        const bookId =this.props.bookId;
-        let volume = this.props.volume;
-        for(let i=0,len=50;i<len;i++){
-            volume.chapterList.splice(volume.chapterList.length,0,{id:i,name:`第${i}章 好好学习，天天向上`,href:""})
+    constructor(props){
+        super(props);
+        this.state = {
+            bookId:"",
+            volume:{},
+
         }
+    }
+    componentWillReceiveProps(props){
+        this.setState({volume:props.volume,bookId:props.bookId});
+    }
+    render(){
+        const volume = this.state.volume;
+        const bookId = this.state.bookId;
         return(
             <div className="volume">
 
@@ -19,10 +27,16 @@ export default class VolumeComponent extends Component{
                 </div>
                 <div className="main">
                     <ul>
-                        {volume.chapterList.map((item,index) => {
+                        {
+                            volume.chapterList ?
+                                volume.chapterList.map((item,index) => {
 
-                            return <li key={index}> <Link to={`/bookCity/books/${bookId}/chapterList/${item.id}`}>{item.name}</Link></li>
-                        })}
+                                    return <li key={index}> <Link to={`/bookCity/books/${bookId}/chapterList/${item.id}`}>{item.name}</Link></li>
+                                })
+                                :
+                                ""
+                        }
+
 
                     </ul>
 

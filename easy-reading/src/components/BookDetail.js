@@ -20,16 +20,14 @@ export default class BookDetail extends Component{
         document.body.style.backgroundColor = "white";
         // 获取传递过来的bookId参数
         let bookid = this.props.match.params.id;
-        // 从服务器获取所有bulletin
+        // 通过bookId从服务器获取书籍
         reqwest({
-            url:`${bookUrl}/1558061396284`,
+            url:`${bookUrl}/1558116539648`,
             type:'json',
             method:'get',
             error:(err)=>console.log(err),
             success:(res)=>{
-                for (let key of Object.keys(res)) {
-                    console.log(key + ": " + res[key]);
-                }
+
                 this.setState({...this.state,book:res});
             }
         });

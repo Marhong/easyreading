@@ -9,6 +9,7 @@ let BookTypeSQL = poolModule.BookTypeSQL;
 let BookRecomendRecordsSQL = poolModule.BookRecomendRecordsSQL;
 let BookRankRecordsSQL = poolModule.BookRankRecordsSQL;
 let RankRecordSQL = poolModule.RankRecordSQL;
+let ChapterSQL = poolModule.ChapterSQL;
 let readImage = require("./readImage");
 let formidable = require('formidable');
 let callback = common.parseUploadBookCallBack;
@@ -45,14 +46,14 @@ exports.addBook = (req, res) => {
             let path = files[name].path;
             console.log('name:' + name+";file:"+path);
             console.log(files[name].name);
-            let newPath = `public/upload/${files[name].name}`;
-            // 好像没必要改名字
+            let newPath = `${files[name].name}`;
             fs.renameSync(path,newPath);
-            changeEncoding(files[name].name);
+            // 好像没必要改名字
             if(path.split(".")[1] === "txt"){
+                changeEncoding(files[name].name);
                 book.fileUrl = newPath
             }else{
-                book.imgUrl = newPath;
+                book.imgUrl = path;
             }
 
         });
@@ -114,10 +115,16 @@ exports.getBookById = (req,res) => {
                                     sum += rows[i].score;
                                 }
                                 book.score = (sum/rows.length).toFixed(1);
-                                for(let key of Object.keys(book)){
-                                    console.log(key+": "+book[key]);
-                                }
-                                res.send(book);
+                                pool.query(ChapterSQL.selectOneById,[book.latestChapter], (err, rows)=>{
+                                    if (err){
+                                        res.send(false);
+                                        throw err;
+                                    }
+                                    book.latestChapter = rows[0];
+
+                                    res.send(book);
+                                });
+
                             })
 
                         });
