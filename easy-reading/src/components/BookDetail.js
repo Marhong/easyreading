@@ -27,11 +27,15 @@ export default class BookDetail extends Component{
             method:'get',
             error:(err)=>console.log(err),
             success:(res)=>{
+                for (let key of Object.keys(res)) {
+                    console.log(key + ": " + res[key]);
+                }
                 this.setState({...this.state,book:res});
             }
         });
     }
     render(){
+
         console.log("书籍id:",this.props.match.params.id);
         // 通过this.props.match.params.id传递过来的书籍id参数，可以从服务器获取书籍详细信息
         // 从服务器获取数据的url: localhost:3000/easyreading/books/:id/detail

@@ -1,9 +1,14 @@
 let poolModule = require('./pool');
 let pool = poolModule.pool;
 let common = require('./common');
+let recommendRecordController =require('./recommendRecordController');
+let getRecommendNumbers = recommendRecordController.getRecommendNumbers;
 let BookSQL = poolModule.BookSQL;
 let BookTypesSQL = poolModule.BookTypesSQL;
 let BookTypeSQL = poolModule.BookTypeSQL;
+let BookRecomendRecordsSQL = poolModule.BookRecomendRecordsSQL;
+let BookRankRecordsSQL = poolModule.BookRankRecordsSQL;
+let RankRecordSQL = poolModule.RankRecordSQL;
 let readImage = require("./readImage");
 let formidable = require('formidable');
 let callback = common.parseUploadBookCallBack;
@@ -57,7 +62,7 @@ exports.addBook = (req, res) => {
 };
 
 // 通过id获取某一书籍
-exports.getBookById = (req,res) =>{
+exports.getBookById = (req,res) => {
     pool.query(BookSQL.selectOneBook,[req.params.id], (err, rows)=>{
         if (err){
             res.send(false);
@@ -65,8 +70,8 @@ exports.getBookById = (req,res) =>{
         }
         let book = rows[0];
         // 通过typeId获取type的名字
-        pool.query(BookTypeSQL.selectBookTypeById,[book.type],(err,rows)=>{
-            if (err){
+        pool.query(BookTypeSQL.selectBookTypeById,[book.type],(err,rows)=> {
+            if (err) {
                 res.send(false);
                 throw err;
             }
@@ -75,28 +80,93 @@ exports.getBookById = (req,res) =>{
             let transformed = "";
             let words = book.keywords.split(",");
             let length = book.keywords.split(",").length;
-            for(let i=0;i<length;i++){
+            for (let i = 0; i < length; i++) {
 
                 let item = words[i];
-                pool.query(BookTypeSQL.selectBookTypeById,[item],(err,rows) =>{
-                    if(err){
+                pool.query(BookTypeSQL.selectBookTypeById, [item], (err, rows) => {
+                    if (err) {
                         res.send(false);
                         throw err;
                     }
 
-                    if(i< length-1){
-                        transformed += rows[0].name+",";
-                    }else{
+                    if (i < length - 1) {
+                        transformed += rows[0].name + ",";
+                    } else {
                         transformed += rows[0].name;
                         book.keywords = transformed;
-                        res.send(book);
+                        // 获取概书籍推荐次数
+                        pool.query(BookRecomendRecordsSQL.selectAllRecommendRecordsByBookId,[book.id], (err, rows)=>{
+                            if (err){
+                                res.send(false);
+                                throw err;
+                            }
+                            book.recommendNumbers = rows.length;
+                            // 获取给该书籍评分的人数
+                            pool.query(RankRecordSQL.selectAllRecordByBookId,[book.id],(err,rows)=>{
+                                if (err){
+                                    res.send(false);
+                                    throw err;
+                                }
+                                book.rankNumbers = rows.length;
+                                // 计算书籍评分
+                                let sum = 0;
+                                for(let i=0,len=rows.length;i<len;i++){
+                                    sum += rows[i].score;
+                                }
+                                book.score = (sum/rows.length).toFixed(1);
+                                for(let key of Object.keys(book)){
+                                    console.log(key+": "+book[key]);
+                                }
+                                res.send(book);
+                            })
+
+                        });
+
+    /*                    // 获取书籍的所有推荐记录
+                        pool.query(BookRecomendRecordsSQL.selectAllRecommendRecordsByBookId, [book.id], (err, rows) => {
+                            if (err) {
+                                res.send(false);
+                                throw err;
+                            }
+                            book.recommendNumbers = rows.length;
+                            console.log("执行了没")
+                            pool.query(BookRankRecordsSQL.selectAllRankRecordsByBookId, [book.id], (err, rows) => {
+                                if (err) {
+                                    res.send(false);
+                                    throw err;
+                                }
+                                // 根据评分记录获取书籍评分人数
+                                book.rankNumbers = rows.length;
+                                // 根据评分记录计算书籍分值
+                                let sum = 0;
+                                for (let i=0;i<rows.length;i++) {
+                                    pool.query(BookRankRecordsSQL.selectRecordById, [item.rankRecordId], (err, rows) => {
+                                            if (err) {
+                                                res.send(false);
+                                                throw err;
+                                            }
+                                            if(i<rows.length-1){
+                                                sum += rows[0].score;
+                                            }else{
+                                                book.score = (sum / rows.length).toFixed(1);
+                                                for (let key of Object.keys(book)) {
+                                                    console.log(key + ": " + book[key]);
+                                                }
+                                                res.send(book);
+                                            }
+
+                                        }
+                                    )
+                                }
+
+                            })
+                        })*/
+
                     }
-                })
+                });
             }
-
         })
-
-    });
+})
 };
 // GET 获取照片
 exports.getImageByUrl = (req,res) => {

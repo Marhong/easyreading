@@ -11,6 +11,12 @@ exports.UserSQL = {
     selectAll:'SELECT * FROM user',
     getUserById:'SELECT * FROM user WHERE id = ? ',
 };
+exports.UserRanksSQL = {
+    insert :'INSERT INTO user_ranks (userId,rankRecordId) VALUES (?,?)',
+};
+exports.UserRecommendsSQL = {
+    insert :'INSERT INTO user_recommends (userId,recommendRecordId) VALUES (?,?)',
+};
 exports.BookshelfSQL = {
     insert :'INSERT INTO bookshelf(id,userId) VALUES (?,?)',
 };
@@ -24,6 +30,22 @@ exports.BookSQL = {
   updateNumbersAndLatestChapter : 'UPDATE book set numbers = ?, latestChapter = ? WHERE id = ?',
   updateBookIsValid:'UPDATE book set isValid = ? WHERE id = ?',
     selectOneBook : 'SELECT * FROM book WHERE id = ?',
+};
+exports.BookRecomendRecordsSQL = {
+    selectAllRecommendRecordsByBookId : 'SELECT * FROM book_recommend_records WHERE bookId = ?',
+    insert:'INSERT INTO book_recommend_records (bookId,recommendRecordId) VALUES (?,?)',
+};
+exports.RecomendRecordSQL = {
+    insert:'INSERT INTO recommend_record (id,userId,bookId,time) VALUES (?,?,?,?)',
+};
+exports.BookRankRecordsSQL = {
+    selectAllRankRecordsByBookId : 'SELECT * FROM book_rank_records WHERE bookId = ?',
+    insert :'INSERT INTO book_rank_records (bookId,rankRecordId) VALUES (?,?)',
+};
+exports.RankRecordSQL = {
+    selectAllRecordByBookId : 'SELECT * FROM rank_record WHERE  bookId = ?',
+    insert : 'INSERT INTO rank_record (id,bookId,userId,score,time) VALUES (?,?,?,?,?)',
+    updateScore : 'UPDATE rank_record set score = ? WHERE userId = ?',
 };
 exports.BookTypeSQL = {
     updateUseTimes : 'UPDATE booktype set useTimes = useTimes+1 where id = ?',

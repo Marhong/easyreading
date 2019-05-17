@@ -64,6 +64,10 @@ router.get('/books/:id/latestChapter',book_controller.book_getLatestChapter);
 router.get('/books/:id/volumes',book_controller.book_getAllVolumesById);*/
 // 图片路由
 router.get('/book/image/:url',book_controller.getImageByUrl);
+// POST 用户推荐书籍
+router.post('/book/recommend',recommend_record_controller.addRecommendRecord);
+// POST 用户给书籍评分
+router.post('/book/rank',rank_record_controller.addOrUpdateRankRecord);
 /// Chapter章节路由 ///   用户每次切换章节都会更新对应书籍的最后阅读章节属性
 
 /*// GET通过章节id获取某一章节详细信息
