@@ -54,9 +54,41 @@ exports.getAllBulletins = (req,res) => {
 
 };
 
+// 获取前num条公告
+exports.getTopNumBulletins = (req,res) => {
+
+    pool.query(BulletinSQL.selectTopNumBulletin,[Number(req.params.num)], (err, rows)=>{
+        if (err){
+            res.send(false);
+            throw err;
+        }
+        res.send(rows);
+    });
+};
+// 获取前start+10条数据
+exports.getMoreTenBulletins = (req,res) => {
+
+    pool.query(BulletinSQL.selectTopNumBulletin,[Number(req.params.start)+10], (err, rows)=>{
+        if (err){
+            res.send(false);
+            throw err;
+        }
+        res.send(rows);
+    });
+};
+// 通过id获取某一条公告
+exports.getBulletinById = (req,res) =>{
+    pool.query(BulletinSQL.selectOneBulletin,[req.params.id], (err, rows)=>{
+        if (err){
+            res.send(false);
+            throw err;
+        }
+        res.send(rows[0]);
+    });
+};
 // 删除某条公告
 exports.deleteBulletin = (req,res) => {
-   
+
     pool.query(BulletinSQL.delete,[req.body.id], (err, row)=>{
         if (err){
             res.send(false);

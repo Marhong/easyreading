@@ -23,9 +23,11 @@ exports.BookSQL = {
   '(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
   updateNumbersAndLatestChapter : 'UPDATE book set numbers = ?, latestChapter = ? WHERE id = ?',
   updateBookIsValid:'UPDATE book set isValid = ? WHERE id = ?',
+    selectOneBook : 'SELECT * FROM book WHERE id = ?',
 };
 exports.BookTypeSQL = {
     updateUseTimes : 'UPDATE booktype set useTimes = useTimes+1 where id = ?',
+    selectBookTypeById: 'SELECT * FROM booktype WHERE id = ?',
 };
 exports.BookTypesSQL = {
     insert :'INSERT INTO book_types(bookId,bookTypeId) VALUES (?,?)',
@@ -46,7 +48,7 @@ exports.BulletinSQL = {
     insert :'INSERT INTO bulletin (id,userId,title,content,type,time) VALUES (?,?,?,?,?,?)',
     delete : 'Delete FROM bulletin WHERE id = ?',
     selectAll :'SELECT * FROM bulletin order by time desc',
-    selectTopNumBulletin : 'SELECT * FROM bulletin order by time desc top ?',
+    selectTopNumBulletin : 'SELECT * FROM bulletin order by time desc limit ?',
     selectOneBulletin : 'SELECT * FROM bulletin WHERE id = ?',
-    selectMoreTenBulletin : 'SELECT * FROM bulletin order by time desc top (? + 10)',
+
 };

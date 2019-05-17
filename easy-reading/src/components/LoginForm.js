@@ -330,6 +330,7 @@ class NormalLoginForm extends React.Component {
                             <Input placeholder="个人简介"/>
                         )}
                     </Form.Item>
+                    <img src={`http://localhost:5000/easyreading/book/image/00001543.jpg`}/>
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             注册

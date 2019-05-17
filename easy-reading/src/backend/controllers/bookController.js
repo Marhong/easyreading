@@ -56,6 +56,48 @@ exports.addBook = (req, res) => {
     });
 };
 
+// 通过id获取某一书籍
+exports.getBookById = (req,res) =>{
+    pool.query(BookSQL.selectOneBook,[req.params.id], (err, rows)=>{
+        if (err){
+            res.send(false);
+            throw err;
+        }
+        let book = rows[0];
+        // 通过typeId获取type的名字
+        pool.query(BookTypeSQL.selectBookTypeById,[book.type],(err,rows)=>{
+            if (err){
+                res.send(false);
+                throw err;
+            }
+            book.type = rows[0].name;
+            // 书籍的关键字可能有多个，需要遍历查询booktype获取关键字的名字
+            let transformed = "";
+            let words = book.keywords.split(",");
+            let length = book.keywords.split(",").length;
+            for(let i=0;i<length;i++){
+
+                let item = words[i];
+                pool.query(BookTypeSQL.selectBookTypeById,[item],(err,rows) =>{
+                    if(err){
+                        res.send(false);
+                        throw err;
+                    }
+
+                    if(i< length-1){
+                        transformed += rows[0].name+",";
+                    }else{
+                        transformed += rows[0].name;
+                        book.keywords = transformed;
+                        res.send(book);
+                    }
+                })
+            }
+
+        })
+
+    });
+};
 // GET 获取照片
 exports.getImageByUrl = (req,res) => {
     console.log(req.params.url);

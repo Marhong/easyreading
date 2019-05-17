@@ -8,11 +8,6 @@ class BulletinListPage extends  Component{
 
     render() {
 
-        let bulletin = this.props.location.bulletin;
-        console.log("BulletinListPage",bulletin);
-        if(bulletin){
-            sessionStorage.setItem("bulletin",JSON.stringify(bulletin));
-        }
         return (
             <div>
                 <Switch >

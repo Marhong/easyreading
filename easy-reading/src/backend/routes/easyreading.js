@@ -43,19 +43,21 @@ router.get('/bulletin/all',bulletin_controller.getAllBulletins);
 router.post('/bulletin/delete',bulletin_controller.deleteBulletin);
 // GET 每次获取10条公告,请求应该包含一个参数
 // start 起始索引，初始化时start为0，之后每请求一次start+=10
-/*router.get('/bulletinList/:start',bulletin_controller.bulletin_getTenBulletins);*/
+router.get('/bulletin/more/:start',bulletin_controller.getMoreTenBulletins);
 // GET 按时间排序获取最近的num条公告
-/*router.get('/bulletin/bulletinBoard/:num',bulletin_controller.getTopNumBulletins);*/
+router.get('/bulletin/top/:num',bulletin_controller.getTopNumBulletins);
+// GET 获取某一条公告
+router.get('/bulletin/:id',bulletin_controller.getBulletinById);
 
 // Book书籍路由 ///
 
 // POST 用户上传书籍
 router.post('/book/add',book_controller.addBook);
-
+// GET 通过书籍id获取某一书籍详细信息
+router.get('/book/:id',book_controller.getBookById);
 /*// 获取用户每天的个性化推荐书籍列表
 router.get('/books/personalBooks',book_controller.book_getPersonalBooks);
-// GET 通过书籍id获取某一书籍详细信息
-router.get('/books/:id/detail',book_controller.book_getBookById);
+
 // GET 获取书籍的最近更新章节
 router.get('/books/:id/latestChapter',book_controller.book_getLatestChapter);
 // GET 通过书籍id获取某一书籍的所有章节
