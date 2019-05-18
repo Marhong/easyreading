@@ -29,12 +29,14 @@ exports.BookshelfSQL = {
 };
 exports.ReadingSettingSQL = {
     insert:'INSERT INTO reading_setting(id,userId,fontSize,pageWidth,fontFamily,bgColor,pageBgColor,lastModifiedTime) VALUES(?,?,?,?,?,?,?,?)',
+    selectOneByUserId : 'SELECT * FROM reading_setting WHERE userId = ?',
+    update: 'UPDATE reading_setting set fontSize = ?, pageWidth = ?, fontFamily = ?,bgColor = ?,pageBgColor = ?,lastModifiedTime = ? WHERE userId = ?',
 };
 exports.BookSQL = {
   insert :'INSERT INTO book (id,userId,author,distribute,dynasty,name,startTime,description,' +
-  'clickNumbers,isFinished,keywords,preface,latestChapter,isValid,isFree,imgUrl,fileUrl,type,numbers) VALUES ' +
-  '(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-  updateNumbersAndLatestChapter : 'UPDATE book set numbers = ?, latestChapter = ? WHERE id = ?',
+  'clickNumbers,isFinished,keywords,preface,latestChapter,isValid,isFree,imgUrl,fileUrl,type,numbers,firstChapter) VALUES ' +
+  '(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+  updateNumbersAndLatestChapter : 'UPDATE book set numbers = ?, latestChapter = ? ,firstChapter = ? WHERE id = ?',
   updateBookIsValid:'UPDATE book set isValid = ? WHERE id = ?',
     selectOneBook : 'SELECT * FROM book WHERE id = ?',
 };

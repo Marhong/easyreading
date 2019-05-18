@@ -17,7 +17,7 @@ exports.parseUploadBookCallBack = async (err,res,book) =>{
 
     // 将book对象属性值插入数据库
       pool.query(BookSQL.insert,[book.id,book.userId,book.author,book.distribute,book.dynasty,book.name,book.startTime,book.description,
-              book.clickNumbers,book.isFinished,book.keywords,book.preface,book.latestChapter,book.isValid,book.isFree,book.imgUrl,book.fileUrl,book.type,book.numbers]
+              book.clickNumbers,book.isFinished,book.keywords,book.preface,book.latestChapter,book.isValid,book.isFree,book.imgUrl,book.fileUrl,book.type,book.numbers,book.firstChapter]
           ,(err,rows) => {
               if(err){
                   res.send(err);
@@ -166,7 +166,7 @@ async function insertBookData(res,volumeList,chapterList,numbers,bookId){
         })
     }
     // update书籍的number和latestChapter
-    pool.query(BookSQL.updateNumbersAndLatestChapter,[numbers,chapterList[chapterList.length-1].id,bookId],(err) => {
+    pool.query(BookSQL.updateNumbersAndLatestChapter,[numbers,chapterList[chapterList.length-1].id,chapterList[0].id,bookId],(err) => {
         if(err){
             res.send(err);
             throw err;

@@ -6,7 +6,7 @@ export default class VolumeComponent extends Component{
     constructor(props){
         super(props);
         this.state = {
-            bookId:"",
+            bookId:props.bookId,
             volume:props.volume,
 
         }
@@ -43,7 +43,6 @@ export default class VolumeComponent extends Component{
                         {
                             volume.chapterList ?
                                 volume.chapterList.map((item,index) => {
-
                                     return <li key={index}> <Link to={`/bookCity/books/${bookId}/chapterList/${item.id}`}>{item.name}</Link></li>
                                 })
                                 :

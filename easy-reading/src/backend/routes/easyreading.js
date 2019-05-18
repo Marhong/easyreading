@@ -78,6 +78,10 @@ router.get('/chapter/:id/all',chapter_controller.getChaptersByVolumeId);
 router.get('/volume/:id',volume_controller.getVolumeById);
 // GET 通过书籍id获取该书籍的所有卷
 router.get('/volume/:id/all',volume_controller.getAllVolumes);
+/// GET 通过userId获取阅读界面设置
+router.get('/reading_setting/:id',reading_setting_controller.getReadingSettingByUserId);
+/// POST 保存用户设置的阅读界面设置
+router.post('/reading_setting/:id/save',reading_setting_controller.saveReadingSetting);
 /*// GET通过章节id获取某一章节详细信息
 router.get('/chapters/:id/detail',chapter_controller.chapter_getChapterById);
 // GET 通过章节id获取该章节的上一章
@@ -85,7 +89,6 @@ router.get('/chapters/:id/preChapter',chapter_controller.getPreChapter);
 // GET 通过章节id获取该章节的下一章
 router.get('/chapters/:id/nextChapter',chapter_controller.getNextChapter);
 
-/// ReadingSetting阅读界面设置路由
 
 // GET 通过用户id，获取该用户的阅读界面设置
 router.get('/readingSetting/:id/detail',reading_setting_controller.getReadingSettingById);

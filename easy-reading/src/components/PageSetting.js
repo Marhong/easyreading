@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Button,Icon} from 'antd';
 import {colorRGBToHex,HexToColorRGB} from '../static/commonFun';
+
 require('../css/PageSetting.css');
 const bgColors = {
     faeed7:"#d9cdb6",
@@ -97,13 +98,13 @@ export default class PageSetting extends Component{
 
     render(){
         return(
-            <div className="setting" ref={(setting) => this.setting = setting}>
+            <div className="setting" ref={(setting) => this.setting = setting} style={{fontSize:18}}>
                 <div className="title">
                     <strong className="settingName">设置</strong><Icon type="close" className="close" onClick={this.handleClose.bind(this)}/>
                 </div>
                 <hr/>
                 <div className="bgColor" onClick={this.handleSettingChange.bind(this)} >
-                    <span>阅读背景</span>
+                    <span >阅读背景</span>
                         <span className="outer selected" > <span className="color1"/></span>
                         <span className="outer"><span className="color2"/></span>
                         <span className="outer"><span className="color3"/></span>
@@ -114,7 +115,7 @@ export default class PageSetting extends Component{
 
                 </div>
                 <div className="fontFamily" onClick={this.handleSettingChange.bind(this)}>
-                    <span>正文字体</span>
+                    <span >正文字体</span>
                     <span className="controlFontFamily" >
                         <span className="selected">宋体</span>
                         <span>黑体</span>
@@ -123,13 +124,13 @@ export default class PageSetting extends Component{
                     </span>
                 </div>
                 <div className="fontSize">
-                    <span>字体大小 </span>
+                    <span >字体大小 </span>
                     <span className="controlFont" onClick={this.handleSettingChange.bind(this)}>
                         <strong className="minus">A-</strong> | <strong/><span ref={(size) => this.size = size}> 14</span> <strong/>| <strong/><strong className="plus">A+</strong>
                     </span>
                 </div>
                 <div className="pageWidth"  onClick={this.handleSettingChange.bind(this)}>
-                    <span>页面宽度 </span>
+                    <span >页面宽度 </span>
                     <span className="controlPageWidth" >
                         <span>600</span>
                         <span>800</span>
@@ -138,7 +139,7 @@ export default class PageSetting extends Component{
                     </span>
                 </div>
                 <div className="footer">
-                    <span className="controlSetting" onClick={this.handleSettingChange.bind(this)}> <Button type="danger">保存设置</Button> <Button>恢复默认</Button></span>
+                    <span className="controlSetting" onClick={this.handleSettingChange.bind(this)}> <Button type="danger">保存设置</Button></span>
                 </div>
             </div>
         );

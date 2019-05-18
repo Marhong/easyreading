@@ -16,7 +16,7 @@ import BookDetailPageRouter from "./BookDetailPage";
 class ChapterReaderPage extends  Component{
 
     render() {
-        console.log(this.props.match.params.id);
+        console.log("ReaderPage书籍id:"+this.props.match.params.bookId,"章节id："+this.props.match.params.id);
         return (
             <div>
                 <Switch >

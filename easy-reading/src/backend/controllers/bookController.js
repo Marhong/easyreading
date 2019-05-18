@@ -27,6 +27,7 @@ exports.addBook = (req, res) => {
     book.clickNumbers = 0;
     book.isFinished = true;
     book.latestChapter = 0;
+    book.firstChapter = 0;
     book.isValid = false;
     book.isFree = true;
     book.fileUrl=0;

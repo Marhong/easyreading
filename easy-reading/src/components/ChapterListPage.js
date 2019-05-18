@@ -15,7 +15,8 @@ import BookCityPageRouter from "./BookCityPage";
 class ChapterListPage extends  Component{
 
     render() {
-        console.log(this.props.match.params.id);
+        console.log("ListPage书籍id:"+this.props.match.params.bookId,"章节id："+this.props.match.params.id);
+
         return (
             <div>
                 <Switch >

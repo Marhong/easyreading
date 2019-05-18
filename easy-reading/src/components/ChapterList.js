@@ -98,7 +98,7 @@ export default class ChapterList extends Component{
                 </div>
                 <div className="content">
                     {volumes.map((item,index) => {
-                        return <VolumeComponent key={index} volume={item} bookId={book.id}/>
+                        return <VolumeComponent key={index} volume={item} bookId={item.bookId}/>
                     })}
                 </div>
             </div>
