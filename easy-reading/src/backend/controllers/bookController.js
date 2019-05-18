@@ -25,6 +25,7 @@ exports.addBook = (req, res) => {
     book.id = Date.now();
     book.startTime = Date.now();
     book.clickNumbers = 0;
+    book.memberClickNumbers = 0;
     book.isFinished = true;
     book.latestChapter = 0;
     book.firstChapter = 0;
@@ -138,6 +139,26 @@ exports.getBookById = (req,res) => {
             }
         })
 })
+};
+
+// 获取所有书籍
+exports.getAllBooks = (req,res) => {
+
+};
+// 用户查看书籍详情，更新书籍的clickNumber
+exports.clickBook = (req,res) =>{
+    let {userId,bookId,time} =req.body;
+    let sql = "";
+    if(userId){
+        sql = BookSQL.updateNormalAndMemberClickNumbers;
+    }else{
+        sql = BookSQL.updateNormalClickNumbers;
+    }
+    pool.query(sql,[bookId],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
+        res.end();
+    })
 };
 // GET 获取照片
 exports.getImageByUrl = (req,res) => {

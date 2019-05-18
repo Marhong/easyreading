@@ -34,11 +34,13 @@ exports.ReadingSettingSQL = {
 };
 exports.BookSQL = {
   insert :'INSERT INTO book (id,userId,author,distribute,dynasty,name,startTime,description,' +
-  'clickNumbers,isFinished,keywords,preface,latestChapter,isValid,isFree,imgUrl,fileUrl,type,numbers,firstChapter) VALUES ' +
-  '(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+  'clickNumbers,isFinished,keywords,preface,latestChapter,isValid,isFree,imgUrl,fileUrl,type,numbers,firstChapter,memberClickNumbers) VALUES ' +
+  '(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
   updateNumbersAndLatestChapter : 'UPDATE book set numbers = ?, latestChapter = ? ,firstChapter = ? WHERE id = ?',
   updateBookIsValid:'UPDATE book set isValid = ? WHERE id = ?',
     selectOneBook : 'SELECT * FROM book WHERE id = ?',
+    updateNormalAndMemberClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1,  memberClickNumbers = memberClickNumbers+1 WHERE id = ?',
+    updateNormalClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1  WHERE id = ?'
 };
 exports.BookRecomendRecordsSQL = {
     selectAllRecommendRecordsByBookId : 'SELECT * FROM book_recommend_records WHERE bookId = ?',
@@ -55,6 +57,10 @@ exports.RankRecordSQL = {
     selectAllRecordByBookId : 'SELECT * FROM rank_record WHERE  bookId = ?',
     insert : 'INSERT INTO rank_record (id,bookId,userId,score,time) VALUES (?,?,?,?,?)',
     updateScore : 'UPDATE rank_record set score = ? WHERE userId = ?',
+};
+exports.CollectRecordSQL = {
+  insert :'INSERT INTO collectrecord (id,userId,bookId,time) VALUES (?,?,?,?)',
+    selectByUserAndBookId : 'SELECT * FROM collectrecord WHERE userId = ? and bookId = ?',
 };
 exports.BookTypeSQL = {
     updateUseTimes : 'UPDATE booktype set useTimes = useTimes+1 where id = ?',

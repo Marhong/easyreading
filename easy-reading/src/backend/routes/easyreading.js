@@ -53,6 +53,8 @@ router.get('/bulletin/:id',bulletin_controller.getBulletinById);
 
 // POST 用户上传书籍
 router.post('/book/add',book_controller.addBook);
+// GET 获取所有书籍
+router.get('/book/all',book_controller.getAllBooks);
 // GET 通过书籍id获取某一书籍详细信息
 router.get('/book/:id',book_controller.getBookById);
 /*// 获取用户每天的个性化推荐书籍列表
@@ -66,7 +68,8 @@ router.post('/book/recommend',recommend_record_controller.addRecommendRecord);
 // POST 用户给书籍评分
 router.post('/book/rank',rank_record_controller.addOrUpdateRankRecord);
 /// Chapter章节路由 ///   用户每次切换章节都会更新对应书籍的最后阅读章节属性
-
+// POST 用户查看书籍详情,修改书籍clickNumbers
+router.post('/book/click',book_controller.clickBook);
 // GET通过章节id获取某一章节详细信息
 router.get('/chapter/:id',chapter_controller.getChapterById);
 // GET 通过卷id获取该卷的所有章节
@@ -85,6 +88,8 @@ router.post('/chapterreadingrecord/add',chapter_reading_record_controller.addRea
 // POST 更新一条章节阅读记录
 router.post('/chapterreadingrecord/update',chapter_reading_record_controller.updateReadingRecord);
 
+// POST 添加一条收藏记录
+router.post('/collect/add',collect_record_controller.addCollectRecord);
 // POST 请求删除藏书
 router.post('/book/:id/delete', book_controller.book_delete_post);
 

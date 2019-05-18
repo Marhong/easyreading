@@ -5,13 +5,37 @@ import {Link} from 'react-router-dom';
 import '../css/BookCity.css';
 import NavComponent from "./NavComponent";
 import FilterPanel from "./FilterPanel";
+import reqwest from "reqwest";
+const bookUrl = "http://localhost:5000/easyreading/book";
 export default class BookCity extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            data:[],
+            keywords:"",
+            selectType:props.match.params.type,
+        }
     }
     componentDidMount(){
         document.documentElement.style.backgroundColor = "white";
         document.body.style.backgroundColor = "white";
+        // 从服务器获取所有书籍
+        reqwest({
+            url:`${bookUrl}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                this.setState({...this.state,data:res});
+            }
+        });
+    }
+    // 最开始只传递该类型数据的长度，以及第一个page页面展示的数据。
+    // 如pagesize为5，总共有22条数据。初始化时只传递25和前5条数据
+    // 切换page,根据page值向服务器请求新page页面的数据
+    // 需要判断table展示的什么类型的数据(书籍、公告、帖子、评论等)
+    onChange(page,pageSize,e){
+        console.log(page,pageSize,this.state.currentDataName);
     }
     render(){
         console.log("当前默认类型为: ",this.props.match.params.type)
@@ -35,17 +59,21 @@ export default class BookCity extends Component{
                    {/* <NavComponent/>*/}
                     <div className="content">
                         <ul>
-                            {data.map((book,index) => {
+                            {
+                                data ?
+                                    data.map((book,index) => {
                                 if(index>=data.length-2){
                                     return <li key={book.id}><MyBookCard book={book}/></li>
                                 }else{
                                     return <li key={book.id}><MyBookCard book={book}/><hr/></li>
                                 }
-                            })}
+                            })
+                            :
+                            ""}
                         </ul>
                     </div>
                     <div className="pagination">
-                        <Pagination showQuickJumper defaultCurrent={2} total={500}  />
+                        <Pagination showQuickJumper defaultCurrent={1} total={500}  onChange={this.onChange.bind(this)} />
                     </div>
                 </div>
 

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Link ,Switch} from "react-router-dom";
 import BookDetailPageRouter from "./BookDetailPage";
 import BookCity from "./BookCity";
 import IndexPageRouter from "./IndexPage";
-import MainContent from "./MainContent";
 
 class BookCityPage extends  Component{
 

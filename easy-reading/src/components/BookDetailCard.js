@@ -6,17 +6,35 @@ import { Link } from "react-router-dom";
 import {message} from "antd/lib/index";
 import reqwest from "reqwest";
 const bookUrl = "http://localhost:5000/easyreading/book";
+const collectUrl = "http://localhost:5000/easyreading/collect";
 export default class BookDetailCard extends Component{
     constructor(props){
         super(props);
+        let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+        let userId = user ? user.id : null;
         this.state = {
             book:{},
-            userId:JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user")).id,
+            userId:userId,
+        };
 
-        }
     }
     componentWillReceiveProps(props){
-        this.setState({book:props.book});
+        // 当该组件创建时，认为该书被点击浏览过一次，该书clickNumbers+1
+        let book = props.book;
+        reqwest({
+            url:`${bookUrl}/click`,
+            type:'json',
+            method:'post',
+            data:{userId:this.state.userId,bookId:book.id,time:Date.now()},
+            error:(err)=>{
+                console.log(err)},
+            success:(res)=>{
+                console.log("查看书籍详情成功");
+                let memberClickNumbers= this.state.userId ? book.memberClickNumbers+1 : book.memberClickNumbers;
+                this.setState({...this.state,book:{...book,clickNumbers:book.clickNumbers+1,memberClickNumbers:memberClickNumbers}});
+            }
+        });
+
     }
     handleChange = (bookId,number) => {
         reqwest({
@@ -74,6 +92,25 @@ export default class BookDetailCard extends Component{
             }
         });
     }
+    // 用户收藏书籍
+    handleCollect(bookId,e){
+        reqwest({
+            url:`${collectUrl}/add`,
+            type:'json',
+            method:'post',
+            data:{userId:this.state.userId,bookId:bookId,time:Date.now()},
+            error:(err)=>{
+                message.error("收藏书籍失败！");
+                console.log(err)},
+            success:(res)=>{
+                if(res){
+                    message.success("收藏书籍成功！");
+                }else{
+                    message.warn("已经收藏过该书!");
+                }
+            }
+        });
+    }
     handleSubmit(values){
         console.log("BookDetailCard",values);
     }
@@ -97,11 +134,11 @@ export default class BookDetailCard extends Component{
                     </div>
                     <p className="intro">{book.description ? book.description : "" }</p>
                     <p className="count">{(book.numbers/10000).toFixed(2)}<span className="suffix">万字</span>
-                        {book.clickNumbers ? (book.clickNumbers/10000).toFixed(2) : ""}<span className="suffix">万总点击</span>
+                        {book.clickNumbers }<span className="suffix">总点击</span>
                        {/* 目前暂不统计非登录人员点击次数，所以会员点击量==总点击*/}
-                        {book.clickNumbers ? (book.clickNumbers/10000).toFixed(2) : ""}<span className="suffix">万会员点击</span>
+                        {book.memberClickNumbers }<span className="suffix">会员点击</span>
                         {book.recommendNumbers }<span className="suffix">总推荐</span></p>
-                    <p className="buttons"><Link to={`/bookCity/books/${book.id}/chapterList/1`}><Button >开始阅读</Button></Link> <Button >加入书架</Button> <Button onClick={this.handleRecommend.bind(this,book.id)}>投推荐票</Button> <Button > <Link to={`/bookCity/books/${book.id}/chapterList`}>全部目录</Link></Button><ReportItem item={book} onSubmit={this.handleSubmit.bind(this)}/> </p>
+                    <p className="buttons"><Link to={`/bookCity/books/${book.id}/chapterList/${book.firstChapter}`}><Button >开始阅读</Button></Link> <Button onClick={this.handleCollect.bind(this,book.id)}>加入书架</Button> <Button onClick={this.handleRecommend.bind(this,book.id)}>投推荐票</Button> <Button > <Link to={`/bookCity/books/${book.id}/chapterList`}>全部目录</Link></Button><ReportItem item={book} onSubmit={this.handleSubmit.bind(this)}/> </p>
                 </div>
                 <div className="tRan">
                     <h2>{String(book.score) === "NaN" ? "暂无评分" : Math.floor(book.score)}.<span className="point">{String(book.score).split(".")[1]}</span></h2>
