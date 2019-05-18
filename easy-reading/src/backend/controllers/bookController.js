@@ -47,13 +47,15 @@ exports.addBook = (req, res) => {
             console.log('name:' + name+";file:"+path);
             console.log(files[name].name);
             let newPath = `${files[name].name}`;
-            fs.renameSync(path,newPath);
+            //fs.renameSync(path,newPath);
             // 好像没必要改名字
             if(path.split(".")[1] === "txt"){
-                changeEncoding(files[name].name);
-                book.fileUrl = newPath
+
+                changeEncoding(path);
+                book.fileUrl = path
             }else{
-                book.imgUrl = path;
+                let imgUrl = path.split("\\")[2];
+                book.imgUrl = imgUrl;
             }
 
         });
@@ -180,6 +182,7 @@ exports.getImageByUrl = (req,res) => {
     console.log(req.params.url);
     if (req.params.url !=="favicon.ico") {
         //res.write('hello,world');//不能向客户端输出任何字节,否则会影响图片的输出
+        //readImage.readImage(`./${req.params.url}`, res);
         readImage.readImage(`./public/upload/${req.params.url}`, res); //如果文件路径存在则添加数据，如果不存在则新建文件并且添加数据
         console.log("继续执行");
         //res.end('end'); 在 readImage.readImage方法中已经写过了

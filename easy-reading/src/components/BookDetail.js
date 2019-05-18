@@ -22,7 +22,7 @@ export default class BookDetail extends Component{
         let bookid = this.props.match.params.id;
         // 通过bookId从服务器获取书籍
         reqwest({
-            url:`${bookUrl}/1558116539648`,
+            url:`${bookUrl}/1558143227651`,
             type:'json',
             method:'get',
             error:(err)=>console.log(err),

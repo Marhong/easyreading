@@ -154,7 +154,6 @@ async function insertBookData(res,volumeList,chapterList,numbers,bookId){
         let chapter = chapterList[i];
         pool.query(ChapterSQL.insert,[chapter.id,chapter.volumeId,bookId,chapter.name,chapter.numbers,chapter.link,chapter.isFree,chapter.time,chapter.content],(err)=>{
             if(err){
-                res.send(err);
                 throw err;
             }
             // 每插入一个chapter,就插入一个volumeChapters
@@ -176,7 +175,7 @@ async function insertBookData(res,volumeList,chapterList,numbers,bookId){
 }
 // 将文件编码格式转为utf-8
 exports.changeEncoding=(fileName) => {
-    let filePath = 'public/upload/'+fileName;
+    let filePath = fileName;
     let stats = fs.statSync(filePath);
 
     if (stats.isFile()) {
