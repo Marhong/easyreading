@@ -10,6 +10,9 @@ let BookRecomendRecordsSQL = poolModule.BookRecomendRecordsSQL;
 let BookRankRecordsSQL = poolModule.BookRankRecordsSQL;
 let RankRecordSQL = poolModule.RankRecordSQL;
 let ChapterSQL = poolModule.ChapterSQL;
+let VolumeSQL = poolModule.VolumeSQL;
+let BookVolumesSQL = poolModule.BookVolumesSQL;
+let compare = poolModule.compare;
 let readImage = require("./readImage");
 let formidable = require('formidable');
 let callback = common.parseUploadBookCallBack;
@@ -123,54 +126,42 @@ exports.getBookById = (req,res) => {
                                         throw err;
                                     }
                                     book.latestChapter = rows[0];
+                                    // 通过bookId从bookVolumes中获取所有项
+                                    pool.query(BookVolumesSQL.selectAll,[req.params.id], (err, rows)=>{
+                                        if (err){
+                                            res.send(false);
+                                            throw err;
+                                        }
+                                        let volumes = [];
+                                        let index = 0;
+                                        let volumeLength = rows.length;
+                                        // 遍历bookVolumes的每一项
+                                        for(let i=0;i<volumeLength;i++){
+                                            let bookVolume = rows[i];
+                                            //  // 通过遍历bookVolumes的每一项中每一项的volumeId从volume中获取volume
+                                            pool.query(VolumeSQL.selectOneById,[bookVolume.volumeId],(err,rows) =>{
+                                                if(err) throw err;
+                                                if(i<volumeLength){
+                                                    volumes.push(rows[0]);
+                                                    index++;
+                                                    if(index === volumeLength){
+                                                        book.volumes = volumes.sort(compare('id'));
+                                                        for(let i=0;i<book.volumes.length;i++){
+                                                            console.log(book.volumes[i])
+                                                        }
+                                                        res.send(book);
+                                                    }
+                                                }
+                                            })
 
-                                    res.send(book);
+                                        }
+                                    });
+
                                 });
 
                             })
 
                         });
-
-    /*                    // 获取书籍的所有推荐记录
-                        pool.query(BookRecomendRecordsSQL.selectAllRecommendRecordsByBookId, [book.id], (err, rows) => {
-                            if (err) {
-                                res.send(false);
-                                throw err;
-                            }
-                            book.recommendNumbers = rows.length;
-                            console.log("执行了没")
-                            pool.query(BookRankRecordsSQL.selectAllRankRecordsByBookId, [book.id], (err, rows) => {
-                                if (err) {
-                                    res.send(false);
-                                    throw err;
-                                }
-                                // 根据评分记录获取书籍评分人数
-                                book.rankNumbers = rows.length;
-                                // 根据评分记录计算书籍分值
-                                let sum = 0;
-                                for (let i=0;i<rows.length;i++) {
-                                    pool.query(BookRankRecordsSQL.selectRecordById, [item.rankRecordId], (err, rows) => {
-                                            if (err) {
-                                                res.send(false);
-                                                throw err;
-                                            }
-                                            if(i<rows.length-1){
-                                                sum += rows[0].score;
-                                            }else{
-                                                book.score = (sum / rows.length).toFixed(1);
-                                                for (let key of Object.keys(book)) {
-                                                    console.log(key + ": " + book[key]);
-                                                }
-                                                res.send(book);
-                                            }
-
-                                        }
-                                    )
-                                }
-
-                            })
-                        })*/
-
                     }
                 });
             }

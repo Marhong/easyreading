@@ -56,9 +56,9 @@ async function analyseTxtFile(res,url,bookId) {
          input: fRead
      });
         // 匹配卷的正则表达式
-        let volume = /(^[正文|第])([0-9|一|二|三|四|五|六|七|八|九|十|百|千|万]+)?(.[卷|集|部])/;
+        let volume = /^第([0-9|一二三四五六七八九十百千万]+)?(.[卷集部])/;
         // 匹配章节的正则表达式
-        let chapter = /(^[正文|第])([0-9|一|二|三|四|五|六|七|八|九|十|百|千|万]+)?(.[章|篇|回|节])/;
+        let chapter = /^第([0-9|一二三四五六七八九十百千万]+)?(.[章篇回节])/;
 
         let volumeList = []; // 卷列表
         let chapterList = []; // 章节列表

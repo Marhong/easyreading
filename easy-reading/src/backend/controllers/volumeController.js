@@ -24,11 +24,9 @@ exports.getAllVolumes = (req,res) =>{
             res.send(false);
             throw err;
         }
-
         let volumes = [];
         let index = 0;
         let volumeLength = rows.length;
-
         // 遍历bookVolumes的每一项
         for(let i=0;i<volumeLength;i++){
             let bookVolume = rows[i];
@@ -42,38 +40,6 @@ exports.getAllVolumes = (req,res) =>{
                         res.send(volumes.sort(compare('id')));
                     }
                 }
-                // 通过volumeId从volume_chapters中获取所有项
-/*                pool.query(VolumeChaptersSQL.selectAll,[volume.id],(err,rows) =>{
-                    if (err){
-                        res.send(false);
-                        throw err;
-                    }
-                    // 遍历volume_chapters中所有项
-                    for(let i=0,len=rows.length;i<len;i++){
-                        let volumeChapter = rows[i];
-                        // 通过volume_chapters中每一项的chapterId从chapter中获取chapter
-                        pool.query(ChapterSQL.selectOneById,[volumeChapter.chapterId], (err, rows)=>{
-                            if (err){
-                                res.send(false);
-                                throw err;
-                            }
-                            chapterList.push(rows[0]);
-                            if(i === len-1){
-                                //volume.chapterList = chapterList;
-                                volume.count = len;
-
-                                volumes.push(volume);
-                                index++;
-                                console.log(volumeLength,index);
-                            }
-                            if(index === volumeLength+1){
-                                console.log(volumes[0].chapterList.content);
-                                res.send(volumes);
-                            }
-
-                        });
-                    }
-                })*/
             })
 
         }

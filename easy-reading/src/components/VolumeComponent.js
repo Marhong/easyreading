@@ -10,6 +10,7 @@ export default class VolumeComponent extends Component{
         }
     }
     componentWillReceiveProps(props){
+
         this.setState({volume:props.volume,bookId:props.bookId});
     }
     render(){

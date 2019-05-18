@@ -22,7 +22,7 @@ export default class BookDetail extends Component{
         let bookid = this.props.match.params.id;
         // 通过bookId从服务器获取书籍
         reqwest({
-            url:`${bookUrl}/1558143227651`,
+            url:`${bookUrl}/1558143964713`,
             type:'json',
             method:'get',
             error:(err)=>console.log(err),
@@ -34,7 +34,6 @@ export default class BookDetail extends Component{
     }
     render(){
 
-        console.log("书籍id:",this.props.match.params.id);
         // 通过this.props.match.params.id传递过来的书籍id参数，可以从服务器获取书籍详细信息
         // 从服务器获取数据的url: localhost:3000/easyreading/books/:id/detail
         // 目前用户只上传txt或者pdf文件，并没有上传书籍对应照片。所以book的imgSrc值暂时先不管,让图片先空着
