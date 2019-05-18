@@ -58,10 +58,7 @@ router.get('/book/:id',book_controller.getBookById);
 /*// 获取用户每天的个性化推荐书籍列表
 router.get('/books/personalBooks',book_controller.book_getPersonalBooks);
 
-// GET 获取书籍的最近更新章节
-router.get('/books/:id/latestChapter',book_controller.book_getLatestChapter);
-// GET 通过书籍id获取某一书籍的所有章节
-router.get('/books/:id/volumes',book_controller.book_getAllVolumesById);*/
+*/
 // 图片路由
 router.get('/book/image/:url',book_controller.getImageByUrl);
 // POST 用户推荐书籍
@@ -82,58 +79,18 @@ router.get('/volume/:id/all',volume_controller.getAllVolumes);
 router.get('/reading_setting/:id',reading_setting_controller.getReadingSettingByUserId);
 /// POST 保存用户设置的阅读界面设置
 router.post('/reading_setting/:id/save',reading_setting_controller.saveReadingSetting);
-/*// GET通过章节id获取某一章节详细信息
-router.get('/chapters/:id/detail',chapter_controller.chapter_getChapterById);
-// GET 通过章节id获取该章节的上一章
-router.get('/chapters/:id/preChapter',chapter_controller.getPreChapter);
-// GET 通过章节id获取该章节的下一章
-router.get('/chapters/:id/nextChapter',chapter_controller.getNextChapter);
 
-
-// GET 通过用户id，获取该用户的阅读界面设置
-router.get('/readingSetting/:id/detail',reading_setting_controller.getReadingSettingById);
-// POST 通过用户id,更新该用户的阅读界面设置
-router.post('/readingSetting/:id/update',reading_setting_controller.updateReadingSettingById);
-
-/// RankRecord评分记录路由
-
-// POST 通过用户id,更改他对某一bookId的评分
-router.post('/rankRecord/:userId/:bookId/update',rank_record_controller.updateRankRecord);
-
-
-
-
-
-
-/// 藏书路由 ///
-
-// GET 获取藏书编目主页
-router.get('/', book_controller.index);
-
-// GET 请求添加新的藏书。注意此项必须位于显示藏书的路由（使用了 id）之前。
-router.get('/book/create', book_controller.book_create_get);
-
-// POST 请求添加新的藏书
-router.post('/book/create', book_controller.book_create_post);
-
-// GET 请求删除藏书
-router.get('/book/:id/delete', book_controller.book_delete_get);
+// POST 添加一条章节阅读界面设置
+router.post('/chapterreadingrecord/add',chapter_reading_record_controller.addReadingRecord);
+// POST 更新一条章节阅读记录
+router.post('/chapterreadingrecord/update',chapter_reading_record_controller.updateReadingRecord);
 
 // POST 请求删除藏书
 router.post('/book/:id/delete', book_controller.book_delete_post);
 
-// GET 请求更新藏书
-router.get('/book/:id/update', book_controller.book_update_get);
-
 // POST 请求更新藏书
 router.post('/book/:id/update', book_controller.book_update_post);
 
-// GET 请求藏书
-router.get('/book/:id', book_controller.book_detail);
 
-// GET 请求完整藏书列表
-router.get('/books', book_controller.book_list);
-
-/// 藏书副本、藏书种类、作者的路由与藏书路由结构基本一致，只是无需获取主页 ///*/
 
 module.exports = router;

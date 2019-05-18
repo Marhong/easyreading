@@ -9,21 +9,35 @@ import {message} from "antd/lib/index";
 const bookUrl = "http://localhost:5000/easyreading/book";
 const chapterUrl = "http://localhost:5000/easyreading/chapter";
 const readingSettingUrl = "http://localhost:5000/easyreading/reading_setting";
+const chapterReadingRecordUrl = "http://localhost:5000/easyreading/chapterreadingrecord";
 require('../css/ChapterReader.css');
 
 export default class ChapterReader extends Component{
     constructor(props) {
         super(props);
+        console.log("该对象创建一次");
+        let userId = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user")).id;
         this.state = {
             // 通过chapterId从服务器去获取chapter
             chapter: {},
             style: {},
             bookId: props.match.params.bookId,
             chapterId: props.match.params.id,
-            userId: JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user")).id,
+            userId: userId,
             book: {},
-        }
-
+            curReadingRecord:0,
+        };
+        // 用户第一次进入章节阅读界面时，插入一条该章节的阅读记录
+        reqwest({
+            url:`${chapterReadingRecordUrl}/add`,
+            type:'json',
+            method:'post',
+            data:{chapterId:props.match.params.id,bookId:props.match.params.bookId,userId:userId,startTime:Date.now(),endTime:0},
+            error:(err)=>console.log("获取失败"),
+            success:(res)=>{
+               this.setState({...this.state,curReadingRecord:res.id});
+            }
+        });
     }
     // 默认的阅读界面设置
     componentDidMount(){
@@ -62,6 +76,19 @@ export default class ChapterReader extends Component{
             }
         });
 
+    }
+    // 阅读界面组件卸载时，认为当前章节阅读完成
+    componentWillUnmount(){
+        reqwest({
+            url:`${chapterReadingRecordUrl}/update`,
+            type:'json',
+            method:'post',
+            data:{id:this.state.curReadingRecord,endTime:Date.now()},
+            error:(err)=>console.log("获取失败"),
+            success:(res)=>{
+
+            }
+        });
     }
     // 根据用户选择设置阅读界面
     handleSetting(personalStyle){
@@ -119,8 +146,29 @@ export default class ChapterReader extends Component{
                 method:'get',
                 error:(err)=>console.log("获取失败"),
                 success:(res)=>{
-
                     this.setState({...this.state,chapter:res,chapterId:curId-1});
+                }
+            });
+            // 当用户请求上一章节时，认为当前章节已经阅读完毕，更新当前章节阅读记录的endTime,
+            reqwest({
+                url:`${chapterReadingRecordUrl}/update`,
+                type:'json',
+                method:'post',
+                data:{id:this.state.curReadingRecord,endTime:Date.now()},
+                error:(err)=>console.log("获取失败"),
+                success:(res)=>{
+
+                }
+            });
+            // 同时插入一条上一章节的阅读记录（如果用户一个章节阅读了两次，还是分别插入两条记录）
+            reqwest({
+                url:`${chapterReadingRecordUrl}/add`,
+                type:'json',
+                method:'post',
+                data:{chapterId:curId-1,bookId:this.state.bookId,userId:this.state.userId,startTime:Date.now(),endTime:0},
+                error:(err)=>console.log("获取失败"),
+                success:(res)=>{
+                    this.setState({...this.state,curReadingRecord:res.id});
                 }
             });
         }else{
@@ -141,6 +189,28 @@ export default class ChapterReader extends Component{
                     success:(res)=>{
 
                         this.setState({...this.state,chapter:res,chapterId:curId+1});
+                    }
+                });
+                // 当用户请求下一章节时，认为当前章节已经阅读完毕，更新当前章节阅读记录的endTime,
+                reqwest({
+                    url:`${chapterReadingRecordUrl}/update`,
+                    type:'json',
+                    method:'post',
+                    data:{id:this.state.curReadingRecord,endTime:Date.now()},
+                    error:(err)=>console.log("获取失败"),
+                    success:(res)=>{
+
+                    }
+                });
+                // 同时插入一条下一章节的阅读记录
+                reqwest({
+                    url:`${chapterReadingRecordUrl}/add`,
+                    type:'json',
+                    method:'post',
+                    data:{chapterId:curId+1,bookId:this.state.bookId,userId:this.state.userId,startTime:Date.now(),endTime:0},
+                    error:(err)=>console.log("获取失败"),
+                    success:(res)=>{
+                        this.setState({...this.state,curReadingRecord:res.id});
                     }
                 });
             }else{
@@ -178,7 +248,7 @@ export default class ChapterReader extends Component{
                             <div className="content" ref={(content) => this.content = content}
                                  dangerouslySetInnerHTML={{__html: chapter.content}}/>
                         <div className="readerFooter">
-                            <a href="javascript:scrollTo(0,0);"><span className="control"> <Button onClick={this.handlePreChapter.bind(this)}>上一章</Button><Link to={`/bookCity/books/${this.state.bookId}/chapterList`} ><Button>章节目录</Button></Link><Button onClick={this.handleNextChapter.bind(this)}>下一章</Button></span></a>
+                            <span className="control">   <a href="javascript:scrollTo(0,0);"><Button onClick={this.handlePreChapter.bind(this)}>上一章</Button></a><Link to={`/bookCity/books/${this.state.bookId}/chapterList`} ><Button>章节目录</Button></Link>  <a href="javascript:scrollTo(0,0);"><Button onClick={this.handleNextChapter.bind(this)}>下一章</Button></a></span>
                         </div>
                     </div>
                 </div>

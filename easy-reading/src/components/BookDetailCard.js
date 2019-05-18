@@ -33,7 +33,11 @@ export default class BookDetailCard extends Component{
                     // 之前没打过评分
                     this.setState((preState) => {
                         let preBook = preState.book;
-                        let newScore = ((number*2)+(preBook.score*preBook.rankNumbers))/(preBook.rankNumbers+1).toFixed(1);
+                        let oldScore = 0;
+                        if(String(preBook.score) !== "NaN"){
+                            oldScore = preBook.score;
+                        }
+                        let newScore = ((number*2)+(oldScore*preBook.rankNumbers))/(preBook.rankNumbers+1).toFixed(1);
                         return {...preState,book:{...preBook,score:newScore,rankNumbers:preBook.rankNumbers+1}};
                     });
                 }else if(res.code === 300 && res.oldScore){
@@ -42,7 +46,7 @@ export default class BookDetailCard extends Component{
                     this.setState((preState) => {
                         let preBook = preState.book;
                         let newScore = (((number*2)+(preBook.score*preBook.rankNumbers) - res.oldScore)/(preBook.rankNumbers)).toFixed(1);
-                        alert(newScore);
+
                         return {...preState,book:{...preBook,score:newScore}};
                     });
                 }
@@ -100,7 +104,7 @@ export default class BookDetailCard extends Component{
                     <p className="buttons"><Link to={`/bookCity/books/${book.id}/chapterList/1`}><Button >开始阅读</Button></Link> <Button >加入书架</Button> <Button onClick={this.handleRecommend.bind(this,book.id)}>投推荐票</Button> <Button > <Link to={`/bookCity/books/${book.id}/chapterList`}>全部目录</Link></Button><ReportItem item={book} onSubmit={this.handleSubmit.bind(this)}/> </p>
                 </div>
                 <div className="tRan">
-                    <h2>{Math.floor(book.score)}.<span className="point">{String(book.score).split(".")[1]}</span></h2>
+                    <h2>{String(book.score) === "NaN" ? "暂无评分" : Math.floor(book.score)}.<span className="point">{String(book.score).split(".")[1]}</span></h2>
                     <p className="bookRank">{book.rankNumbers}人评价</p>
                     <p><strong>我要评价</strong></p>
                     <Rate allowHalf defaultValue={2.5} onChange={this.handleChange.bind(this,book.id)}/>

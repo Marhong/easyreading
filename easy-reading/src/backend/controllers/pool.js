@@ -73,6 +73,10 @@ exports.ChapterSQL = {
     selectOneById : 'SELECT * FROM chapter WHERE id = ?',
     selectAllByVolumeId : 'SELECT * FROM chapter WHERE volumeId = ?',
 };
+exports.ChapterReadingRecordSQL = {
+    insert : 'INSERT INTO chapterreadingrecord (id,chapterId,bookId,userId,startTime,endTime) VALUES (?,?,?,?,?,?)',
+    update :'UPDATE chapterreadingrecord set endTime = ? WHERE id = ?',
+};
 exports.VolumeChaptersSQL = {
   insert : 'INSERT INTO volume_chapters (volumeId,chapterId) VALUES (?,?)',
     selectAll : 'SELECT * FROM volume_chapters WHERE volumeId = ?',

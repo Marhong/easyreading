@@ -1,3 +1,4 @@
+
 export const dateFmt = function(fmt,date)
 {
     let o = {
