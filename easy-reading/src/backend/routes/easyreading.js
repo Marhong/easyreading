@@ -57,8 +57,13 @@ router.post('/book/add',book_controller.addBook);
 router.get('/book/all',book_controller.getAllBooks);
 // GET 通过书籍id获取某一书籍详细信息
 router.get('/book/:id',book_controller.getBookById);
+// GET 获取书籍id的所有帖子
+router.get('/post/:id/all',post_controller.getAllPostsByBookId);
+// POST 发布一条帖子
+router.post('/post/add',post_controller.addPost);
 /*// 获取用户每天的个性化推荐书籍列表
 router.get('/books/personalBooks',book_controller.book_getPersonalBooks);
+
 
 */
 // 图片路由

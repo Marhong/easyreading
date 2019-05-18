@@ -4,10 +4,15 @@ import { Comment, Tooltip, List,Icon,Button ,Modal} from 'antd';
 import {crtTimeFtt,timestampFormat} from '../static/commonFun';
 import {WrappedPostForm} from './PostForm';
 import ReportItem from "./ReportItem";
+import reqwest from "reqwest";
+import {message} from "antd/lib/index";
+const postUrl = "http://localhost:5000/easyreading/post";
 export default class MyPostComponent extends Component{
 
     constructor(props){
         super(props);
+        let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+        let userId = user ? user.id : null;
         this.state = {
             isReplying:false,  // 回复框是否显示
             replys:[], // 某个帖子的所有回复
@@ -18,15 +23,26 @@ export default class MyPostComponent extends Component{
             currentId: 2015303094, // 当前用户ID
             isSendingMsg : false,
             visible: false,
+            userId:userId,
+            bookId:props.id,
 
-
-        }
+        };
         this.handleReplyMsgChange = this.handleReplyMsgChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     // 异步获取所有的帖子数据
     componentDidMount(){
-        let data = [
+        // 从数据库获取所有的帖子
+       reqwest({
+            url:`${postUrl}/${this.state.bookId}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log("获取失败"),
+            success:(res)=>{
+                this.setState({...this.state,posts:res});
+            }
+        });
+/*        let data = [
             {
                 postId: 2015242225,
                 novelId: 541204,
@@ -62,7 +78,6 @@ export default class MyPostComponent extends Component{
                     },
                 ],
                 publishedDate:1555989228,
-
             },
             {
                 postId: 20152422250,
@@ -85,7 +100,7 @@ export default class MyPostComponent extends Component{
                 publishedDate:1555989228,
             },
         ];
-        this.setState({posts:this.formatPostData(data)});
+        this.setState({posts:this.formatPostData(data)});*/
     }
     componentDidUpdate(){
         if(this.input){
@@ -94,14 +109,14 @@ export default class MyPostComponent extends Component{
     }
     showModal = () => {
         this.setState({
+            ...this.state,
             visible: true,
         });
     }
-
-
     handleCancel = () => {
         console.log('Clicked cancel button');
         this.setState({
+            ...this.state,
             visible: false,
         });
     }
@@ -130,7 +145,7 @@ export default class MyPostComponent extends Component{
                     console.log(postId);
                     post.hasClickedLike = true;
                     post.likeNum += 1;
-                    this.setState({...this.state,posts:this.formatPostData(posts)});
+                    this.setState({...this.state,posts:posts});
                 }
                 break;
             }
@@ -160,7 +175,6 @@ export default class MyPostComponent extends Component{
     }
     // 提交回复
     handleSubmit(e){
-
        // alert(`我回复了${this.state.replyToAnother}:${this.state.replyMsg}`);
         if(this.state.replyMsg.trim() === "" || this.state.replyMsg.trim() === null){
             alert("回复消息不能为空!");
@@ -184,7 +198,7 @@ export default class MyPostComponent extends Component{
         }
 
         // 为什么设置isSending值为true没有用啊
-        this.setState({ ...this.state, posts:this.formatPostData(newposts), isSendingMsg:true});
+        this.setState({ ...this.state, posts:newposts, isSendingMsg:true});
 
         this.handleView(this.state.postId);
         this.setState({ ...this.state, replyMsg:"", isReplying:true})
@@ -192,10 +206,31 @@ export default class MyPostComponent extends Component{
     }
     // 发布帖子
     handleSubmitPost(values){
-        console.log(values);
-        this.setState({
-            visible: false,
+
+        let newPost = {userId:this.state.userId,bookId:this.state.bookId,title:values.title,content:values.content,time:Date.now()};
+        // 将帖子内容插入数据库中,同时更新帖子数据
+        reqwest({
+            url:`${postUrl}/add`,
+            type:'json',
+            method:'post',
+            data: newPost,
+            error:(err)=>{
+                message.error("发布帖子失败！");
+                console.log(err)},
+            success:(res)=>{
+                if(res){
+                    message.success("发布帖子成功！");
+                    newPost.id = res.id;
+                    this.setState((preState) => {
+                        let oldPosts = preState.posts;
+                        oldPosts.push(newPost);
+                        return { ...preState, visible: false, posts:oldPosts,};
+                    });
+
+                }
+            }
         });
+
     }
     // 提交举报信息
     handleReportSubmit(values){
@@ -204,37 +239,43 @@ export default class MyPostComponent extends Component{
 
     // 格式化数据
     formatPostData(data){
+        console.log(data+"   不能格式化？？"+Date.now());
         for(let post of data){
-            let viewAll = post.postReply.length > 0 ? `查看所有(${post.postReply.length})` : "";
-            post.actions = [<span onClick={this.handleView.bind(this,post.postId)} className="view">{viewAll}</span>,
-                <span onClick={this.handleReplyPost.bind(this,post.postId,post.userId)} className="reply">回复</span>,
-                <span onClick={this.clickLike.bind(this,post.postId)}>
+            let viewAll = `查看所有评论`;
+            post.actions = [<span onClick={this.handleView.bind(this,post.id)} className="view">{viewAll}</span>,
+                <span onClick={this.handleReplyPost.bind(this,post.id,post.userId)} className="reply">回复</span>,
+                <span onClick={this.clickLike.bind(this,post.id)}>
                     <i className="iconfont icon-dianzan11"> {post.likeNum}</i>
                 </span>];
             // 将每个帖子的发布日期转换为“刚刚、N分钟前、今天几时几分”的形式
-            let date = post.publishedDate;
+            let date = post.time;
             post.formatPublishedDate = ( <Tooltip title={crtTimeFtt(date)}>
                 <span>{timestampFormat(date)}</span>
             </Tooltip>);
-            let replys = post.postReply;
+        }
+        return data;
+    }
+    // 格式化评论数据
+    formatReplyData(postUserId,data){
+        let replys = data;
+        if(replys){
             if(replys.length>0){
                 for(let reply of replys){
                     reply.actions = [<span onClick={this.handleReplyPost.bind(this,reply.postId,reply.userId)} className="reply">回复</span>];
                     // 将每条回复的发布日期转换为“刚刚、N分钟前、今天几时几分”的形式
-                    let date = reply.replyDate;
+                    let date = reply.time;
                     reply.formatReplyDate = ( <Tooltip title={crtTimeFtt(date)}>
-                        <span className="reply">{timestampFormat(date)} 回复 {reply.replyToAnother === post.userId ? "楼主" : reply.replyToAnother}</span>
+                        <span className="reply">{timestampFormat(date)} 回复 {reply.anotherUserId === postUserId ? "楼主" : reply.anotherUserId}</span>
                     </Tooltip>);
                 }
             }
         }
-        return data;
     }
     render(){
         const isReplying = this.state.isReplying;
         const postId = this.state.postId;
         const replyToAnother = this.state.replyToAnother;
-        const { visible } = this.state;
+        const posts = this.formatPostData(this.state.posts);
         return(
             <div className="postModule">
                 <div className="header">
@@ -256,28 +297,30 @@ export default class MyPostComponent extends Component{
                   <List
                             className="comment-list"
                             itemLayout="horizontal"
-                            dataSource={this.state.posts}
+                            dataSource={posts}
                             renderItem={item => (
                                 <Comment
                                     actions={item.actions}
                                     author={item.userId}
                                     avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                                    content={((item) => {return <span><span className="postTitle"><strong> {item.postTitle} </strong></span><ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/> <br/>{item.postContent}</span>})(item)}
+                                    content={((item) => {return <span><span className="postTitle"><strong> {item.title} </strong></span><ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/> <br/>{item.content}</span>})(item)}
                                     datetime={item.formatPublishedDate}>
                                     {/* 根据state的replys内容来渲染回复*/}
-                                    {this.state.replys.map((reply,index) => {
+                                    {this.state.replys
+                                        ?
+                                        this.state.replys.map((reply,index) => {
                                         if(item.postId === reply.postId){
                                             return <Comment key={index}
                                                             actions={reply.actions}
                                                             author={reply.userId}
                                                             avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                                                            content={((item) => {return <span>{item.replyContent} <ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/></span>})(reply)}
+                                                            content={((item) => {return <span>{item.content} <ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/></span>})(reply)}
                                                             datetime={reply.formatReplyDate}
                                             >
                                             </Comment>
                                         }
 
-                                    })}
+                                    }) : ""}
                                     {isReplying&&postId===item.postId ?
                                         <div className="replyContainer">
                                         <input className="replyToPost"

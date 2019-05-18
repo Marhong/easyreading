@@ -3,7 +3,7 @@ import {
 } from 'antd';
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-
+const { TextArea } = Input;
 class PostForm extends React.Component {
     constructor(props){
         super(props);
@@ -20,8 +20,8 @@ class PostForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 if(this.props.onSubmitPost){
+                    console.log("这是在PostForm" + Date.now())
                     this.props.onSubmitPost(values);
                 }
             }
@@ -44,8 +44,9 @@ class PostForm extends React.Component {
                     <Form.Item
                                label="标题"
                                hasFeedback>
-                        {getFieldDecorator('postTitle', {
-                            rules: [{ required: true, message: '请填写标题!' }],
+                        {getFieldDecorator('title', {
+                            rules: [{ required: true, message: '请填写标题!' },
+                                {max:20,message:"标题长度不能超过20!"}],
                         })(
                             <Input  placeholder="填写标题" style={{  width:450}}/>
                         )}
@@ -53,10 +54,11 @@ class PostForm extends React.Component {
                     <Form.Item
                                label="内容"
                                hasFeedback>
-                        {getFieldDecorator('postContent', {
-                            rules: [{ required: true, message: '内容不能为空!' }],
+                        {getFieldDecorator('content', {
+                            rules: [{ required: true, message: '内容不能为空!' },
+                                {max:100,message:"内容长度不能超过100!"}],
                         })(
-                            <textarea  placeholder="填写帖子内容" style={{ width:450}} ref={(postContent) => this.postContent = postContent}/>
+                            <TextArea rows={3} placeholder="填写帖子内容" style={{ width:450}} ref={(postContent) => this.postContent = postContent}/>
                         )}
                     </Form.Item>
                     <Form.Item style={{float:"right",marginTop:-25,marginRight:20}}>

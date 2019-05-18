@@ -18,6 +18,7 @@ export default class BookDetail extends Component{
         this.state = {
             book:{},
             latestChapter:{},
+            bookId:bookId,
         }
 
     }
@@ -68,7 +69,7 @@ export default class BookDetail extends Component{
                        </TabPane>
                        <TabPane tab="作品讨论" key="3">
                            <div>
-                           <MyPostComponent id={book.id}/>
+                           <MyPostComponent id={this.state.bookId}/>
                            </div>
                        </TabPane>
                    </Tabs>

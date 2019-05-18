@@ -43,6 +43,14 @@ exports.BookSQL = {
     updateNormalClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1  WHERE id = ?',
     selectAllBooks :'SELECT * FROM book ',
 };
+exports.PostSQL = {
+  insert :'INSERT INTO post (id,bookId,userId,title,content,time) VALUES (?,?,?,?,?,?)',
+  selectAllByBookId :'SELECT * FROM post WHERE bookId = ?',
+};
+exports.ReplySQL = {
+    insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId) VALUES (?,?,?,?,?,?,?)',
+    selectAllByPostId :'SELECT * FROM post WHERE postId = ?',
+};
 exports.BookRecomendRecordsSQL = {
     selectAllRecommendRecordsByBookId : 'SELECT * FROM book_recommend_records WHERE bookId = ?',
     insert:'INSERT INTO book_recommend_records (bookId,recommendRecordId) VALUES (?,?)',

@@ -1,9 +1,6 @@
 let poolModule = require('./pool');
 let pool = poolModule.pool;
 let VolumeSQL = poolModule.VolumeSQL;
-let BookVolumesSQL = poolModule.BookVolumesSQL;
-let ChapterSQL = poolModule.ChapterSQL;
-let compare = poolModule.compare;
 // 通过id获取某一条卷
 exports.getVolumeById = (req,res) =>{
     pool.query(VolumeSQL.selectOneById,[req.params.id], (err, rows)=>{
@@ -27,6 +24,6 @@ exports.getAllVolumes = (req,res) =>{
         }
         res.send(rows);
         res.end();
-        res.end();
+
     });
 };
