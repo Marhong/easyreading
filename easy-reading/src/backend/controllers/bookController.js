@@ -143,7 +143,11 @@ exports.getBookById = (req,res) => {
 
 // 获取所有书籍
 exports.getAllBooks = (req,res) => {
-
+    pool.query(BookSQL.selectAllBooks,(err,rows) => {
+        if(err) throw err;
+        res.send(rows);
+        res.end();
+    })
 };
 // 用户查看书籍详情，更新书籍的clickNumber
 exports.clickBook = (req,res) =>{

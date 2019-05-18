@@ -40,7 +40,8 @@ exports.BookSQL = {
   updateBookIsValid:'UPDATE book set isValid = ? WHERE id = ?',
     selectOneBook : 'SELECT * FROM book WHERE id = ?',
     updateNormalAndMemberClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1,  memberClickNumbers = memberClickNumbers+1 WHERE id = ?',
-    updateNormalClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1  WHERE id = ?'
+    updateNormalClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1  WHERE id = ?',
+    selectAllBooks :'SELECT * FROM book ',
 };
 exports.BookRecomendRecordsSQL = {
     selectAllRecommendRecordsByBookId : 'SELECT * FROM book_recommend_records WHERE bookId = ?',
