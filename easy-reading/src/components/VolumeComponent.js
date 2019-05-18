@@ -1,18 +1,30 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
+import reqwest from "reqwest";
+const chapterUrl = "http://localhost:5000/easyreading/chapter";
 export default class VolumeComponent extends Component{
     constructor(props){
         super(props);
         this.state = {
             bookId:"",
-            volume:{},
+            volume:props.volume,
 
         }
     }
-    componentWillReceiveProps(props){
-
-        this.setState({volume:props.volume,bookId:props.bookId});
+    componentDidMount(){
+        reqwest({
+            url:`${chapterUrl}/${this.state.volume.id}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                this.setState({...this.state,volume:{...this.state.volume,count:res.length,chapterList:res}});
+            }
+        });
     }
+/*    componentWillReceiveProps(props){
+        this.setState({volume:props.volume,bookId:props.bookId});
+    }*/
     render(){
         const volume = this.state.volume;
         const bookId = this.state.bookId;

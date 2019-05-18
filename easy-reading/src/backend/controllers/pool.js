@@ -64,10 +64,12 @@ exports.BookTypesSQL = {
 exports.VolumeSQL = {
   insert : 'INSERT INTO volume (id,bookId,name,isFree,startTime,numbers) VALUES (?,?,?,?,?,?)',
     selectOneById : 'SELECT * FROM volume WHERE id = ?',
+    selectAllByBookId :'SELECT * FROM volume WHERE bookId = ?',
 };
 exports.ChapterSQL = {
     insert :'INSERT INTO chapter (id,volumeId,bookId,name,numbers,link,isFree,time,content) VALUES (?,?,?,?,?,?,?,?,?)',
     selectOneById : 'SELECT * FROM chapter WHERE id = ?',
+    selectAllByVolumeId : 'SELECT * FROM chapter WHERE volumeId = ?',
 };
 exports.VolumeChaptersSQL = {
   insert : 'INSERT INTO volume_chapters (volumeId,chapterId) VALUES (?,?)',

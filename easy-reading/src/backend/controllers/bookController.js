@@ -87,7 +87,6 @@ exports.getBookById = (req,res) => {
             let words = book.keywords.split(",");
             let length = book.keywords.split(",").length;
             for (let i = 0; i < length; i++) {
-
                 let item = words[i];
                 pool.query(BookTypeSQL.selectBookTypeById, [item], (err, rows) => {
                     if (err) {
@@ -126,37 +125,8 @@ exports.getBookById = (req,res) => {
                                         throw err;
                                     }
                                     book.latestChapter = rows[0];
-                                    // 通过bookId从bookVolumes中获取所有项
-                                    pool.query(BookVolumesSQL.selectAll,[req.params.id], (err, rows)=>{
-                                        if (err){
-                                            res.send(false);
-                                            throw err;
-                                        }
-                                        let volumes = [];
-                                        let index = 0;
-                                        let volumeLength = rows.length;
-                                        // 遍历bookVolumes的每一项
-                                        for(let i=0;i<volumeLength;i++){
-                                            let bookVolume = rows[i];
-                                            //  // 通过遍历bookVolumes的每一项中每一项的volumeId从volume中获取volume
-                                            pool.query(VolumeSQL.selectOneById,[bookVolume.volumeId],(err,rows) =>{
-                                                if(err) throw err;
-                                                if(i<volumeLength){
-                                                    volumes.push(rows[0]);
-                                                    index++;
-                                                    if(index === volumeLength){
-                                                        book.volumes = volumes.sort(compare('id'));
-                                                        for(let i=0;i<book.volumes.length;i++){
-                                                            console.log(book.volumes[i])
-                                                        }
-                                                        res.send(book);
-                                                    }
-                                                }
-                                            })
-
-                                        }
-                                    });
-
+                                    res.send(book);
+                                    res.end();
                                 });
 
                             })

@@ -13,6 +13,7 @@ export default class BookDetail extends Component{
         super(props);
         this.state = {
             book:{},
+            latestChapter:{},
         }
     }
     componentWillMount(){
@@ -27,8 +28,7 @@ export default class BookDetail extends Component{
             method:'get',
             error:(err)=>console.log(err),
             success:(res)=>{
-
-                this.setState({...this.state,book:res});
+                this.setState({...this.state,book:res,latestChapter:res.latestChapter});
             }
         });
     }
@@ -50,7 +50,7 @@ export default class BookDetail extends Component{
         // 通过用户上传txt或者pdf文件，书籍是没有最近更新章节这一值的。
         // 所以如果book.latestChapter值为空的话就默认从服务器获取最后一章为最近更新章节，更新时间就为上传时间
         // 这里章节具体内容的html文件对应link，和book的imgSrc一样还没想好，暂时空着
-        const latestChapter = {id:"86523",volumeId:"8566",bookId:"book2019010011",name:"第八百九十章 露出笑脸",time:1494562220,numbers:3000,isFree:true,link:""};
+        const latestChapter = this.state.latestChapter;
         const book =this.state.book;
        return(
            <div className="bookDetail">

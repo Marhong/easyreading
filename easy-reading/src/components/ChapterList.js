@@ -32,49 +32,26 @@ export default class ChapterList extends Component{
             method:'get',
             error:(err)=>console.log("获取失败"),
             success:(res)=>{
-                let volume1 = res.volumes[0];
-                for(let key of Object.keys(volume1)){
-                    console.log(key +": "+volume1[key]);
-                }
-                this.setState({...this.state,book:res});
+                this.setState({...this.state,book:res,latestChapter:res.latestChapter});
             }
         });
-/*        // 通过bookId，从服务器获取该书籍对应的所有卷
         reqwest({
             url:`${volumeUrl}/${bookId}/all`,
             type:'json',
             method:'get',
-            error:(err)=>console.log(err),
+            error:(err)=>console.log("获取失败"),
             success:(res)=>{
-                let volumes = res;
-               // this.setState({...this.state,volumes:res});
-                // 通过volumeId，获取对应的chapterList
-
-                for(let i=0,len=volumes.length;i<len;i++){
-                    let volume = volumes[i];
-
-                    reqwest({
-                        url:`${chapterUrl}/${volume.id}/all`,
-                        type:'json',
-                        method:'get',
-                        error:(err)=>console.log(err),
-                        success:(res)=>{
-                            volume.count = res.count;
-                            volume.chapterList = res.chapterList;
-                        }
-                    });
-                }
-                this.setState({...this.state,volumes:volumes});
+                this.setState({...this.state,volumes:res});
             }
-        });*/
+        });
     }
     handleChaptersSort(){
         this.setState({sort:this.state.sort==="icon-shengxu" ? "icon-jiangxu" : "icon-shengxu"});
     }
     render(){
-        console.log("传递的bookId:",this.props.match.params.id);
+
         // 通过bookId获取该书籍的所有卷。从服务器获取书籍卷的url: localhost:3000/easyreading/books/:id/volumes
-        const volumes = [{name:"卷一 大城小事",count:24,numbers:524561245,chapterList:
+     /*   const volumes = [{name:"卷一 大城小事",count:24,numbers:524561245,chapterList:
                 [{id:45112,name:"第一章 有朋字远方来，尚能饭否",href:""},
                 ]},
             {name:"卷二 小城大事",count:24,numbers:524561245,chapterList:
@@ -82,7 +59,7 @@ export default class ChapterList extends Component{
                     ]},
             {name:"卷三 城里无事",count:24,numbers:524561245,chapterList:
                     [{id:45112,name:"第一章 三人行必有我师焉",href:""},
-                    ]},];
+                    ]},];*/
 /*        const book = {id:"book2019010011",name:"仙宫",isFinished:false,isFree:true,author:"大眼怪",score:8.2,type:["武侠","仙侠","幻想"],rankNumber:40,numbers:231454545,clickedNumbers:1514514,membershipClicked:8452852,recommendNumbers:525742,description:"修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！修仙觅长生，热血任逍遥，踏莲曳波涤剑骨，凭虚御风塑圣魂！",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1013561350/180",preface:`"冤有头，债有主，你我往日无怨，近日无仇，在下职责所在，奉命行事，得罪了。”
                                王腾念了一遍工作语，一刀斩下犯人头颅。
                                然后，一个白色光团从囚犯身体里冒出。
@@ -92,10 +69,10 @@ export default class ChapterList extends Component{
                                “拾取！”
                                王腾意念一动。`,latestChapter:{id:"86523",volumeId:"8566",bookId:"book2019010011",name:"第八百九十章 露出笑脸",time:1494562220,numbers:3000,isFree:true,link:""}};*/
         const book = this.state.book;
-      /*  const volumes = book.volumes;*/
+        const volumes = this.state.volumes;
         // 这里还要展示最新章节的信息，所以还要通过该book获取到他的最新章节
         // 先看book有无latestChapter属性，没有的话就从服务器获取最新章节的url: localhost:3000/easyreading/books/:id/latestChapter
-        const latestChapter = book.latestChapter || {id:"86523",volumeId:"8566",bookId:book.id,name:"第八百九十章 露出笑脸",time:1494562220,numbers:3000,isFree:true,link:""};
+        const latestChapter = this.state.latestChapter;
 
         return(
             <div className="chapterList">
@@ -108,16 +85,13 @@ export default class ChapterList extends Component{
                             <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}/chapterList`} style={{color:"#40a9ff"}}>章节列表</Link></Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
-{/*                    <div className="right">
-                        <p>倒序</p>
-                    </div>*/}
                 </div>
                 <div className="title">
                     <h1>{book.name}</h1>
                     <p>
                         <span>作者: {book.author}</span>
 
-                        <span>更新时间: {moment(latestChapter.time).format('YYYY-MM-DD HH:mm:ss')}</span>
+                        <span>更新时间: {latestChapter ? moment(latestChapter.time).format('YYYY-MM-DD HH:mm:ss') : ""}</span>
                         <span>最新章节: {latestChapter.name}</span>
                         <span onClick={this.handleChaptersSort.bind(this)}><a className="sort">{this.state.sort === 'icon-shengxu' ? '正序' : '倒序'}<i className={`iconfont ${this.state.sort}`}/></a></span>
                     </p>
