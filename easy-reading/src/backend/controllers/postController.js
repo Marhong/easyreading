@@ -2,6 +2,8 @@ let poolModule = require('./pool');
 let pool = poolModule.pool;
 let PostSQL = poolModule.PostSQL;
 let ReplySQL = poolModule.ReplySQL;
+let ReplyReportSQL = poolModule.ReplyReportSQL;
+let PostReportSQL = poolModule.PostReportSQL;
 let sortBy = require('./common').sortBy;
 let moment = require('moment');
 // 通过书籍id获取该书籍的所有post
@@ -65,6 +67,29 @@ exports.getAllPosts = (req,res) => {
             item.publishTime = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
         }
         res.send(rows);
+        res.end();
+    })
+};
+
+// 根据id删除某条post
+exports.deletePost = (req,res) =>{
+    pool.query(PostSQL.delete,[req.body.id],(err,rows) => {
+        if(err) throw err;
+
+    });
+    // 该帖子包含的所有举报信息通过另外一个请求删除了
+    pool.query(PostReportSQL.deleteAllByPostId,[req.body.id],(err)=>{
+        if(err) throw err;
+    });
+    // 删除该帖子包含的所有评论
+    pool.query(ReplySQL.deleteAllByPostId,[req.body.id],(err,rows) => {
+        if(err) throw err;
+
+    });
+    // 删除该帖子包含的所有评论的所有举报信息
+    pool.query(ReplyReportSQL.deleteAllByPostId,[req.body.id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
         res.end();
     })
 };

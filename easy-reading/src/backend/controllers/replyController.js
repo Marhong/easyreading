@@ -47,3 +47,11 @@ exports.getAllReplys = (req,res) => {
         res.send(rows);
         res.end();})
 };
+
+// 根据id删除某条评论
+exports.deleteReply = (req,res) =>{
+    pool.query(ReplySQL.delete,[req.body.id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
+        res.end();})
+};

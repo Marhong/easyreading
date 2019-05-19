@@ -20,7 +20,7 @@ exports.addPostReport = (req,res) =>{
 
 // 获取所有的帖子举报记录
 exports.getAllReports = (req,res) => {
-    console.log("收到了请求");
+
     pool.query(PostReportSQL.selectAll,(err,rows) => {
         if(err) throw err;
         for(let item of rows){
@@ -30,9 +30,26 @@ exports.getAllReports = (req,res) => {
             item.whistleBlower = item.userName;
             item.invalidUser = item.reportedUserName;
             item.reportTime = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
-            console.log(item);
         }
         res.send(rows);
+        res.end();
+    })
+};
+
+// 根据id删除某条评论举报信息
+exports.deleteReport = (req,res) =>{
+    pool.query(PostReportSQL.delete,[req.body.id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
+        res.end();
+    })
+};
+
+// 根据postId删除对应的所有举报信息
+exports.deleteAllByPostId = (req,res) =>{
+    pool.query(PostReportSQL.deleteAllByPostId,[req.body.id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
         res.end();
     })
 };

@@ -17,8 +17,8 @@
       <file leaf-file-name="easyreading.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/routes/easyreading.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1163">
-              <caret line="32" column="50" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
+            <state relative-caret-position="547">
+              <caret line="68" column="69" selection-start-line="68" selection-start-column="69" selection-end-line="68" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -26,8 +26,8 @@
       <file leaf-file-name="Administrator.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Administrator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="96" column="31" selection-start-line="96" selection-start-column="27" selection-end-line="96" selection-end-column="31" />
+            <state relative-caret-position="618">
+              <caret line="356" column="51" selection-start-line="356" selection-start-column="51" selection-end-line="356" selection-end-column="51" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
                 <element signature="e#596#886#0" />
@@ -43,7 +43,21 @@
                 <element signature="e#5544#7488#0" />
                 <element signature="e#9224#9720#0" />
                 <element signature="e#9765#10666#0" />
+                <element signature="e#13151#13167#0" />
+                <element signature="e#14042#15910#0" />
+                <element signature="e#15965#16836#0" />
+                <element signature="e#14905#14921#0" />
+                <element signature="e#14976#14992#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="commonFun.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/static/commonFun.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="110" column="25" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -51,7 +65,7 @@
       <file leaf-file-name="userController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/controllers/userController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
+            <state relative-caret-position="-133">
               <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
               <folding>
                 <element signature="e#243#727#0" />
@@ -61,32 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyPostComponent.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/MyPostComponent.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="150" column="9" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bookReportController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/backend/controllers/bookReportController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-51">
-              <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="pool.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/controllers/pool.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="51" column="128" selection-start-line="51" selection-start-column="128" selection-end-line="51" selection-end-column="128" />
+            <state relative-caret-position="237">
+              <caret line="74" column="49" selection-start-line="74" selection-start-column="49" selection-end-line="74" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -94,24 +87,8 @@
       <file leaf-file-name="replyController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/controllers/replyController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" column="7" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bookController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/backend/controllers/bookController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-89">
-              <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
-              <folding>
-                <element signature="e#935#2326#0" />
-                <element signature="e#1328#1452#0" />
-                <element signature="e#2378#5244#0" />
-                <element signature="e#5489#5809#0" />
-                <element signature="e#5860#6254#0" />
-              </folding>
+            <state relative-caret-position="931">
+              <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
             </state>
           </provider>
         </entry>
@@ -119,10 +96,23 @@
       <file leaf-file-name="postReportController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/controllers/postReportController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="37" column="2" lean-forward="true" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
+            <state relative-caret-position="462">
+              <caret line="49" column="46" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="46" />
               <folding>
-                <element signature="e#161#606#0" />
+                <element signature="e#692#1201#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="replyReportController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/backend/controllers/replyReportController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="362">
+              <caret line="50" column="48" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="48" />
+              <folding>
+                <element signature="e#691#1180#0" />
+                <element signature="e#1236#1384#0" />
               </folding>
             </state>
           </provider>
@@ -131,12 +121,21 @@
       <file leaf-file-name="postController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/controllers/postController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="31" />
+            <state relative-caret-position="361">
+              <caret line="82" column="7" selection-start-line="82" selection-start-column="7" selection-end-line="82" selection-end-column="7" />
               <folding>
                 <element signature="e#271#1223#0" />
                 <element signature="e#1266#1606#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bookReportController.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/backend/controllers/bookReportController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="343">
+              <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -154,15 +153,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>handleView</find>
-      <find>点赞</find>
-      <find>replyToAnother</find>
-      <find>handleReplyPost</find>
-      <find>anotherUserId</find>
-      <find>formatPostData</find>
-      <find>posts</find>
-      <find>showModal</find>
-      <find>handleTypeChange</find>
       <find>handleReallyReport</find>
       <find>post</find>
       <find>handleReportSubmit</find>
@@ -171,19 +161,28 @@
       <find>handleSubmit</find>
       <find>UserS</find>
       <find>handlePostReportSubmit</find>
-      <find>ReplyReportSQL</find>
       <find>postListData</find>
       <find>/post/report/all</find>
-      <find>ReplySQL</find>
       <find>/report/all</find>
       <find>post_report_controller</find>
       <find>/post/report</find>
       <find>bookListData</find>
-      <find>/reply/report/all</find>
       <find>userListData</find>
-      <find>368</find>
       <find>书籍审核</find>
+      <find>modalTitle</find>
+      <find>368</find>
       <find>Reply</find>
+      <find>handleDeleteItem</find>
+      <find>ReplySQL</find>
+      <find>handleDeleteReplyItem</find>
+      <find>handleApproveDeleteReply</find>
+      <find>handleDeletePostItem</find>
+      <find>ReplyReportSQL</find>
+      <find>handleViewDetail</find>
+      <find>handleRejectDeletePost</find>
+      <find>/reply/report/all</find>
+      <find>BookReportSQL</find>
+      <find>deleteAllByBookId</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -229,17 +228,17 @@
         <option value="$PROJECT_DIR$/src/components/BulletinForm.js" />
         <option value="$PROJECT_DIR$/src/static/commonFun.js" />
         <option value="$PROJECT_DIR$/src/backend/controllers/bulletinController.js" />
-        <option value="$PROJECT_DIR$/src/backend/controllers/postController.js" />
-        <option value="$PROJECT_DIR$/src/backend/controllers/bookReportController.js" />
         <option value="$PROJECT_DIR$/src/backend/controllers/bookController.js" />
+        <option value="$PROJECT_DIR$/src/backend/controllers/userController.js" />
+        <option value="$PROJECT_DIR$/src/components/MyPostComponent.js" />
+        <option value="$PROJECT_DIR$/src/backend/controllers/replyController.js" />
         <option value="$PROJECT_DIR$/src/backend/controllers/postReportController.js" />
         <option value="$PROJECT_DIR$/src/backend/controllers/replyReportController.js" />
-        <option value="$PROJECT_DIR$/src/backend/controllers/userController.js" />
-        <option value="$PROJECT_DIR$/src/backend/routes/easyreading.js" />
+        <option value="$PROJECT_DIR$/src/backend/controllers/postController.js" />
         <option value="$PROJECT_DIR$/src/components/Administrator.js" />
+        <option value="$PROJECT_DIR$/src/backend/routes/easyreading.js" />
         <option value="$PROJECT_DIR$/src/backend/controllers/pool.js" />
-        <option value="$PROJECT_DIR$/src/backend/controllers/replyController.js" />
-        <option value="$PROJECT_DIR$/src/components/MyPostComponent.js" />
+        <option value="$PROJECT_DIR$/src/backend/controllers/bookReportController.js" />
       </list>
     </option>
   </component>
@@ -424,7 +423,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="607861000" />
+    <option name="totallyTimeSpent" value="619331000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -438,7 +437,7 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.32905984" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4993395" weight="0.06837607" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4993395" visible="true" weight="0.115384616" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -760,13 +759,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/static/commonFun.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="155" column="32" selection-start-line="155" selection-start-column="32" selection-end-line="155" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/BookDetail.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -784,16 +776,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/controllers/replyReportController.js">
+    <entry file="file://$PROJECT_DIR$/src/components/MyPostComponent.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+        <state relative-caret-position="150">
+          <caret line="150" selection-start-line="150" selection-end-line="150" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/controllers/replyController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="931">
+          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/controllers/userController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
+        <state relative-caret-position="-133">
           <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
           <folding>
             <element signature="e#243#727#0" />
@@ -804,29 +806,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/controllers/bookController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-89">
+        <state relative-caret-position="-2261">
           <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/static/commonFun.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="110" column="25" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/controllers/replyReportController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="50" column="48" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="48" />
           <folding>
-            <element signature="e#935#2326#0" />
-            <element signature="e#1328#1452#0" />
-            <element signature="e#2378#5244#0" />
-            <element signature="e#5489#5809#0" />
-            <element signature="e#5860#6254#0" />
+            <element signature="e#691#1180#0" />
+            <element signature="e#1236#1384#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/controllers/bookReportController.js">
+    <entry file="file://$PROJECT_DIR$/src/backend/controllers/postReportController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="31" />
+        <state relative-caret-position="462">
+          <caret line="49" column="46" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="46" />
+          <folding>
+            <element signature="e#692#1201#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/controllers/postController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="31" />
+        <state relative-caret-position="361">
+          <caret line="82" column="7" selection-start-line="82" selection-start-column="7" selection-end-line="82" selection-end-column="7" />
           <folding>
             <element signature="e#271#1223#0" />
             <element signature="e#1266#1606#0" />
@@ -834,27 +850,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/controllers/postReportController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="37" column="2" lean-forward="true" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
-          <folding>
-            <element signature="e#161#606#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/routes/easyreading.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1163">
-          <caret line="32" column="50" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Administrator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="96" column="31" selection-start-line="96" selection-start-column="27" selection-end-line="96" selection-end-column="31" />
+        <state relative-caret-position="618">
+          <caret line="356" column="51" selection-start-line="356" selection-start-column="51" selection-end-line="356" selection-end-column="51" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
             <element signature="e#596#886#0" />
@@ -870,31 +869,33 @@
             <element signature="e#5544#7488#0" />
             <element signature="e#9224#9720#0" />
             <element signature="e#9765#10666#0" />
+            <element signature="e#13151#13167#0" />
+            <element signature="e#14042#15910#0" />
+            <element signature="e#15965#16836#0" />
+            <element signature="e#14905#14921#0" />
+            <element signature="e#14976#14992#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/controllers/pool.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="51" column="128" selection-start-line="51" selection-start-column="128" selection-end-line="51" selection-end-column="128" />
+        <state relative-caret-position="237">
+          <caret line="74" column="49" selection-start-line="74" selection-start-column="49" selection-end-line="74" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/controllers/replyController.js">
+    <entry file="file://$PROJECT_DIR$/src/backend/routes/easyreading.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="7" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+        <state relative-caret-position="547">
+          <caret line="68" column="69" selection-start-line="68" selection-start-column="69" selection-end-line="68" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/MyPostComponent.js">
+    <entry file="file://$PROJECT_DIR$/src/backend/controllers/bookReportController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="150" column="9" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="343">
+          <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
         </state>
       </provider>
     </entry>

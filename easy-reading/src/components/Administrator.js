@@ -4,7 +4,7 @@ import { Menu ,Divider,Tabs,Table,Modal,Button,Input,Icon,Popconfirm} from 'antd
 import moment from 'moment';
 import Highlighter from 'react-highlight-words';
 import {WrappedBulletinForm} from './BulletinForm';
-import {formatArray,sortBy} from '../static/commonFun';
+import {formatArray,sortBy,deepClone} from '../static/commonFun';
 import reqwest from "reqwest";
 import {message} from "antd/lib/index";
 const bookUrl = "http://localhost:5000/easyreading/book";
@@ -122,6 +122,7 @@ export default class Administrator extends Component{
             userListData:userListData,
             modalTitle:"",
             modalContent:"",
+            modalItem:{},
             visible:false,
             searchText:"",
 
@@ -296,7 +297,7 @@ export default class Administrator extends Component{
                 this.setState({...this.state,tabs:replyTabs,currentDataName:"replyReportData"});
                 break;
             default:
-                this.setState({...this.state,tabs:userTabs});
+                this.setState({...this.state,tabs:userTabs,currentDataName:"userListData"});
                 break;
         }
     }
@@ -321,9 +322,41 @@ export default class Administrator extends Component{
             visible: true,
             modalTitle:selectedItem[itemKeys[1]],
             modalContent:selectedItem[itemKeys[2]],
+            modalItem:selectedItem,
         });
     }
-    // 删除某条数据
+    // 拒绝某本书籍的举报
+    handleRejectDeleteBook(record,e){
+        // 向服务器发送请求删除该条举报信息
+        let curData = this.state.bookReportData;
+        let selectedItem;
+        for(let i=0;i<curData.length;i++) {
+            let item = curData[i];
+            if (item.key === record.key) {
+                selectedItem = item;
+                curData.splice(i, 1);
+                break;
+            }
+        }
+        // 向服务器发送请求删除该book举报信息
+        reqwest({
+            url:`${bookUrl}/report/delete`,
+            type:'json',
+            method:'post',
+            data:{id:selectedItem.key},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                    message.success("删除错误举报记录成功！");
+                }
+            }
+        });
+        this.setState({...this.state,bookReportData:curData});
+    }
+    // 删除某条公告数据
     handleDeleteItem(record,e){
         let curData = this.state[this.state.currentDataName];
         let selectedItem;
@@ -353,6 +386,232 @@ export default class Administrator extends Component{
             }
         });
         this.setState({...this.state,tabs:bulletinTabs,currentDataName:"bulletinListData",bulletinListData:curData});
+    }
+  /*  // 删除某条帖子数据
+    handleDeletePostItem(record,e){
+        let curData = this.state.postListData;
+        let selectedItem;
+        for(let i=0;i<curData.length;i++) {
+            let item = curData[i];
+            if (item.key === record.key) {
+                selectedItem = item;
+                curData.splice(i, 1);
+                break;
+            }
+        }
+        // 向服务器发送请求删除该post
+        reqwest({
+            url:`${postUrl}/delete`,
+            type:'json',
+            method:'post',
+            data:{id:selectedItem.key},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                    message.success("删除帖子成功！");
+                }
+            }
+        });
+        this.setState({...this.state,postListData:curData});
+    }*/
+    // 同意某条帖子的举报
+    handleApproveDeletePost(record,e){
+        // 向服务器发送请求删除该条举报信息
+        // 向服务器发送请求删除该条举报信息
+        let curReportData = this.state.postReportData;
+        let curPostList = this.state.postListData;
+        let curReplyList = this.state.replyListData;
+        let curReplyReortData = this.state.replyReportData;
+        let selectedItem;
+        let replyItem;
+        // 找到要删除的举报信息
+        let cloneReportData = deepClone(curReportData);
+        let count=0;
+        let postId = record.postId ?  record.postId : record.id;
+        for(let i=0,len=curReportData.length;i<len;i++) {
+            let item = curReportData[i];
+            console.log(item.postId,postId);
+            if (item.postId === postId) {
+                selectedItem = item;
+                cloneReportData.splice(i-count, 1);
+                count++;
+            }
+        }
+        // 找到该postId对应的所有reply删除
+        let cloneReplyListData = deepClone(curReplyList);
+         count=0;
+        for(let i=0,len=curReplyList.length;i<len;i++) {
+            let item = curReplyList[i];
+            if (item.postId === postId) {
+                cloneReplyListData.splice(i-count, 1);
+                count++;
+            }
+        }
+        // 找到该postId对应的所有replyReport删除
+        let cloneReplyReportData = deepClone(curReplyReortData);
+        count=0;
+        for(let i=0,len=curReplyReortData.length;i<len;i++) {
+            let item = curReplyReortData[i];
+            if (item.postId === postId) {
+                cloneReplyReportData.splice(i-count, 1);
+                count++;
+            }
+        }
+        // 找到举报信息对应的帖子
+        for(let i=0;i<curPostList.length;i++) {
+            let item = curPostList[i];
+            if (item.id === postId) {
+                replyItem = item;
+                curPostList.splice(i, 1);
+                break;
+            }
+        }
+        // 向服务器发送请求删除被举报的post
+        reqwest({
+            url:`${postUrl}/delete`,
+            type:'json',
+            method:'post',
+            data:{id:replyItem.id},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                    message.success("成功删除该不合法帖子!");
+                }
+            }
+        });
+        this.setState({...this.state,postReportData:cloneReportData,postListData:curPostList,replyListData:cloneReplyListData,replyReportData:cloneReplyReportData});
+    }
+    // 拒绝某条帖子的举报
+    handleRejectDeletePost(record,e){
+        // 向服务器发送请求删除该条举报信息
+        let curData = this.state.postReportData;
+        let selectedItem;
+        for(let i=0;i<curData.length;i++) {
+            let item = curData[i];
+            if (item.key === record.key) {
+                selectedItem = item;
+                curData.splice(i, 1);
+                break;
+            }
+        }
+        // 向服务器发送请求删除该reply举报信息
+        reqwest({
+            url:`${postUrl}/report/delete`,
+            type:'json',
+            method:'post',
+            data:{id:selectedItem.key},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                    message.success("删除错误举报记录成功！");
+                }
+            }
+        });
+        this.setState({...this.state,postReportData:curData});
+    }
+
+    // 同意某条评论的举报
+    handleApproveDeleteReply(record,e){
+        // 向服务器发送请求删除该条举报信息
+        // 向服务器发送请求删除该条举报信息
+        let curReportData = this.state.replyReportData;
+        let curReplyList = this.state.replyListData;
+        let selectedItem;
+        let replyItem;
+        // 找到要删除的举报信息
+        let cloneReportData = deepClone(curReportData);
+        let count=0;
+        let replyId = record.replyId ?  record.replyId : record.id;
+        for(let i=0,len=curReportData.length;i<len;i++) {
+            let item = curReportData[i];
+            if (item.replyId === replyId) {
+                selectedItem = item;
+                cloneReportData.splice(i-count, 1);
+                count++;
+            }
+        }
+        // 找到举报信息对应的评论
+        for(let i=0;i<curReplyList.length;i++) {
+            let item = curReplyList[i];
+            if (item.id === replyId) {
+                replyItem = item;
+                curReplyList.splice(i, 1);
+                break;
+            }
+        }
+        // 向服务器发送请求删除该reply的所有举报信息
+        reqwest({
+            url:`${replyUrl}/report/delete/all`,
+            type:'json',
+            method:'post',
+            data:{id:selectedItem.replyId},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                }
+            }
+        });
+        // 向服务器发送请求删除被举报的reply
+        reqwest({
+            url:`${replyUrl}/delete`,
+            type:'json',
+            method:'post',
+            data:{id:replyItem.id},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                    message.success("成功删除该不合法评论!");
+                }
+            }
+        });
+        this.setState({...this.state,replyReportData:cloneReportData,replyListData:curReplyList});
+
+    }
+    // 拒绝某条评论的举报
+    handleRejectDeleteReply(record,e){
+        // 向服务器发送请求删除该条举报信息
+        let curData = this.state.replyReportData;
+        let selectedItem;
+        for(let i=0;i<curData.length;i++) {
+            let item = curData[i];
+            if (item.key === record.key) {
+                selectedItem = item;
+                curData.splice(i, 1);
+                break;
+            }
+        }
+        // 向服务器发送请求删除该reply举报信息
+        reqwest({
+            url:`${replyUrl}/report/delete`,
+            type:'json',
+            method:'post',
+            data:{id:selectedItem.key},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                    message.success("删除错误举报记录成功！");
+                }
+            }
+        });
+        this.setState({...this.state,replyReportData:curData});
     }
     // 根据某条记录的key查找整条记录
     getItemByKey(key,dataIndex){
@@ -418,7 +677,7 @@ export default class Administrator extends Component{
                         <span className="table-operation">
                     <a href="javascript:;">同意</a>
                     <Divider type="vertical" />
-                    <a href="javascript:;">拒绝</a>
+                    <a href="javascript:;" onClick={this.handleRejectDeleteBook.bind(this,record)}>拒绝</a>
                     <Divider type="vertical" />
                     <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                 </span>
@@ -435,8 +694,8 @@ export default class Administrator extends Component{
                     key: 'operation',
                     render: () => (
                         <span className="table-operation">
-                    <a href="javascript:;">查看书籍</a>
-                    <Divider type="vertical" />
+                  {/*  <a href="javascript:;">查看书籍</a>
+                    <Divider type="vertical" /> 不知道怎么连接到书籍页面，先把查看书籍去掉*/}
                     <a href="javascript:;">删除</a>
                 </span>
                     ),
@@ -476,9 +735,15 @@ export default class Administrator extends Component{
                     key: 'operation',
                     render: (text,record) => (
                         <span className="table-operation">
-                    <a href="javascript:;">同意</a>
+                    <Popconfirm
+                        title="确定要删除该条数据吗?"
+                        onConfirm={this.handleApproveDeletePost.bind(this,record)}
+                        okText="Yes"
+                        cancelText="No"
+                    >  <a href="javascript:;" >同意</a>
+                                </Popconfirm>
                     <Divider type="vertical" />
-                    <a href="javascript:;">拒绝</a>
+                      <a href="javascript:;" onClick={this.handleRejectDeletePost.bind(this,record)}>拒绝</a>
                      <Divider type="vertical" />
                     <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                 </span>
@@ -496,7 +761,14 @@ export default class Administrator extends Component{
                         <span className="table-operation">
                     <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                     <Divider type="vertical" />
-                    <a href="javascript:;" onClick={this.handleDeleteItem.bind(this,record)}>删除</a>
+                            <Popconfirm
+                                title="确定要删除该条数据吗?"
+                                onConfirm={this.handleApproveDeletePost.bind(this,record)}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <a href="javascript:;" >删除</a>
+                                </Popconfirm>
                 </span>
                     ),
                 },],
@@ -511,9 +783,16 @@ export default class Administrator extends Component{
                     key: 'operation',
                     render: (text,record) => (
                         <span className="table-operation">
-                    <a href="javascript:;">同意</a>
+                            <Popconfirm
+                                title="确定要删除该条数据吗?"
+                                onConfirm={this.handleApproveDeleteReply.bind(this,record)}
+                                okText="Yes"
+                                cancelText="No"
+                            >  <a href="javascript:;" >同意</a>
+                                </Popconfirm>
+
                     <Divider type="vertical" />
-                    <a href="javascript:;">拒绝</a>
+                    <a href="javascript:;" onClick={this.handleRejectDeleteReply.bind(this,record)}>拒绝</a>
                     <Divider type="vertical" />
                     <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                 </span>
@@ -531,7 +810,14 @@ export default class Administrator extends Component{
                         <span className="table-operation">
                     <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
                     <Divider type="vertical" />
-                    <a href="javascript:;">删除</a>
+                            <Popconfirm
+                                title="确定要删除该条数据吗?"
+                                onConfirm={this.handleApproveDeleteReply.bind(this,record)}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <a href="javascript:;" >删除</a>
+                                </Popconfirm>
                 </span>
                     ),
                 },],
@@ -542,8 +828,10 @@ export default class Administrator extends Component{
                     title: '操作',
                     dataIndex: 'operation',
                     key: 'operation',
-                    render: () => (
+                    render: (text,record) => (
                         <span className="table-operation">
+                            <a href="javascript:;" onClick={this.handleViewDetail.bind(this,record)}>详细</a>
+                    <Divider type="vertical" />
                     <a href="javascript:;">删除</a>
                 </span>
                     ),
@@ -592,8 +880,14 @@ export default class Administrator extends Component{
                                     <Button type="primary" key="back" onClick={this.hideModal}>确认</Button>,]
                                 }
                             >
-                                <p><strong> 标题：</strong>{this.state.modalTitle}</p>
-                                <p><strong>内容</strong>：{this.state.modalContent}</p>
+                                {
+                                    Object.keys(this.state.modalItem).map((key)=>{
+
+                                        return <p key={key}><strong>{key}：</strong>{this.state.modalItem[key]}</p>
+                                    })
+
+                                }
+
                             </Modal>
                         </div>
                     </div>

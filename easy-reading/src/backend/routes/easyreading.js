@@ -65,15 +65,20 @@ router.get('/book/:id',book_controller.getBookById);
 router.post('/book/report',book_report_controller.addBookReport);
 // GET 获取所有书籍举报信息
 router.post('/book/report/all',book_report_controller.getAllReports);
-
+// POST 根据id删除书籍举报信息
+router.post('/book/report/delete',book_report_controller.deleteReport);
 // GET 获取书籍id的所有帖子
 router.get('/post/:id/all',post_controller.getAllPostsByBookId);
 // POST 发布一条帖子
 router.post('/post/add',post_controller.addPost);
+// POST 根据id删除一条帖子
+router.post('/post/delete',post_controller.deletePost);
 // GET 获取所有的帖子
 router.get('/post/all',post_controller.getAllPosts);
 // POST 发布一条评论
 router.post('/reply/add',reply_controller.addReply);
+// POST 根据id删除一条评论
+router.post('/reply/delete',reply_controller.deleteReply);
 // GET 获取所有的评论
 router.get('/reply/all',reply_controller.getAllReplys);
 // GET 通过postId获取所有评论
@@ -81,13 +86,21 @@ router.get('/reply/:id/all',reply_controller.getAllReplysByPostId);
 
 // POST 举报一条帖子
 router.post('/post/report',post_report_controller.addPostReport);
-// GET 获取所有的帖子举报信息
+// POST 获取所有的帖子举报信息
 router.post('/post/report/all',post_report_controller.getAllReports);
+// POST 根据id删除一条帖子举报信息
+router.post('/post/report/delete',post_report_controller.deleteReport);
+// POST 根据postId删除该条post的所有举报信息
+router.post('/post/report/delete/all',post_report_controller.deleteAllByPostId);
 
 // POST 举报一条评论
 router.post('/reply/report',reply_report_controller.addReplyReport);
-// GET 获取所有评论举报信息
+// POST 获取所有评论举报信息
 router.post('/reply/report/all',reply_report_controller.getAllReports);
+// POST 根据id删除一条评论举报信息
+router.post('/reply/report/delete',reply_report_controller.deleteReport);
+// POST 根据replyId删除该条reply的所有举报信息
+router.post('/reply/report/delete/all',reply_report_controller.deleteAllByReplyId);
 /*// 获取用户每天的个性化推荐书籍列表
 router.get('/books/personalBooks',book_controller.book_getPersonalBooks);
 

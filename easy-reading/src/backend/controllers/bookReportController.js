@@ -33,3 +33,12 @@ exports.getAllReports = (req,res) => {
         res.end();
     })
 };
+
+// 根据id删除某条举报信息
+exports.deleteReport = (req,res) => {
+    pool.query(BookReportSQL.delete,[req.body.id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
+        res.end();
+    })
+};

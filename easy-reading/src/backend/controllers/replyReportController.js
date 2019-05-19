@@ -19,7 +19,7 @@ exports.addReplyReport = (req,res) =>{
 
 // 获取所有的评论举报记录
 exports.getAllReports = (req,res) => {
-    console.log("接收到了请求")
+
     pool.query(ReplyReportSQL.selectAll,(err,rows) => {
         if(err) throw err;
         for(let item of rows){
@@ -29,9 +29,28 @@ exports.getAllReports = (req,res) => {
             item.invalidUser = item.reportedUserName;
             item.whistleBlower = item.userName;
             item.reportTime = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
-            console.log(item);
         }
         res.send(rows);
+        res.end();
+    })
+};
+
+// 根据id删除某条评论举报信息
+exports.deleteReport = (req,res) =>{
+
+    pool.query(ReplyReportSQL.delete,[req.body.id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
+        res.end();
+    })
+};
+
+
+// 根据replyId删除对应的所有举报信息
+exports.deleteAllByReplyId = (req,res) =>{
+    pool.query(ReplyReportSQL.deleteAllByReplyId,[req.body.id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
         res.end();
     })
 };
