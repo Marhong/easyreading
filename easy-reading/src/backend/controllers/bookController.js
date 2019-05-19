@@ -78,6 +78,7 @@ exports.getBookById = (req,res) => {
             throw err;
         }
         let book = rows[0];
+
         // 通过typeId获取type的名字
         pool.query(BookTypeSQL.selectBookTypeById,[book.type],(err,rows)=> {
             if (err) {
@@ -150,6 +151,29 @@ exports.getAllBooks = (req,res) => {
             item.key =item.id;
             item.uploader = item.userId;
             item.uploadTime = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
+        }
+        res.send(rows);
+        res.end();
+    })
+};
+const booktypes = {
+    1:"玄幻",
+    2:"奇幻",
+    3:"仙侠",
+    4:"历史",
+    5:"都市",
+    6:"科幻",
+    7:"军事",
+    8:"灵异",
+};
+// 通过用户id获取所有上传的书籍
+exports.getAllBooksByUserId = (req,res) =>{
+    pool.query(BookSQL.selectAllBooksByUserId,[req.params.userId],(err,rows) => {
+        if(err) throw err;
+        for(let item of rows){
+            item.key =item.id;
+            item.bookType = booktypes[item.type];
+            item.uploadTime = moment(item.startTime).format('YYYY-MM-DD HH:mm:ss');
         }
         res.send(rows);
         res.end();

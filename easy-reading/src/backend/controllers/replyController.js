@@ -67,7 +67,7 @@ exports.getAllReplysByUserId = (req,res) =>{
             pool.query(BookSQL.selectOneBook,[reply.bookId],(err,rows)=>{
                 if(err) throw err;
                 reply.bookName = rows[0].name;
-                console.log(reply);
+
                 replys.push(reply);
                 index++;
                 if(index === replyLength){

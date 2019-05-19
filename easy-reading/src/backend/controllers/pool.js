@@ -44,6 +44,7 @@ exports.BookSQL = {
     updateNormalAndMemberClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1,  memberClickNumbers = memberClickNumbers+1 WHERE id = ?',
     updateNormalClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1  WHERE id = ?',
     selectAllBooks :'SELECT * FROM book ',
+    selectAllBooksByUserId :"SELECT * FROM book WHERE userId = ?"
 };
 exports.PostSQL = {
   insert :'INSERT INTO post (id,bookId,userId,title,content,time,userName) VALUES (?,?,?,?,?,?,?)',
@@ -97,6 +98,8 @@ exports.RankRecordSQL = {
 exports.CollectRecordSQL = {
   insert :'INSERT INTO collectrecord (id,userId,bookId,time) VALUES (?,?,?,?)',
     selectByUserAndBookId : 'SELECT * FROM collectrecord WHERE userId = ? and bookId = ?',
+    selectAllByUserId :'SELECT * FROM collectrecord WHERE userId = ? order by id desc',
+    delete:'DELETE FROM collectrecord WHERE id = ?',
 };
 exports.BookTypeSQL = {
     updateUseTimes : 'UPDATE booktype set useTimes = useTimes+1 where id = ?',

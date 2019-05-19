@@ -1,25 +1,19 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Menu ,Divider,Tabs,Table,Select,Form,DatePicker,Input,Button,Tag} from 'antd';
+import { Menu ,Divider,Tabs,Table,Popconfirm,Tag} from 'antd';
 import moment from 'moment';
 import {WrappedRegistrationForm} from './RegistrationForm';
 import {sortBy} from '../static/commonFun';
 import reqwest from "reqwest";
+import {message} from "antd/lib/index";
 require('../css/PersonalCenter.css');
 const bookUrl = "http://localhost:5000/easyreading/book";
 const postUrl = "http://localhost:5000/easyreading/post";
 const replyUrl = "http://localhost:5000/easyreading/reply";
+const collectUrl = "http://localhost:5000/easyreading/collect";
 // 菜单项为“我的书架”时的数据
 const bookData = [
-    {
-        key: 1, name: '癞蛤蟆想吃天鹅肉', author: '烽火戏诸侯', chapter: '第二百一十三章 长得美想的还没', updateTime: '一天前',description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-    },
-    {
-        key: 2, name: '斗破苍穹', author: '天蚕土豆', chapter: '第四百一十三章 晋升斗皇', updateTime: '两天前',description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-    },
-    {
-        key: 3, name: '求魔', author: '耳根', chapter: '第二百三十三章 海神', updateTime: '一个月前',description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-    },
+
 ];
 // 菜单项为“我的书单”时的数据
 const bookListData = [
@@ -193,11 +187,47 @@ export default class PersonalCenter extends Component{
             weekData:weekData,
             monthData:monthData,
             yearData:yearData,
+            uploadRecordData:uploadRecordData,
             currentDataName:"bookData",
             user:user,
         }
     }
     componentDidMount(){
+        // 从服务器获取收藏的书籍
+        reqwest({
+            url:`${collectUrl}/${this.state.user.id}`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log("收藏的书籍数据:"+res);
+                if(res){
+                    let books = res;
+                    let index =0;
+                    for(let i=0,len=books.length;i<len;i++){
+                        // 通过bookId从服务器获取书籍
+                        reqwest({
+                            url:`${bookUrl}/${books[i].bookId}`,
+                            type:'json',
+                            method:'get',
+                            error:(err)=>console.log(err),
+                            success:(res)=>{
+                                books[i].name = res.name;
+                                books[i].author = res.author;
+                                books[i].chapter = res.latestChapter.name;
+                                books[i].description =res.description;
+                                books[i].updateTime = moment(res.latestChapter.time).format('YYYY-MM:DD HH:mm:ss');
+                                index++;
+                                if(index === books.length){
+                                    this.setState({...this.state,bookData:books.sort(sortBy('key',false))});
+                                }
+
+                            }
+                        });
+                    }
+                }
+            }
+        });
         // 从服务器获取所发表的所有帖子信息
         reqwest({
             url:`${postUrl}/${this.state.user.id}`,
@@ -221,12 +251,51 @@ export default class PersonalCenter extends Component{
                 this.setState({...this.state,replyData:res.sort(sortBy('key',false))});
             }
         });
+        // 从服务器获取用户的上传记录
+        reqwest({
+            url:`${bookUrl}/${this.state.user.id}/upload`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log("收到的reply:"+res);
+                this.setState({...this.state,uploadRecordData:res.sort(sortBy('key',false))});
+            }
+        });
     }
     handleContinueReading(record,e){
         console.log(record);
     }
     handleDeleteBookFromBookshelf(record,e){
-        console.log(record);
+        let curData = this.state[this.state.currentDataName];
+        let selectedItem;
+        for(let i=0;i<curData.length;i++) {
+            let item = curData[i];
+            console.log(item.key,record.key);
+            if (item.key === record.key) {
+                selectedItem = item;
+                curData.splice(i, 1);
+                break;
+            }
+        }
+        // 向服务器发送请求删除该收藏记录
+        reqwest({
+            url:`${collectUrl}/delete`,
+            type:'json',
+            method:'post',
+            data:{id:selectedItem.key},
+            error:(err)=>{
+                message.error("删除失败!");
+                console.log(err)
+            },
+            success:(res)=>{
+                if(res){
+                    message.success("移除成功！");
+                    this.setState({...this.state,bookData:curData});
+                }
+            }
+        });
+
     }
     handleDeleteBookList(record,e){
         console.log(record);
@@ -243,7 +312,7 @@ export default class PersonalCenter extends Component{
             case "1":
                 this.tabs.style.display = "none";
                 table.style.display = "block";
-                this.setState({...this.state,columnsName:"bookShelfColumns",bookData,expandedRowRender:null,currentDataName:"bookData"});
+                this.setState({...this.state,columnsName:"bookShelfColumns",expandedRowRender:null,currentDataName:"bookData"});
                 break;
 
             case "2":
@@ -275,7 +344,7 @@ export default class PersonalCenter extends Component{
             case "6":
                 this.tabs.style.display = "none";
                 table.style.display = "block";
-                this.setState({columnsName:"uploadRecordColumns",uploadRecordData:uploadRecordData,expandedRowRender:null,currentDataName:"uploadRecordData"});
+                this.setState({...this.state,columnsName:"uploadRecordColumns",expandedRowRender:null,currentDataName:"uploadRecordData"});
                 break;
             default:
                 this.tabs.style.display = "block";
@@ -358,7 +427,14 @@ export default class PersonalCenter extends Component{
                         <span>
                                         <a href="javascript:;" onClick={this.handleContinueReading.bind(this,record)}>继续阅读</a>
                                         <Divider type="vertical" />
-                                        <a href="javascript:;" onClick={this.handleDeleteBookFromBookshelf.bind(this,record)}>删除</a>
+                             <Popconfirm
+                                 title="确定要将该书从书架移除吗?"
+                                 onConfirm={this.handleDeleteBookFromBookshelf.bind(this,record)}
+                                 okText="Yes"
+                                 cancelText="No"
+                             >  <a href="javascript:;" >删除</a>
+                                </Popconfirm>
+
                                     </span>
                     )},],
             // 菜单项为“我的书单”的表头
