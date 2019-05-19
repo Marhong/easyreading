@@ -79,6 +79,10 @@ router.post('/post/add',post_controller.addPost);
 router.post('/post/delete',post_controller.deletePost);
 // GET 获取所有的帖子
 router.get('/post/all',post_controller.getAllPosts);
+// GET 通过userId获取用户发表的所有评论
+router.get('/post/:userId',post_controller.getAllPostsByUserId);
+
+
 // POST 发布一条评论
 router.post('/reply/add',reply_controller.addReply);
 // POST 根据id删除一条评论
@@ -87,6 +91,8 @@ router.post('/reply/delete',reply_controller.deleteReply);
 router.get('/reply/all',reply_controller.getAllReplys);
 // GET 通过postId获取所有评论
 router.get('/reply/:id/all',reply_controller.getAllReplysByPostId);
+// GET 通过userId获取用户发表的所有评论
+router.get('/reply/:userId',reply_controller.getAllReplysByUserId);
 
 // POST 举报一条帖子
 router.post('/post/report',post_report_controller.addPostReport);

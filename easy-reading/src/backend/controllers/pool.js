@@ -50,6 +50,7 @@ exports.PostSQL = {
   selectAllByBookId :'SELECT * FROM post WHERE bookId = ? order by id desc',
     selectAll :'SELECT * FROM post order by id desc',
     delete :'DELETE FROM post WHERE id = ?',
+    selectAllByUserId:'SELECT * FROM post WHERE userId = ?',
 };
 exports.ReplySQL = {
     insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId,userName,postTitle) VALUES (?,?,?,?,?,?,?,?,?)',
@@ -57,6 +58,7 @@ exports.ReplySQL = {
     selectAll :'SELECT * FROM reply order by id desc',
     delete :'DELETE FROM reply WHERE id = ?',
     deleteAllByPostId:'DELETE FROM reply WHERE postId = ?',
+    selectAllByUserId:'SELECT * FROM reply WHERE userId = ? order by id desc',
 };
 exports.ReplyReportSQL = {
     insert :'INSERT INTO replyreport (id,content,replyContent,userId,userName,reportedUserId,reportedUserName,replyId,time,postId) VALUES (?,?,?,?,?,?,?,?,?,?)',

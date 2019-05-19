@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom';
 import { Menu ,Divider,Tabs,Table,Select,Form,DatePicker,Input,Button,Tag} from 'antd';
 import moment from 'moment';
 import {WrappedRegistrationForm} from './RegistrationForm';
+import {sortBy} from '../static/commonFun';
+import reqwest from "reqwest";
 require('../css/PersonalCenter.css');
-
+const bookUrl = "http://localhost:5000/easyreading/book";
+const postUrl = "http://localhost:5000/easyreading/post";
+const replyUrl = "http://localhost:5000/easyreading/reply";
 // 菜单项为“我的书架”时的数据
 const bookData = [
     {
@@ -158,7 +162,7 @@ const recordExpandedRowRender = (e) => {
 };
 const postTabs = [{name:"发表的帖子",dataName:"postData",columnsName:"postColumns",key:"postData"},
     {name:"发表的回复",dataName:"replyData",columnsName:"replyColumns",key:"replyData"},
-    {name:"点赞的帖子",dataName:"likeData",columnsName:"likeColumns",key:"likeData"}];
+    /*帖子点赞功能暂不实现{name:"点赞的帖子",dataName:"likeData",columnsName:"likeColumns",key:"likeData"}*/];
 const msgTabs = [{name:"系统消息",dataName:"sysData",columnsName:"sysColumns",key:"sysData"},
     {name:"私信",dataName:"perData",columnsName:"perColumns",key:"perData"},];
 const readingRecord = [{name:"周",dataName:"weekData",columnsName:"weekColumns",key:"weekData"},
@@ -170,7 +174,7 @@ const perInfoTabs =  [{name:"基本信息",},
 export default class PersonalCenter extends Component{
     static defaultProps = {
         userInfo :{name:"麦香馅饼和肉夹馍",gender:"male",address:"shanxi,xian,lianhu",birthday:"2019-04-28",phone:"15245256",email:"15245256@qq.com",description:"我爱看小说你呢？"}
-    }
+    };
     constructor(props){
         super(props);
         let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
@@ -192,6 +196,31 @@ export default class PersonalCenter extends Component{
             currentDataName:"bookData",
             user:user,
         }
+    }
+    componentDidMount(){
+        // 从服务器获取所发表的所有帖子信息
+        reqwest({
+            url:`${postUrl}/${this.state.user.id}`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log(res);
+
+                this.setState({...this.state,postData:res.sort(sortBy('key',false))})
+            }
+        });
+        // 从服务器获取发表的所有评论信息
+        reqwest({
+            url:`${replyUrl}/${this.state.user.id}`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log("收到的reply:"+res);
+                this.setState({...this.state,replyData:res.sort(sortBy('key',false))});
+            }
+        });
     }
     handleContinueReading(record,e){
         console.log(record);
@@ -354,7 +383,7 @@ export default class PersonalCenter extends Component{
                 { title: '帖子', dataIndex: 'post', key: 'post' },
                 { title: '是否精华', dataIndex: 'isEssence', key: 'isEssence' },
                 { title: '回复数量', dataIndex: 'replyNum', key: 'replyNum' },
-                { title: '最后回复时间', dataIndex: 'latReplyTime', key: 'latReplyTime' },
+                { title: '发布时间', dataIndex: 'latReplyTime', key: 'latReplyTime' },
                 { title: '所在书评区', dataIndex: 'bookName', key: 'bookName' },],
             replyColumns:[
                 { title: '帖子', dataIndex: 'post', key: 'post' },
@@ -421,7 +450,7 @@ export default class PersonalCenter extends Component{
                             expandedRowRender={this.state.expandedRowRender ? bookListExpandedRowRender : null}
                             dataSource={this.state[this.state.currentDataName]}
                             ref={(table) => this.table = table}
-                            pagination={{total:this.state[this.state.currentDataName].length,pageSize:1,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
+                            pagination={{total:this.state[this.state.currentDataName].length,pageSize:5,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
                         />
                         <div className="card-container" ref={(tabs) => this.tabs =tabs } style={{display:"none"}}>
                             <Tabs type="card" onChange={this.handleTabChange}>
@@ -433,7 +462,7 @@ export default class PersonalCenter extends Component{
                                             <Table columns={columnsCollection[tab.columnsName]}
                                                    dataSource={this.state[tab.dataName]}
                                                    expandedRowRender={this.state.recordExpandedRowRender}
-                                                   pagination={{total:this.state[tab.dataName].length,pageSize:1,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
+                                                   pagination={{total:this.state[tab.dataName].length,pageSize:5,defaultCurrent:1,showQuickJumper:true,onChange:this.onChange.bind(this) }}
                                             />}
                                     </TabPane>
                                 })}

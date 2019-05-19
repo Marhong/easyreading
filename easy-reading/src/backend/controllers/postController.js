@@ -4,6 +4,7 @@ let PostSQL = poolModule.PostSQL;
 let ReplySQL = poolModule.ReplySQL;
 let ReplyReportSQL = poolModule.ReplyReportSQL;
 let PostReportSQL = poolModule.PostReportSQL;
+let BookSQL = poolModule.BookSQL;
 let sortBy = require('./common').sortBy;
 let moment = require('moment');
 // 通过书籍id获取该书籍的所有post
@@ -70,7 +71,50 @@ exports.getAllPosts = (req,res) => {
         res.end();
     })
 };
+const essenceStadard = 20;
+// 通过useId获取所有帖子数据
+exports.getAllPostsByUserId = (req,res) =>{
+    pool.query(PostSQL.selectAllByUserId,[req.params.userId],(err,rows) => {
+        if(err) throw err;
+        let posts =[];
+        if(rows.length>0){
+        for(let item of rows){
 
+            let post = item;
+            post.key = item.id;
+            post.post = item.title;
+            post.latReplyTime = moment(post.time).format('YYYY-MM-DD HH:mm:ss');
+            let index=0,postLength=rows.length;
+            pool.query(BookSQL.selectOneBook,[post.bookId],(err,rows)=>{
+                if(err) throw err;
+                post.bookName = rows[0].name;
+                post.isEssence = "否";
+                post.replyNum = 0;
+                pool.query(ReplySQL.selectAllByPostId,[post.id],(err,rows)=> {
+                    if (err) throw err;
+                    if (rows.length > 0){
+                            post.replyNum = rows.length;
+                            if (post.replyNum > essenceStadard) {
+                                post.isEssence = "是";
+                            }
+
+
+                    }
+                        posts.push(post);
+
+                    index++;
+                    if (index === postLength) {
+                        res.send(posts);
+                        res.end();
+                    }
+                })
+            });
+
+        }
+        }
+
+    })
+};
 // 根据id删除某条post
 exports.deletePost = (req,res) =>{
     pool.query(PostSQL.delete,[req.body.id],(err,rows) => {
