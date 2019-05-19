@@ -4,9 +4,13 @@ import { Menu ,Divider,Tabs,Table,Modal,Button,Input,Icon,Popconfirm} from 'antd
 import moment from 'moment';
 import Highlighter from 'react-highlight-words';
 import {WrappedBulletinForm} from './BulletinForm';
-import {formatArray} from '../static/commonFun';
+import {formatArray,sortBy} from '../static/commonFun';
 import reqwest from "reqwest";
 import {message} from "antd/lib/index";
+const bookUrl = "http://localhost:5000/easyreading/book";
+const postUrl = "http://localhost:5000/easyreading/post";
+const replyUrl = "http://localhost:5000/easyreading/reply";
+const userUrl = "http://localhost:5000/easyreading/user";
 const bulletinUrl = "http://localhost:5000/easyreading/bulletin";
 require('../css/PersonalCenter.css');
 
@@ -90,7 +94,7 @@ const userListData = [
         key: "userListData1", name  : '王小二', registerTime  : '2019-02-10 14:20:20',
     },
 ];
-const bookTabs = [{name:"书籍审核",dataName:"uploadedBooksData",columnsName:"uploadedBooksColumns",key:"uploadedBooksData"},
+const bookTabs = [/*{name:"书籍审核",dataName:"uploadedBooksData",columnsName:"uploadedBooksColumns",key:"uploadedBooksData"},*/
     {name:"举报信息",dataName:"bookReportData",columnsName:"bookReportColumns",key:"bookReportData"},
     {name:"书籍列表",dataName:"bookListData",columnsName:"bookListColumns",key:"bookListData"}];
 const bulletinTabs = [{name:"发布公告",key:"publishBulletin"},
@@ -124,7 +128,95 @@ export default class Administrator extends Component{
         }
     }
     componentDidMount(){
+        // 从服务器获取所有book
+        reqwest({
+            url:`${bookUrl}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
 
+                console.log(res);
+                this.setState({...this.state,bookListData:res});
+            }
+        });
+        // 从服务器获取所有书籍举报信息
+        reqwest({
+            url:`${bookUrl}/report/all`,
+            type:'json',
+            method:'post',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log(res);
+                this.setState({...this.state,bookReportData:res});
+            }
+        });
+        // 从服务器获取所有bulletin
+        reqwest({
+            url:`${bulletinUrl}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                this.setState({...this.state,bulletinListData:res.sort(sortBy('key',false))});
+            }
+        });
+        // 从服务器获取所有评论信息
+        reqwest({
+            url:`${replyUrl}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log(res);
+                this.setState({...this.state,replyListData:res});
+            }
+        });
+        // 从服务器获取所有评论举报信息
+        reqwest({
+            url:`${replyUrl}/report/all`,
+            type:'json',
+            method:'post',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                this.setState({...this.state,replyReportData:res});
+            }
+        });
+        // 从服务器获取所有帖子举报信息
+        reqwest({
+            url:`${postUrl}/report/all`,
+            type:'json',
+            method:'post',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log(res);
+
+                this.setState({...this.state,postReportData:res});
+            }
+        });
+        // 从服务器获取所有帖子信息
+        reqwest({
+            url:`${postUrl}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log(res);
+
+                this.setState({...this.state,postListData:res})
+            }
+        });
+        // 从服务器获取所有用户信息
+        reqwest({
+            url:`${userUrl}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                console.log(res);
+                this.setState({...this.state,userListData:res});
+            }
+        });
     }
     // 展示搜索框
     getColumnSearchProps = (dataIndex) => ({
@@ -194,27 +286,13 @@ export default class Administrator extends Component{
                 this.setState({...this.state,tabs:bookTabs,currentDataName:"bookReportData"});
                 break;
             case "2":
-                    let bulletinList = [];
-                // 从服务器获取所有bulletin
-                reqwest({
-                    url:`${bulletinUrl}/all`,
-                    type:'json',
-                    method:'get',
-                    error:(err)=>console.log(err),
-                    success:(res)=>{
-                        for(let item of res){
-                            bulletinList.push({...item});
-                        }
-                    }
-                });
-                this.setState({...this.state,tabs:bulletinTabs,currentDataName:"bulletinListData",bulletinListData:bulletinList});
+
+                this.setState({...this.state,tabs:bulletinTabs,currentDataName:"bulletinListData"});
                 break;
             case "3":
-
                 this.setState({...this.state,tabs:postTabs,currentDataName:"postReportData"});
                 break;
             case "4":
-
                 this.setState({...this.state,tabs:replyTabs,currentDataName:"replyReportData"});
                 break;
             default:

@@ -3,6 +3,7 @@ let pool = poolModule.pool;
 let UserSQL = poolModule.UserSQL;
 let BookshelfSQL = poolModule.BookshelfSQL;
 let ReadingSettingSQL =poolModule.ReadingSettingSQL;
+let moment = require('moment');
 // POST 验证用户登录
 exports.userLogin = (req,res) => {
     let {userName,password} = req.body;
@@ -21,7 +22,7 @@ exports.userLogin = (req,res) => {
         }
         res.send(isRight ? curUser : false);
     })
-}
+};
 // POST 注册用户
 exports.addUser = (req,res) => {
     let user = req.body;
@@ -43,7 +44,7 @@ exports.addUser = (req,res) => {
                 })
             });
         });
-}
+};
 // 验证用户名是否已被注册
 exports.isExist = (req,res) => {
     let name = req.body.name;
@@ -60,5 +61,18 @@ exports.isExist = (req,res) => {
         }
         res.send({isExist:isExist});
     })
-}
+};
+
+// 获取所有的用户信息
+exports.getAllUsers = (req,res) => {
+    pool.query(UserSQL.selectAll,(err,rows) => {
+        if(err) throw err;
+        for(let item of rows){
+            item.key = item.id;
+            item.registerTime = moment(item.signUpTime).format('YYYY-MM-DD HH:mm:ss');
+        }
+        res.send(rows);
+        res.end();
+    })
+};
 

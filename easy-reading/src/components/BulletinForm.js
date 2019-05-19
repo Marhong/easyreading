@@ -24,7 +24,7 @@ class BulletinForm extends React.Component {
                 if(this.props.onSubmitBulletin){
                     this.props.onSubmitBulletin(values);
                 }*/
-               if(this.props.onSubmitBulletin){
+               if(this.props.onSubmitBulletin && this.props.reportedItem){
                    this.props.onSubmitBulletin(values);
                }else{
                    let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));

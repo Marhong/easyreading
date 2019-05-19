@@ -46,19 +46,24 @@ exports.BookSQL = {
 exports.PostSQL = {
   insert :'INSERT INTO post (id,bookId,userId,title,content,time,userName) VALUES (?,?,?,?,?,?,?)',
   selectAllByBookId :'SELECT * FROM post WHERE bookId = ? order by id desc',
+    selectAll :'SELECT * FROM post order by id desc',
 };
 exports.ReplySQL = {
-    insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId,userName) VALUES (?,?,?,?,?,?,?,?)',
+    insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId,userName,postTitle) VALUES (?,?,?,?,?,?,?,?,?)',
     selectAllByPostId :'SELECT * FROM reply WHERE postId = ? order by id desc',
+    selectAll :'SELECT * FROM reply order by id desc',
 };
 exports.ReplyReportSQL = {
     insert :'INSERT INTO replyreport (id,content,replyContent,userId,userName,reportedUserId,reportedUserName,replyId,time,postId) VALUES (?,?,?,?,?,?,?,?,?,?)',
+    selectAll:'SELECT * FROM replyreport order by id desc',
 };
 exports.PostReportSQL = {
     insert :'INSERT INTO postreport (id,postId,userId,content,postTitle,userName,reportedUserName,reportedUserId,time) VALUES (?,?,?,?,?,?,?,?,?)',
+    selectAll:'SELECT * FROM postreport order by id desc',
 };
 exports.BookReportSQL = {
     insert :'INSERT INTO bookreport (id,userId,bookId,userName,bookName,content,time,reportedUserId) VALUES (?,?,?,?,?,?,?,?)',
+    selectAll:'SELECT * FROM bookreport order by id desc',
 };
 exports.BookRecomendRecordsSQL = {
     selectAllRecommendRecordsByBookId : 'SELECT * FROM book_recommend_records WHERE bookId = ?',

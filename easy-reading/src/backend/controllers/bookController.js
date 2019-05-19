@@ -15,6 +15,7 @@ let BookVolumesSQL = poolModule.BookVolumesSQL;
 let compare = poolModule.compare;
 let readImage = require("./readImage");
 let formidable = require('formidable');
+let moment = require('moment');
 let callback = common.parseUploadBookCallBack;
 let changeEncoding = common.changeEncoding;
 let fs = require('fs');
@@ -145,6 +146,11 @@ exports.getBookById = (req,res) => {
 exports.getAllBooks = (req,res) => {
     pool.query(BookSQL.selectAllBooks,(err,rows) => {
         if(err) throw err;
+        for(let item of rows){
+            item.key =item.id;
+            item.uploader = item.userId;
+            item.uploadTime = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
+        }
         res.send(rows);
         res.end();
     })

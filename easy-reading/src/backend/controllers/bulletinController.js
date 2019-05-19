@@ -3,6 +3,7 @@ let pool = poolModule.pool;
 let BulletinSQL = poolModule.BulletinSQL;
 let UserSQL = poolModule.UserSQL;
 let moment = require('moment');
+let sortBy = require('./common').sortBy;
 // 添加一条公告
 exports.addBulletin = (req,res) => {
     let id = Date.now();
@@ -34,7 +35,7 @@ exports.getAllBulletins = (req,res) => {
             item.content = bulletin.content;
             item.publishTime = moment(bulletin.time).format('YYYY-MM-DD HH:mm:ss');
 
-            pool.query(UserSQL.getUserById,[bulletin.userId],(err,rows) =>{
+            pool.query(UserSQL.selectOneByUserId,[bulletin.userId],(err,rows) =>{
                 if(err){
                     throw err;
                 }
@@ -42,7 +43,8 @@ exports.getAllBulletins = (req,res) => {
                     item.publisher = rows[0].name;
                     allBulletins.push(item);
                     if(index===length){
-                        res.send(allBulletins);
+                        res.send(allBulletins.sort(sortBy('id',false)));
+                        res.end();
                     }
                     index++;
                 }

@@ -3,6 +3,7 @@ let pool = poolModule.pool;
 let PostSQL = poolModule.PostSQL;
 let ReplySQL = poolModule.ReplySQL;
 let sortBy = require('./common').sortBy;
+let moment = require('moment');
 // 通过书籍id获取该书籍的所有post
 exports.getAllPostsByBookId = (req,res) =>{
 
@@ -52,4 +53,18 @@ exports.addPost = (req,res) =>{
         res.send({id:id});
         res.end();
     });
+};
+
+// 获取所有帖子数据
+exports.getAllPosts = (req,res) => {
+    pool.query(PostSQL.selectAll,(err,rows) => {
+        if(err) throw err;
+        for(let item of rows){
+            item.key = item.id;
+            item.publisher = item.userName;
+            item.publishTime = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
+        }
+        res.send(rows);
+        res.end();
+    })
 };

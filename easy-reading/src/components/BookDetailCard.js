@@ -120,7 +120,7 @@ export default class BookDetailCard extends Component{
 
         let report = {userId:this.state.user.id,bookId:arguments[0],userName:this.state.user.name,
             bookName:arguments[1],content:arguments[3].content,time:Date.now(),reportedUserId:arguments[2]};
-        
+
         // 将帖子内容插入数据库中,同时更新帖子数据
         reqwest({
             url:`${bookUrl}/report`,

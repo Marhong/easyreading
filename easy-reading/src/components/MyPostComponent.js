@@ -146,6 +146,13 @@ export default class MyPostComponent extends Component{
             alert("回复消息不能为空!");
             return;
         }
+        let postTitle ="";
+        for(let item of this.state.posts){
+
+            if(item.id === this.state.postId){
+                postTitle = item.title;
+            }
+        }
         let newReply = {
             userId:this.state.userId,
             bookId:this.state.bookId,
@@ -154,6 +161,7 @@ export default class MyPostComponent extends Component{
             content:this.state.replyMsg,
             anotherUserId:this.state.replyToAnother,
             userName:this.state.user.name,
+            postTitle:postTitle,
         };
         // 将评论内容插入数据库中,同时更新评论数据
         reqwest({
@@ -248,6 +256,7 @@ export default class MyPostComponent extends Component{
     }
     // 提交评论举报信息
     handleReplyReportSubmit(values){
+
            let report = {replyContent:arguments[1],content:arguments[5].content,userId:this.state.user.id,userName:this.state.user.name,
            reportedUserId:arguments[2],reportedUserName:arguments[3],replyId:arguments[0],time:Date.now(),postId:arguments[4]};
             // 将帖子内容插入数据库中,同时更新帖子数据
@@ -319,7 +328,7 @@ export default class MyPostComponent extends Component{
             <div className="postModule">
                 <div className="header">
                     <ul >
-                        <li className="selected" onClick={this.handleTypeChange.bind(this)} ref={(all) => this.all =all}><a>全部(368)</a></li>
+                        <li className="selected" onClick={this.handleTypeChange.bind(this)} ref={(all) => this.all =all}><a>全部({this.state.posts.length})</a></li>
                         <li className="hotposts" onClick={this.handleTypeChange.bind(this)} ref={(hot)=>this.hot=hot}><a>热帖</a></li>
                         <li onClick={this.handleTypeChange.bind(this)}><a><i className="iconfont icon-fatie"/> 我要发帖</a></li>
                     </ul>

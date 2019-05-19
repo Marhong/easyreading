@@ -29,6 +29,8 @@ router.post('/user/login',user_controller.userLogin);
 router.post('/user/signUp/isExist',user_controller.isExist);
 // POST 注册账号
 router.post('/user/signUp/add',user_controller.addUser);
+// GET 获取所有的用户
+router.get('/user/all',user_controller.getAllUsers);
 /// BookType书籍类型路由 ///
 
 // GET 获取固定的那8种BookType
@@ -61,19 +63,31 @@ router.get('/book/all',book_controller.getAllBooks);
 router.get('/book/:id',book_controller.getBookById);
 // POST 举报书籍
 router.post('/book/report',book_report_controller.addBookReport);
+// GET 获取所有书籍举报信息
+router.post('/book/report/all',book_report_controller.getAllReports);
+
 // GET 获取书籍id的所有帖子
 router.get('/post/:id/all',post_controller.getAllPostsByBookId);
 // POST 发布一条帖子
 router.post('/post/add',post_controller.addPost);
+// GET 获取所有的帖子
+router.get('/post/all',post_controller.getAllPosts);
 // POST 发布一条评论
 router.post('/reply/add',reply_controller.addReply);
+// GET 获取所有的评论
+router.get('/reply/all',reply_controller.getAllReplys);
 // GET 通过postId获取所有评论
 router.get('/reply/:id/all',reply_controller.getAllReplysByPostId);
 
 // POST 举报一条帖子
 router.post('/post/report',post_report_controller.addPostReport);
+// GET 获取所有的帖子举报信息
+router.post('/post/report/all',post_report_controller.getAllReports);
+
 // POST 举报一条评论
 router.post('/reply/report',reply_report_controller.addReplyReport);
+// GET 获取所有评论举报信息
+router.post('/reply/report/all',reply_report_controller.getAllReports);
 /*// 获取用户每天的个性化推荐书籍列表
 router.get('/books/personalBooks',book_controller.book_getPersonalBooks);
 
