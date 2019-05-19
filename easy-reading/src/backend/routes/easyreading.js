@@ -19,7 +19,9 @@ const search_record_controller = require('../controllers/searchRecordController'
 const user_controller = require('../controllers/userController');
 const volume_controller = require('../controllers/volumeController');
 const bulletin_controller = require('../controllers/bulletinController');
-
+const post_report_controller = require('../controllers/postReportController');
+const reply_report_controller = require('../controllers/replyReportController');
+const book_report_controller = require('../controllers/bookReportController');
 // 用户路由
 // POST 验证用户登录
 router.post('/user/login',user_controller.userLogin);
@@ -57,6 +59,8 @@ router.post('/book/add',book_controller.addBook);
 router.get('/book/all',book_controller.getAllBooks);
 // GET 通过书籍id获取某一书籍详细信息
 router.get('/book/:id',book_controller.getBookById);
+// POST 举报书籍
+router.post('/book/report',book_report_controller.addBookReport);
 // GET 获取书籍id的所有帖子
 router.get('/post/:id/all',post_controller.getAllPostsByBookId);
 // POST 发布一条帖子
@@ -66,6 +70,10 @@ router.post('/reply/add',reply_controller.addReply);
 // GET 通过postId获取所有评论
 router.get('/reply/:id/all',reply_controller.getAllReplysByPostId);
 
+// POST 举报一条帖子
+router.post('/post/report',post_report_controller.addPostReport);
+// POST 举报一条评论
+router.post('/reply/report',reply_report_controller.addReplyReport);
 /*// 获取用户每天的个性化推荐书籍列表
 router.get('/books/personalBooks',book_controller.book_getPersonalBooks);
 

@@ -26,10 +26,10 @@ export default class ReportItem extends Component{
     showDiffReport(item){
         if(item.name){
             return `您确认要举报书籍：《${item.name}》 吗？`;
-        }else if(item.postTitle){
-            return `您确认要举报帖子：“${item.postTitle}” 吗？`;
+        }else if(item.title){
+            return `您确认要举报帖子：“${item.title}” 吗？`;
         }else{
-            return `您确认要举报评论：“${item.replyContent}” 吗？`;
+            return `您确认要举报评论：“${item.content}” 吗？`;
         }
     }
     handleReport(e){

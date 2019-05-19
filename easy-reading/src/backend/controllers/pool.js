@@ -51,6 +51,15 @@ exports.ReplySQL = {
     insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId,userName) VALUES (?,?,?,?,?,?,?,?)',
     selectAllByPostId :'SELECT * FROM reply WHERE postId = ? order by id desc',
 };
+exports.ReplyReportSQL = {
+    insert :'INSERT INTO replyreport (id,content,replyContent,userId,userName,reportedUserId,reportedUserName,replyId,time,postId) VALUES (?,?,?,?,?,?,?,?,?,?)',
+};
+exports.PostReportSQL = {
+    insert :'INSERT INTO postreport (id,postId,userId,content,postTitle,userName,reportedUserName,reportedUserId,time) VALUES (?,?,?,?,?,?,?,?,?)',
+};
+exports.BookReportSQL = {
+    insert :'INSERT INTO bookreport (id,userId,bookId,userName,bookName,content,time,reportedUserId) VALUES (?,?,?,?,?,?,?,?)',
+};
 exports.BookRecomendRecordsSQL = {
     selectAllRecommendRecordsByBookId : 'SELECT * FROM book_recommend_records WHERE bookId = ?',
     insert:'INSERT INTO book_recommend_records (bookId,recommendRecordId) VALUES (?,?)',

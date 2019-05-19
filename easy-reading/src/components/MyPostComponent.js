@@ -223,11 +223,50 @@ export default class MyPostComponent extends Component{
         });
 
 }
-    // 提交举报信息
-    handleReportSubmit(values){
-        console.log("举报帖子",values);
-    }
+    // 提交帖子举报信息
+    handlePostReportSubmit(values){
+        let report = {postId:arguments[0],userId:this.state.user.id,content:arguments[4].content,postTitle:arguments[1],
+            userName:this.state.user.name,reportedUserName:arguments[3],reportedUserId:arguments[2],time:Date.now()};
+        console.log(report);
+        // 将帖子内容插入数据库中,同时更新帖子数据
+        reqwest({
+            url:`${postUrl}/report`,
+            type:'json',
+            method:'post',
+            data: report,
+            error:(err)=>{
+                message.error("举报帖子失败！");
+                console.log(err)},
+            success:(res)=>{
+                if(res){
+                    message.success("举报帖子成功！");
+                    console.log(res.id);
 
+                }
+            }
+        });
+    }
+    // 提交评论举报信息
+    handleReplyReportSubmit(values){
+           let report = {replyContent:arguments[1],content:arguments[5].content,userId:this.state.user.id,userName:this.state.user.name,
+           reportedUserId:arguments[2],reportedUserName:arguments[3],replyId:arguments[0],time:Date.now(),postId:arguments[4]};
+            // 将帖子内容插入数据库中,同时更新帖子数据
+            reqwest({
+                url:`${replyUrl}/report`,
+                type:'json',
+                method:'post',
+                data: report,
+                error:(err)=>{
+                    message.error("举报评论失败！");
+                    console.log(err)},
+                success:(res)=>{
+                    if(res){
+                        message.success("举报评论成功！");
+                        console.log(res.id);
+                    }
+                }
+            });
+        }
     // 格式化数据
     formatPostData(data){
 
@@ -303,7 +342,7 @@ export default class MyPostComponent extends Component{
                                     actions={item.actions}
                                     author={item.userName}
                                     avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                                    content={((item) => {return <span><span className="postTitle"><strong> {item.title} </strong></span><ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/> <br/>{item.content}</span>})(item)}
+                                    content={((item) => {return <span><span className="postTitle"><strong> {item.title} </strong></span><ReportItem item={item} onSubmit={this.handlePostReportSubmit.bind(this,item.id,item.title,item.userId,item.userName)}/> <br/>{item.content}</span>})(item)}
                                     datetime={item.formatPublishedDate}>
                                     {/* 根据state的replys内容来渲染回复*/}
                                     {this.state.replys
@@ -314,7 +353,7 @@ export default class MyPostComponent extends Component{
                                                             actions={reply.actions}
                                                             author={reply.userName}
                                                             avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                                                            content={((item) => {return <span>{item.content} <ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/></span>})(reply)}
+                                                            content={((item) => {return <span>{item.content} <ReportItem item={item} onSubmit={this.handleReplyReportSubmit.bind(this,item.id,item.content,item.userId,item.userName,item.postId)}/></span>})(reply)}
                                                             datetime={reply.formatReplyDate}
                                             >
                                             </Comment>

@@ -15,6 +15,7 @@ export default class BookDetailCard extends Component{
         this.state = {
             book:{},
             userId:userId,
+            user:user,
         };
 
     }
@@ -114,6 +115,30 @@ export default class BookDetailCard extends Component{
     handleSubmit(values){
         console.log("BookDetailCard",values);
     }
+    // 提交书籍举报信息
+    handleBookReportSubmit(values){
+
+        let report = {userId:this.state.user.id,bookId:arguments[0],userName:this.state.user.name,
+            bookName:arguments[1],content:arguments[3].content,time:Date.now(),reportedUserId:arguments[2]};
+        
+        // 将帖子内容插入数据库中,同时更新帖子数据
+        reqwest({
+            url:`${bookUrl}/report`,
+            type:'json',
+            method:'post',
+            data: report,
+            error:(err)=>{
+                message.error("举报书籍失败！");
+                console.log(err)},
+            success:(res)=>{
+                if(res){
+                    message.success("举报书籍成功！");
+                    console.log(res.id);
+
+                }
+            }
+        });
+    }
     render(){
         let book = this.state.book;
         return(
@@ -138,7 +163,11 @@ export default class BookDetailCard extends Component{
                        {/* 目前暂不统计非登录人员点击次数，所以会员点击量==总点击*/}
                         {book.memberClickNumbers }<span className="suffix">会员点击</span>
                         {book.recommendNumbers }<span className="suffix">总推荐</span></p>
-                    <p className="buttons"><Link to={`/bookCity/books/${book.id}/chapterList/${book.firstChapter}`}><Button >开始阅读</Button></Link> <Button onClick={this.handleCollect.bind(this,book.id)}>加入书架</Button> <Button onClick={this.handleRecommend.bind(this,book.id)}>投推荐票</Button> <Button > <Link to={`/bookCity/books/${book.id}/chapterList`}>全部目录</Link></Button><ReportItem item={book} onSubmit={this.handleSubmit.bind(this)}/> </p>
+                    <p className="buttons"><Link to={`/bookCity/books/${book.id}/chapterList/${book.firstChapter}`}><Button >开始阅读</Button></Link>
+                        <Button onClick={this.handleCollect.bind(this,book.id)}>加入书架</Button>
+                        <Button onClick={this.handleRecommend.bind(this,book.id)}>投推荐票</Button>
+                        <Button > <Link to={`/bookCity/books/${book.id}/chapterList`}>全部目录</Link></Button>
+                        <ReportItem item={book} onSubmit={this.handleBookReportSubmit.bind(this,book.id,book.name,book.userId)}/> </p>
                 </div>
                 <div className="tRan">
                     <h2>{String(book.score) === "NaN" ? "暂无评分" : Math.floor(book.score)}.<span className="point">{String(book.score).split(".")[1]}</span></h2>

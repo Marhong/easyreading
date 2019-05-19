@@ -24,26 +24,29 @@ class BulletinForm extends React.Component {
                 if(this.props.onSubmitBulletin){
                     this.props.onSubmitBulletin(values);
                 }*/
-                let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                reqwest({
-                    url: `${bulletinUrl}/add`,
-                    type:'json',
-                    method:'post',
-                    data:{userId:user.id,title:values.title,content:values.content,time:Date.now()},
-                    error:function(err){
-                        message.error("发布公告失败!");
-                        console.log(err);
-                    },
-                    success: (res) => {
-                        if(res){
-                            message.success("发布公告成功!");
-                            this.props.form.resetFields();
-                            ReactDOM.findDOMNode(this.content).value = "";
+               if(this.props.onSubmitBulletin){
+                   this.props.onSubmitBulletin(values);
+               }else{
+                   let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+                   reqwest({
+                       url: `${bulletinUrl}/add`,
+                       type:'json',
+                       method:'post',
+                       data:{userId:user.id,title:values.title,content:values.content,time:Date.now()},
+                       error:function(err){
+                           message.error("发布公告失败!");
+                           console.log(err);
+                       },
+                       success: (res) => {
+                           if(res){
+                               message.success("发布公告成功!");
+                               this.props.form.resetFields();
+                               ReactDOM.findDOMNode(this.content).value = "";
 
-                        }
-                    },
-                })
-
+                           }
+                       },
+                   })
+               }
             }
         });
 
@@ -66,7 +69,7 @@ class BulletinForm extends React.Component {
                         <Form.Item
                             label="举报项"
                             hasFeedback>
-                            {reportedItem.name || reportedItem.postTitle || reportedItem.replyContent}
+                            {reportedItem.name || reportedItem.title || reportedItem.content}
                         </Form.Item>
                         :
                         <Form.Item
