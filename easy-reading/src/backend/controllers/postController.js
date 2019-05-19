@@ -11,18 +11,30 @@ exports.getAllPostsByBookId = (req,res) =>{
             res.send(false);
             throw err;
         }
-        res.send(rows);
-        res.end();
-/*        let post = {};
-        let postId = rows[0].id;
-        // 通过postId获取所有的reply
-        pool.query(ReplySQL.selectAllByPostId,[postId],(err,rows) => {
-           if(err) throw err;
-           post.postReply = rows;
-            res.send(post);
-            res.end();
+        let posts = [];
+        let index=0,postLength=rows.length;
+        // 通过postId获取所有的评论
+        for(let i=0,len=postLength;i<len;i++){
+            let post = rows[i];
+            // 通过bookId从post中获取所有项
+            pool.query(ReplySQL.selectAllByPostId,[post.id], (err, rows)=>{
+                if (err){
+                    res.send(false);
+                    throw err;
+                }
+                if(index<postLength){
+                    post.postReply = rows;
+                    posts.push(post);
+                    index++;
+                    if(index === postLength){
+                        res.send(posts);
+                        res.end();
+                    }
+                }
+            });
 
-        });*/
+        }
+
 
     });
 };

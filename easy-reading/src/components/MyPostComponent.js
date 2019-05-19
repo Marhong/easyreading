@@ -6,7 +6,9 @@ import {WrappedPostForm} from './PostForm';
 import ReportItem from "./ReportItem";
 import reqwest from "reqwest";
 import {message} from "antd/lib/index";
+import moment from 'moment';
 const postUrl = "http://localhost:5000/easyreading/post";
+const replyUrl = "http://localhost:5000/easyreading/reply";
 export default class MyPostComponent extends Component{
 
     constructor(props){
@@ -132,8 +134,8 @@ export default class MyPostComponent extends Component{
     }
     // 显示或者关闭回复框
     handleReplyPost(id,e){
-
-        this.setState({...this.state,isReplying:!this.state.isReplying,postId:id,replyToAnother:arguments[1]});
+        let isReplying = this.state.isReplying;
+        this.setState({...this.state,isReplying:!isReplying,postId:id,replyToAnother:arguments[1]});
 
     }
     // 给帖子点赞
@@ -154,23 +156,28 @@ export default class MyPostComponent extends Component{
     // 显示某个帖子的所有回复
     handleView(postId,e){
         let replys = [];
-        for(let post of this.state.posts){
-            if(post.postId === postId){
-                replys = post.postReply;
-                break;
-            }
-        }
-        if(this.state.replys.length <1 || (this.state.replys.length>0 && postId !== this.state.replys[0].postId ) || this.state.isSendingMsg){
+        // 从数据库获取所有的帖子
+        reqwest({
+            url:`${replyUrl}/${postId}/all`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log("获取失败"),
+            success:(res)=>{
+                replys = res;
+                if(this.state.replys.length <1 || (this.state.replys.length>0 && postId !== this.state.replys[0].postId ) || this.state.isSendingMsg){
 
-            this.setState({...this.state,replys:replys})
-        }else{
-            this.setState({...this.state,replys:[]})
-        }
+                    this.setState({...this.state,replys:replys})
+                }else{
+                    this.setState({...this.state,replys:[]})
+                }
+            }
+        });
+
 
     }
     handleReplyMsgChange(e){
         let input = e.target.value;
-        input = input.length>50?input.slice(0,50) : input;
+        input = input.length>50?input.slice(0,100) : input;
         this.setState({...this.state,replyMsg:input})
     }
     // 提交回复
@@ -180,28 +187,41 @@ export default class MyPostComponent extends Component{
             alert("回复消息不能为空!");
             return;
         }
-
-        let reply = {
-            replyId:Date.now(),
-            userId:this.state.currentId,
+        let newReply = {
+            userId:this.state.userId,
+            bookId:this.state.bookId,
             postId:this.state.postId,
-            replyDate:1555989328,
-            replyContent:this.state.replyMsg,
-            replyToAnother:this.state.replyToAnother,
-        }
-        let newposts = this.state.posts;
-        for(let post of newposts){
-            if(post.postId === reply.postId){
-                post.postReply.push(reply);
-                break;
-            }
-        }
+            time:Date.now(),
+            content:this.state.replyMsg,
+            anotherUserId:this.state.replyToAnother,
+        };
+        // 将评论内容插入数据库中,同时更新评论数据
+        reqwest({
+            url:`${replyUrl}/add`,
+            type:'json',
+            method:'post',
+            data: newReply,
+            error:(err)=>{
+                message.error("发布评论失败！");
+                console.log(err)},
+            success:(res)=>{
+                if(res){
+                    message.success("发布评论成功！");
+                    newReply.id = res.id;
+                    this.setState((preState) => {
+                        let oldReplys = preState.replys;
+                        oldReplys.push(newReply);
+                        return { ...preState, visible: false, replys:oldReplys,replyMsg:"",isSendingMsg:true,isReplying:"true"};
+                    });
 
-        // 为什么设置isSending值为true没有用啊
+                }
+            }
+        });
+ /*       // 为什么设置isSending值为true没有用啊
         this.setState({ ...this.state, posts:newposts, isSendingMsg:true});
 
         this.handleView(this.state.postId);
-        this.setState({ ...this.state, replyMsg:"", isReplying:true})
+        this.setState({ ...this.state, replyMsg:"", isReplying:true})*/
 
     }
     // 发布帖子
@@ -239,18 +259,19 @@ export default class MyPostComponent extends Component{
 
     // 格式化数据
     formatPostData(data){
-        console.log(data+"   不能格式化？？"+Date.now());
+
         for(let post of data){
             let viewAll = `查看所有评论`;
             post.actions = [<span onClick={this.handleView.bind(this,post.id)} className="view">{viewAll}</span>,
                 <span onClick={this.handleReplyPost.bind(this,post.id,post.userId)} className="reply">回复</span>,
+                // 点赞功能先去掉
                 <span onClick={this.clickLike.bind(this,post.id)}>
                     <i className="iconfont icon-dianzan11"> {post.likeNum}</i>
                 </span>];
             // 将每个帖子的发布日期转换为“刚刚、N分钟前、今天几时几分”的形式
             let date = post.time;
-            post.formatPublishedDate = ( <Tooltip title={crtTimeFtt(date)}>
-                <span>{timestampFormat(date)}</span>
+            post.formatPublishedDate = ( <Tooltip title={moment(date).format('YYYY-MM-DD HH:mm:ss')}>
+                <span>{moment(date).format('YYYY-MM-DD HH:mm:ss')}</span>
             </Tooltip>);
         }
         return data;
@@ -263,9 +284,9 @@ export default class MyPostComponent extends Component{
                 for(let reply of replys){
                     reply.actions = [<span onClick={this.handleReplyPost.bind(this,reply.postId,reply.userId)} className="reply">回复</span>];
                     // 将每条回复的发布日期转换为“刚刚、N分钟前、今天几时几分”的形式
-                    let date = reply.time;
-                    reply.formatReplyDate = ( <Tooltip title={crtTimeFtt(date)}>
-                        <span className="reply">{timestampFormat(date)} 回复 {reply.anotherUserId === postUserId ? "楼主" : reply.anotherUserId}</span>
+                    let date = moment(reply.time).format('YYYY-MM-DD HH:mm:ss');
+                    reply.formatReplyDate = ( <Tooltip title={date}>
+                        <span className="reply">{date} 回复 {reply.anotherUserId === postUserId ? "楼主" : reply.anotherUserId}</span>
                     </Tooltip>);
                 }
             }
@@ -274,8 +295,10 @@ export default class MyPostComponent extends Component{
     render(){
         const isReplying = this.state.isReplying;
         const postId = this.state.postId;
+        console.log(isReplying+" 当前回复的postId: "+postId);
         const replyToAnother = this.state.replyToAnother;
         const posts = this.formatPostData(this.state.posts);
+
         return(
             <div className="postModule">
                 <div className="header">
@@ -309,7 +332,7 @@ export default class MyPostComponent extends Component{
                                     {this.state.replys
                                         ?
                                         this.state.replys.map((reply,index) => {
-                                        if(item.postId === reply.postId){
+                                        if(item.id === reply.postId){
                                             return <Comment key={index}
                                                             actions={reply.actions}
                                                             author={reply.userId}
@@ -321,7 +344,7 @@ export default class MyPostComponent extends Component{
                                         }
 
                                     }) : ""}
-                                    {isReplying&&postId===item.postId ?
+                                    {isReplying&&postId===item.id ?
                                         <div className="replyContainer">
                                         <input className="replyToPost"
                                                value={this.state.replyMsg}

@@ -61,6 +61,11 @@ router.get('/book/:id',book_controller.getBookById);
 router.get('/post/:id/all',post_controller.getAllPostsByBookId);
 // POST 发布一条帖子
 router.post('/post/add',post_controller.addPost);
+// POST 发布一条评论
+router.post('/reply/add',reply_controller.addReply);
+// GET 通过postId获取所有评论
+router.get('/reply/:id/all',reply_controller.getAllReplysByPostId);
+
 /*// 获取用户每天的个性化推荐书籍列表
 router.get('/books/personalBooks',book_controller.book_getPersonalBooks);
 

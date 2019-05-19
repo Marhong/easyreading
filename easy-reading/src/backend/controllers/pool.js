@@ -49,7 +49,7 @@ exports.PostSQL = {
 };
 exports.ReplySQL = {
     insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId) VALUES (?,?,?,?,?,?,?)',
-    selectAllByPostId :'SELECT * FROM post WHERE postId = ?',
+    selectAllByPostId :'SELECT * FROM reply WHERE postId = ?',
 };
 exports.BookRecomendRecordsSQL = {
     selectAllRecommendRecordsByBookId : 'SELECT * FROM book_recommend_records WHERE bookId = ?',
