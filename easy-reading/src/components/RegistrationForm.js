@@ -1,5 +1,8 @@
 import { Form, Input, Tooltip, Icon, Cascader, Select,  Button, } from  'antd';
 import React,{Component} from 'react';
+import reqwest from "reqwest";
+import {message} from "antd/lib/index";
+const userUrl = "http://localhost:5000/easyreading/user";
 const { Option } = Select;
 
 const residences = [{
@@ -28,21 +31,74 @@ const residences = [{
 
 class RegistrationForm extends Component {
 
-    state = {
-        confirmDirty: false,
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            confirmDirty: false,
+            user:props.user,
+        }
+    }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFieldsAndScroll((err, values) => {
+        this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                let newUser = this.state.user;
+                newUser.gender = values.gender ? values.gender : newUser.gender;
+                newUser.address = values.residence.join(",");
+                newUser.email = values.email ? values.email : newUser.email;
+                newUser.phone = values.phone ? values.phone : newUser.phone;
+                newUser.description = values.description ? values.description : newUser.description;
+                console.log(newUser);
+                reqwest({
+                    url: `${userUrl}/update`,
+                    type:'json',
+                    method:'post',
+                    data:{...newUser},
+                    error:function(err){
+                        console.log(err);
+                    },
+                    success: (res) => {
+                        if(res){
+                            localStorage.setItem("user",JSON.stringify(newUser));
+                            message.success("修改账号信息成功！");
+                            this.setState({...this.state,user:newUser});
+                        }
+                    },
+                })
             }
         });
-    }
+    };
+    handleEditPassword = (e) =>{
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                let newUser = this.state.user;
+                newUser.password = values.password;
+                console.log(newUser);
+                reqwest({
+                    url: `${userUrl}/update/password`,
+                    type:'json',
+                    method:'post',
+                    data:{...newUser},
+                    error:function(err){
+                        console.log(err);
+                    },
+                    success: (res) => {
+                        if(res){
+                            this.props.form.resetFields();
+                            localStorage.setItem("user",JSON.stringify(newUser));
+                            message.success("修改密码成功！");
+                            this.setState({...this.state,user:newUser});
+                        }
+                    },
+                })
+            }
+        });
+};
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-    }
+    };
 
     compareToFirstPassword = (rule, value, callback) => {
         const form = this.props.form;
@@ -51,7 +107,7 @@ class RegistrationForm extends Component {
         } else {
             callback();
         }
-    }
+    };
 
     validateToNextPassword = (rule, value, callback) => {
         const form = this.props.form;
@@ -59,9 +115,17 @@ class RegistrationForm extends Component {
             form.validateFields(['confirm'], { force: true });
         }
         callback();
-    }
+    };
+    confirmPassword = (rule,value,callback) => {
+
+        if (value && value !== this.state.user.password) {
+            callback('旧密码错误!');
+        } else {
+            callback();
+        }
+    };
     render() {
-        const user = this.props.user;
+        const user = this.state.user;
         const type = this.props.type;
         const { getFieldDecorator } = this.props.form;
 
@@ -100,29 +164,21 @@ class RegistrationForm extends Component {
                 <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
                     <Form.Item
-                        label={(
-                            <span>
-              昵称&nbsp;
-                                <Tooltip title="想让别人怎么称呼你?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-                        )}
-                        hasFeedback
+                        label="昵称"
                     >
-                        {getFieldDecorator('nickname', {
-                            rules: [{ required: true, message: '昵称不能为空!', whitespace: true }],
-                        })(
-                            <Input placeholder={user.name}/>
-                        )}
+                        {user.name}
                     </Form.Item>
                     <Form.Item
                         label="性别"
                         hasFeedback>
-                        <Select defaultValue={user.gender}>
-                            <Option value="male">男</Option>
-                            <Option value="female">女</Option>
-                        </Select>
+                        {getFieldDecorator('gender', {
+                            initialValue: user.gender,
+                        })(
+                            <Select  >
+                                <Option value="male">男</Option>
+                                <Option value="female">女</Option>
+                            </Select>
+                        )}
                     </Form.Item>
                     <Form.Item
                         label="现居地"
@@ -146,7 +202,7 @@ class RegistrationForm extends Component {
                                 message: '请输入邮箱!',
                             }],
                         })(
-                            <Input placeholder={user.email}/>
+                            <Input placeholder={user.email} />
                         )}
                     </Form.Item>
                     <Form.Item
@@ -154,9 +210,9 @@ class RegistrationForm extends Component {
                         hasFeedback
                     >
                         {getFieldDecorator('phone', {
-                            rules: [{  message: '请输入手机号码!' ,type:'number'}],
+                            rules: [{  message: '请输入手机号码!'  ,pattern:/[0-9]{11}/}],
                         })(
-                            <Input addonBefore={prefixSelector} placeholder={user.phone}/>
+                            <Input addonBefore={prefixSelector} placeholder={user.phone} />
                         )}
                     </Form.Item>
                     <Form.Item
@@ -167,7 +223,7 @@ class RegistrationForm extends Component {
                         {getFieldDecorator('description', {
                             rules: [{  message: '请输入个人简介!', whitespace: true }],
                         })(
-                            <Input placeholder={user.description}/>
+                            <Input placeholder={user.description} />
                         )}
                     </Form.Item>
 
@@ -178,7 +234,7 @@ class RegistrationForm extends Component {
             );
         }else{
             return (
-                <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+                <Form {...formItemLayout} onSubmit={this.handleEditPassword}>
                     <Form.Item
                         label="昵称"
                     >
@@ -190,7 +246,9 @@ class RegistrationForm extends Component {
                         {getFieldDecorator('oldPassword', {
                             rules: [{
                                 required: true, message: '请输入旧密码!',
-                            },],
+                            },, {
+                                validator: this.confirmPassword,
+                            }],
                         })(
                             <Input type="password" />
                         )}
@@ -201,7 +259,9 @@ class RegistrationForm extends Component {
                     {getFieldDecorator('password', {
                         rules: [{
                             required: true, message: '请输入新密码!',
-                        }, {
+                        },
+                        {min:6,message:"密码长度至少为6"},
+                        {max:20,message:"密码长度不能超过20"},{
                             validator: this.validateToNextPassword,
                         }],
                     })(

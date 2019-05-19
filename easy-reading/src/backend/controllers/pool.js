@@ -17,6 +17,8 @@ exports.UserSQL = {
     insert:'INSERT INTO user(id,name,password,gender,address,email,phone,description,type,signUpTime) VALUES(?,?,?,?,?,?,?,?,?,?)',
     selectAll:'SELECT * FROM user',
     selectOneByUserId:'SELECT * FROM user WHERE id = ? ',
+    update:'UPDATE user set gender = ?,address = ?,email = ?,phone = ?,description =? WHERE id = ?',
+    updatePassword:'UPDATE user set password = ? WHERE id = ?',
 };
 exports.UserRanksSQL = {
     insert :'INSERT INTO user_ranks (userId,rankRecordId) VALUES (?,?)',

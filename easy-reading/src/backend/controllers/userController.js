@@ -45,6 +45,26 @@ exports.addUser = (req,res) => {
             });
         });
 };
+
+// 更新账号信息
+exports.updateUser = (req,res) => {
+
+    let {gender,address,email,phone,description,id} =req.body;
+    pool.query(UserSQL.update,[gender,address,email,phone,description,id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
+        res.end();
+    })
+};
+// 更新账号密码
+exports.updatePassword = (req,res) => {
+    let {password,id} =req.body;
+    pool.query(UserSQL.updatePassword,[password,id],(err,rows) => {
+        if(err) throw err;
+        res.send(true);
+        res.end();
+    })
+};
 // 验证用户名是否已被注册
 exports.isExist = (req,res) => {
     let name = req.body.name;

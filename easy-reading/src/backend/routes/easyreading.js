@@ -31,6 +31,10 @@ router.post('/user/signUp/isExist',user_controller.isExist);
 router.post('/user/signUp/add',user_controller.addUser);
 // GET 获取所有的用户
 router.get('/user/all',user_controller.getAllUsers);
+// POST 更新账号信息
+router.post('/user/update',user_controller.updateUser);
+// POST 更新账号密码
+router.post('/user/update/password',user_controller.updatePassword);
 /// BookType书籍类型路由 ///
 
 // GET 获取固定的那8种BookType

@@ -173,6 +173,7 @@ export default class PersonalCenter extends Component{
     }
     constructor(props){
         super(props);
+        let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
         this.state = {
             columnsName:"bookShelfColumns",
             bookData:bookData,
@@ -189,7 +190,7 @@ export default class PersonalCenter extends Component{
             monthData:monthData,
             yearData:yearData,
             currentDataName:"bookData",
-
+            user:user,
         }
     }
     handleContinueReading(record,e){
@@ -285,7 +286,7 @@ export default class PersonalCenter extends Component{
         perinfo.classList.add("ant-menu-item-selected");
     }
     render(){
-        const user = this.props.userInfo;
+        const user = this.state.user;
         // 菜单项为“我的书单”时每一行展开的内容
         const bookListExpandedRowRender = (e) => {
             const columns = [
@@ -387,8 +388,8 @@ export default class PersonalCenter extends Component{
                 <div className="userInfo">
                     <img className="userImg" src="http://static.zongheng.com/userimage/default/image_120_120.gif"/>
                     <div className="userInfoMsg">
-                        <p><span className="userName"><strong>麦香馅饼和肉夹馍</strong></span><span className="modifyInfo" onClick={this.handleEditInfo.bind(this)}><i className="iconfont icon-xiugai"/> 个人资料修改</span></p>
-                        <p className="description">喜欢历史穿越小说</p>
+                        <p><span className="userName"><strong>{user.name}</strong></span><span className="modifyInfo" onClick={this.handleEditInfo.bind(this)}><i className="iconfont icon-xiugai"/> 个人资料修改</span></p>
+                        <p className="description">{user.description}</p>
 
                         <span className="userTags"><Tag color="magenta">新人成就</Tag>
                                 <Tag color="red">读书达人</Tag>
@@ -427,7 +428,7 @@ export default class PersonalCenter extends Component{
                                 {this.state.tabs.map((tab,index) => {
                                     return <TabPane tab={tab.name} key={tab.key || index+1}>
                                         {(tab.name === "基本信息") || (tab.name === "修改密码") ?
-                                            <WrappedRegistrationForm user={user} type={tab.name}/>
+                                            <WrappedRegistrationForm user={user} type={tab.name} />
                                             :
                                             <Table columns={columnsCollection[tab.columnsName]}
                                                    dataSource={this.state[tab.dataName]}
