@@ -4,9 +4,9 @@ let ReplySQL = poolModule.ReplySQL;
 // 发布一条评论
 exports.addReply = (req,res) =>{
     let id = Date.now();
-    let {bookId,userId,content,time,postId,anotherUserId} = req.body;
+    let {bookId,userId,content,time,postId,anotherUserId,userName} = req.body;
     // 向post表中插入一条数据
-    pool.query(ReplySQL.insert,[id,userId,postId,anotherUserId,content,time,bookId], (err, rows)=>{
+    pool.query(ReplySQL.insert,[id,userId,postId,anotherUserId,content,time,bookId,userName], (err, rows)=>{
         if (err){
             res.send(false);
             throw err;

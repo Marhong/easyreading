@@ -9,6 +9,7 @@ import {message} from "antd/lib/index";
 import moment from 'moment';
 const postUrl = "http://localhost:5000/easyreading/post";
 const replyUrl = "http://localhost:5000/easyreading/reply";
+const hotPostStandard = 5;
 export default class MyPostComponent extends Component{
 
     constructor(props){
@@ -19,14 +20,17 @@ export default class MyPostComponent extends Component{
             isReplying:false,  // 回复框是否显示
             replys:[], // 某个帖子的所有回复
             posts:[], // 所有帖子数据
+            rawPosts : [], // 帖子原始数据,
             replyMsg:"", // 回复内容
             postId: "", // 回复的帖子ID
             replyToAnother: "", // 要回复的帖子或者回复的id
+            replyToAnotherName:"",// 要回复的帖子或回复的用户名
             currentId: 2015303094, // 当前用户ID
             isSendingMsg : false,
             visible: false,
             userId:userId,
             bookId:props.id,
+            user:user,
 
         };
         this.handleReplyMsgChange = this.handleReplyMsgChange.bind(this);
@@ -41,68 +45,11 @@ export default class MyPostComponent extends Component{
             method:'get',
             error:(err)=>console.log("获取失败"),
             success:(res)=>{
-                this.setState({...this.state,posts:res});
+                console.log(res);
+                let formatedData = this.formatPostData(res);
+                this.setState({...this.state,posts:formatedData,rawPosts:formatedData});
             }
         });
-/*        let data = [
-            {
-                postId: 2015242225,
-                novelId: 541204,
-                postTitle: "图书馆比自习室环境好",
-                postContent:"星礼卡大师傅爱上了对方卡萨丁阿萨德雷锋咖啡拉水电费拉水电费拉考试得分撒撒旦法.",
-                userId:1,
-                likeNum:10,
-                hasClickedLike:false,
-                postReply:[
-                    {
-                        replyId: 562323,
-                        postId:2015242225,
-                        userId:2,
-                        replyDate:1555989328,
-                        replyContent:"图书馆可以接凉水",
-                        replyToAnother:1,
-                    },
-                    {
-                        replyId: 5623231,
-                        postId:2015242225,
-                        userId:3,
-                        replyDate:1555989428,
-                        replyContent:"我赞同楼主",
-                        replyToAnother:1,
-                    },
-                    {
-                        replyId: 5623232,
-                        postId:2015242225,
-                        userId:4,
-                        replyDate:1555989528,
-                        replyContent:"确实，图书馆可以接凉水，这就很舒服了",
-                        replyToAnother:2,
-                    },
-                ],
-                publishedDate:1555989228,
-            },
-            {
-                postId: 20152422250,
-                novelId: 541204,
-                postTitle: "实验室比自习室还要差",
-                postContent:"星礼卡大师傅爱上了对方卡萨丁阿萨德雷锋咖啡拉水电费拉水电费拉考试得分撒撒旦法.",
-                userId:5,
-                likeNum:15,
-                hasClickedLike:false,
-                postReply:[
-                    {
-                        replyId: 5623234,
-                        postId:20152422250,
-                        userId:6,
-                        replyDate:1555989598,
-                        replyContent:"对啊，实验室练水都没得接",
-                        replyToAnother:5,
-                    },
-                ],
-                publishedDate:1555989228,
-            },
-        ];
-        this.setState({posts:this.formatPostData(data)});*/
     }
     componentDidUpdate(){
         if(this.input){
@@ -110,6 +57,7 @@ export default class MyPostComponent extends Component{
         }
     }
     showModal = () => {
+
         this.setState({
             ...this.state,
             visible: true,
@@ -126,16 +74,34 @@ export default class MyPostComponent extends Component{
     handleTypeChange(e){
         let event = e.event ? e.event : window.event;
         let target = event.target ? event.target : event.srcElement;
-        let lis = target.parentNode.parentNode.children;
 
-        for(let li of lis){
-            li.classList.toggle("selected");
+        let posts = this.state.rawPosts;
+        let itemInnerHTML = target.innerHTML;
+        if(itemInnerHTML.indexOf("热帖") !== -1){
+            let hotPosts = [];
+            for(let item of posts){
+                if(item.postReply.length > hotPostStandard){
+                    hotPosts.push(item);
+                }
+            }
+            this.hot.classList.add("selected");
+            this.all.classList.remove('selected');
+            this.setState({...this.state,posts:this.formatPostData(hotPosts)});
+        }else if(itemInnerHTML.indexOf("全部") !== -1){
+            this.hot.classList.remove("selected");
+            this.all.classList.add('selected');
+            this.setState({...this.state,posts:this.formatPostData(this.state.rawPosts)});
+        }else{
+            this.hot.classList.remove("selected");
+            this.all.classList.add('selected');
+            this.setState({...this.state,posts:this.formatPostData(this.state.rawPosts)});
+            this.showModal();
         }
     }
     // 显示或者关闭回复框
     handleReplyPost(id,e){
         let isReplying = this.state.isReplying;
-        this.setState({...this.state,isReplying:!isReplying,postId:id,replyToAnother:arguments[1]});
+        this.setState({...this.state,isReplying:!isReplying,postId:id,replyToAnother:arguments[1],replyToAnotherName:arguments[2]});
 
     }
     // 给帖子点赞
@@ -156,24 +122,17 @@ export default class MyPostComponent extends Component{
     // 显示某个帖子的所有回复
     handleView(postId,e){
         let replys = [];
-        // 从数据库获取所有的帖子
-        reqwest({
-            url:`${replyUrl}/${postId}/all`,
-            type:'json',
-            method:'get',
-            error:(err)=>console.log("获取失败"),
-            success:(res)=>{
-                replys = res;
-                if(this.state.replys.length <1 || (this.state.replys.length>0 && postId !== this.state.replys[0].postId ) || this.state.isSendingMsg){
-
-                    this.setState({...this.state,replys:replys})
-                }else{
-                    this.setState({...this.state,replys:[]})
-                }
+        for(let post of this.state.posts){
+            if(post.id === postId){
+                replys = post.postReply;
+                break;
             }
-        });
-
-
+        }
+        if(this.state.replys.length <1 || (this.state.replys.length>0 && postId !== this.state.replys[0].postId ) ){
+            this.setState({...this.state,replys:replys})
+        }else{
+            this.setState({...this.state,replys:[]})
+        }
     }
     handleReplyMsgChange(e){
         let input = e.target.value;
@@ -194,6 +153,7 @@ export default class MyPostComponent extends Component{
             time:Date.now(),
             content:this.state.replyMsg,
             anotherUserId:this.state.replyToAnother,
+            userName:this.state.user.name,
         };
         // 将评论内容插入数据库中,同时更新评论数据
         reqwest({
@@ -208,11 +168,20 @@ export default class MyPostComponent extends Component{
                 if(res){
                     message.success("发布评论成功！");
                     newReply.id = res.id;
-                    this.setState((preState) => {
-                        let oldReplys = preState.replys;
-                        oldReplys.push(newReply);
-                        return { ...preState, visible: false, replys:oldReplys,replyMsg:"",isSendingMsg:true,isReplying:"true"};
-                    });
+                        let newposts = this.state.rawPosts;
+                        for(let post of newposts){
+                            if(post.id === newReply.postId){
+                                post.postReply.unshift(newReply);
+                                break;
+                            }
+                        }
+                        // 为什么设置isSending值为true没有用啊
+                        let formatedData = this.formatPostData(newposts);
+                        this.setState({ ...this.state, posts:formatedData,rawPosts:formatedData});
+
+                        this.handleView(this.state.postId);
+                        this.setState({ ...this.state, replyMsg:"", isReplying:true})
+
 
                 }
             }
@@ -227,7 +196,7 @@ export default class MyPostComponent extends Component{
     // 发布帖子
     handleSubmitPost(values){
 
-        let newPost = {userId:this.state.userId,bookId:this.state.bookId,title:values.title,content:values.content,time:Date.now()};
+        let newPost = {userId:this.state.userId,bookId:this.state.bookId,title:values.title,content:values.content,time:Date.now(),userName:this.state.user.name};
         // 将帖子内容插入数据库中,同时更新帖子数据
         reqwest({
             url:`${postUrl}/add`,
@@ -241,17 +210,19 @@ export default class MyPostComponent extends Component{
                 if(res){
                     message.success("发布帖子成功！");
                     newPost.id = res.id;
+                    newPost.postReply = [];
                     this.setState((preState) => {
-                        let oldPosts = preState.posts;
-                        oldPosts.push(newPost);
-                        return { ...preState, visible: false, posts:oldPosts,};
+                        let oldRawPosts = preState.rawPosts;
+                        oldRawPosts.unshift(newPost);
+                        let formatedData = this.formatPostData(oldRawPosts);
+                        return { ...preState, visible: false, posts:formatedData,rawPosts:formatedData};
                     });
 
                 }
             }
         });
 
-    }
+}
     // 提交举报信息
     handleReportSubmit(values){
         console.log("举报帖子",values);
@@ -261,51 +232,57 @@ export default class MyPostComponent extends Component{
     formatPostData(data){
 
         for(let post of data){
-            let viewAll = `查看所有评论`;
+            let viewAll = post.postReply.length > 0 ? `查看所有评论(${post.postReply.length})` : "";
             post.actions = [<span onClick={this.handleView.bind(this,post.id)} className="view">{viewAll}</span>,
-                <span onClick={this.handleReplyPost.bind(this,post.id,post.userId)} className="reply">回复</span>,
-                // 点赞功能先去掉
+                <span onClick={this.handleReplyPost.bind(this,post.id,post.userId,post.userName)} className="reply">回复</span>,
+                /*// 点赞功能先去掉
                 <span onClick={this.clickLike.bind(this,post.id)}>
                     <i className="iconfont icon-dianzan11"> {post.likeNum}</i>
-                </span>];
+                </span>*/];
             // 将每个帖子的发布日期转换为“刚刚、N分钟前、今天几时几分”的形式
             let date = post.time;
             post.formatPublishedDate = ( <Tooltip title={moment(date).format('YYYY-MM-DD HH:mm:ss')}>
                 <span>{moment(date).format('YYYY-MM-DD HH:mm:ss')}</span>
             </Tooltip>);
-        }
-        return data;
-    }
-    // 格式化评论数据
-    formatReplyData(postUserId,data){
-        let replys = data;
-        if(replys){
-            if(replys.length>0){
-                for(let reply of replys){
-                    reply.actions = [<span onClick={this.handleReplyPost.bind(this,reply.postId,reply.userId)} className="reply">回复</span>];
-                    // 将每条回复的发布日期转换为“刚刚、N分钟前、今天几时几分”的形式
-                    let date = moment(reply.time).format('YYYY-MM-DD HH:mm:ss');
-                    reply.formatReplyDate = ( <Tooltip title={date}>
-                        <span className="reply">{date} 回复 {reply.anotherUserId === postUserId ? "楼主" : reply.anotherUserId}</span>
-                    </Tooltip>);
+            let replys = post.postReply;
+            if(replys){
+                if(replys.length>0){
+
+
+                    for(let reply of replys){
+                        reply.actions = [<span onClick={this.handleReplyPost.bind(this,reply.postId,reply.userId,reply.userName)} className="reply">回复</span>];
+                        // 将每条回复的发布日期转换为“刚刚、N分钟前、今天几时几分”的形式
+                        let date = moment(reply.time).format('YYYY-MM-DD HH:mm:ss');
+                        let name = "";
+                        for(let item of replys){
+                            if(item.userId === reply.anotherUserId){
+                                name = item.userName;
+                                break;
+                            }
+                        }
+                        reply.formatReplyDate = ( <Tooltip title={date}>
+                            <span className="reply">{date} 回复 {reply.anotherUserId === post.userId ? "楼主" : name}</span>
+                        </Tooltip>);
+                    }
                 }
             }
         }
+        return data;
     }
+
     render(){
         const isReplying = this.state.isReplying;
         const postId = this.state.postId;
         console.log(isReplying+" 当前回复的postId: "+postId);
-        const replyToAnother = this.state.replyToAnother;
-        const posts = this.formatPostData(this.state.posts);
+        const replyToAnotherName = this.state.replyToAnotherName;
 
         return(
             <div className="postModule">
                 <div className="header">
-                    <ul onClick={this.handleTypeChange.bind(this)}>
-                        <li className="selected"><a>全部(368)</a></li>
-                        <li className="hotposts"><a>热帖</a></li>
-                        <li onClick={this.showModal}><a><i className="iconfont icon-fatie"/> 我要发帖</a></li>
+                    <ul >
+                        <li className="selected" onClick={this.handleTypeChange.bind(this)} ref={(all) => this.all =all}><a>全部(368)</a></li>
+                        <li className="hotposts" onClick={this.handleTypeChange.bind(this)} ref={(hot)=>this.hot=hot}><a>热帖</a></li>
+                        <li onClick={this.handleTypeChange.bind(this)}><a><i className="iconfont icon-fatie"/> 我要发帖</a></li>
                     </ul>
                 </div>
                 <Modal
@@ -320,11 +297,11 @@ export default class MyPostComponent extends Component{
                   <List
                             className="comment-list"
                             itemLayout="horizontal"
-                            dataSource={posts}
+                            dataSource={this.state.posts}
                             renderItem={item => (
                                 <Comment
                                     actions={item.actions}
-                                    author={item.userId}
+                                    author={item.userName}
                                     avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
                                     content={((item) => {return <span><span className="postTitle"><strong> {item.title} </strong></span><ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/> <br/>{item.content}</span>})(item)}
                                     datetime={item.formatPublishedDate}>
@@ -335,7 +312,7 @@ export default class MyPostComponent extends Component{
                                         if(item.id === reply.postId){
                                             return <Comment key={index}
                                                             actions={reply.actions}
-                                                            author={reply.userId}
+                                                            author={reply.userName}
                                                             avatar='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
                                                             content={((item) => {return <span>{item.content} <ReportItem item={item} onSubmit={this.handleReportSubmit.bind(this)}/></span>})(reply)}
                                                             datetime={reply.formatReplyDate}
@@ -349,7 +326,7 @@ export default class MyPostComponent extends Component{
                                         <input className="replyToPost"
                                                value={this.state.replyMsg}
                                                onChange={this.handleReplyMsgChange}
-                                               placeholder={`回复${replyToAnother}: `}
+                                               placeholder={`回复${replyToAnotherName}: `}
                                                 ref={(input) => this.input = input}/>
                                         <br/>
                                         <button className="submit" onClick={this.handleSubmit}>提交</button>

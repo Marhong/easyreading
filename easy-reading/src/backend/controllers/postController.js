@@ -2,6 +2,7 @@ let poolModule = require('./pool');
 let pool = poolModule.pool;
 let PostSQL = poolModule.PostSQL;
 let ReplySQL = poolModule.ReplySQL;
+let sortBy = require('./common').sortBy;
 // 通过书籍id获取该书籍的所有post
 exports.getAllPostsByBookId = (req,res) =>{
 
@@ -27,7 +28,7 @@ exports.getAllPostsByBookId = (req,res) =>{
                     posts.push(post);
                     index++;
                     if(index === postLength){
-                        res.send(posts);
+                        res.send(posts.sort(sortBy('id',false)));
                         res.end();
                     }
                 }
@@ -35,16 +36,15 @@ exports.getAllPostsByBookId = (req,res) =>{
 
         }
 
-
     });
 };
 
 // 发布一条帖子
 exports.addPost = (req,res) =>{
     let id = Date.now();
-    let {bookId,userId,title,content,time} = req.body;
+    let {bookId,userId,title,content,time,userName} = req.body;
     // 向post表中插入一条数据
-    pool.query(PostSQL.insert,[id,bookId,userId,title,content,time], (err, rows)=>{
+    pool.query(PostSQL.insert,[id,bookId,userId,title,content,time,userName], (err, rows)=>{
         if (err){
             res.send(false);
             throw err;

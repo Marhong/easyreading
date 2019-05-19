@@ -16,7 +16,7 @@ exports.compare = (property) => {
 exports.UserSQL = {
     insert:'INSERT INTO user(id,name,password,gender,address,email,phone,description,type,signUpTime) VALUES(?,?,?,?,?,?,?,?,?,?)',
     selectAll:'SELECT * FROM user',
-    getUserById:'SELECT * FROM user WHERE id = ? ',
+    selectOneByUserId:'SELECT * FROM user WHERE id = ? ',
 };
 exports.UserRanksSQL = {
     insert :'INSERT INTO user_ranks (userId,rankRecordId) VALUES (?,?)',
@@ -44,12 +44,12 @@ exports.BookSQL = {
     selectAllBooks :'SELECT * FROM book ',
 };
 exports.PostSQL = {
-  insert :'INSERT INTO post (id,bookId,userId,title,content,time) VALUES (?,?,?,?,?,?)',
-  selectAllByBookId :'SELECT * FROM post WHERE bookId = ?',
+  insert :'INSERT INTO post (id,bookId,userId,title,content,time,userName) VALUES (?,?,?,?,?,?,?)',
+  selectAllByBookId :'SELECT * FROM post WHERE bookId = ? order by id desc',
 };
 exports.ReplySQL = {
-    insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId) VALUES (?,?,?,?,?,?,?)',
-    selectAllByPostId :'SELECT * FROM reply WHERE postId = ?',
+    insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId,userName) VALUES (?,?,?,?,?,?,?,?)',
+    selectAllByPostId :'SELECT * FROM reply WHERE postId = ? order by id desc',
 };
 exports.BookRecomendRecordsSQL = {
     selectAllRecommendRecordsByBookId : 'SELECT * FROM book_recommend_records WHERE bookId = ?',
