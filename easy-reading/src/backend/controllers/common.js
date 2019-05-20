@@ -127,7 +127,14 @@ async function analyseTxtFile(res,url,bookId) {
      objReadline.on('close', function () {
          console.log(volumeList.length ,chapterList.length);
         // 解析完txt文件后，将相应数据插入数据库
-         insertBookData(res,volumeList,chapterList,numbers,bookId);
+         if(chapterList.length > 0){
+             insertBookData(res,volumeList,chapterList,numbers,bookId);
+         }else{
+             pool.query(BookSQL.delete,[bookId],(err,row)=>{
+                 if(err) throw err;
+             })
+         }
+
      });
 }
 // 将volume、chapter、volumeChapters、bookVolumes插入数据库，修改book的numbers和latestChapter

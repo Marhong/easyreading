@@ -30,27 +30,11 @@ const bookListData = [
 ];
 // 菜单项为“我的书评” > “回复的书评” 时的数据
 const postData = [
-    {
-        key: 1, post: '李小二这么做这不地道', isEssence: '是', replyNum: '20', latReplyTime: '2019-02-10 14:20:20',bookName: '癞蛤蟆想吃天鹅肉',
-    },
-    {
-        key: 2, post: '消炎啥时候成斗帝的？', isEssence: '否', replyNum: '25', latReplyTime: '2019-02-12 11:10:20',bookName: '斗破苍穹',
-    },
-    {
-        key: 3, post: '苏铭好惨', isEssence: '是', replyNum: '50', latReplyTime: '2019-02-15 10:15:10',bookName: '求魔',
-    },
+
 ];
 // 菜单项为“我的书评” > “点赞的书评” 时的数据
 const replyData = [
-    {
-        key: 1, post: '李小二这么做这不地道', replyContent: '就是啊',  latReplyTime: '2019-02-10 14:20:20',bookName: '癞蛤蟆想吃天鹅肉',
-    },
-    {
-        key: 2, post: '消炎啥时候成斗帝的？', replyContent: '书快要结束的时候', latReplyTime: '2019-02-12 11:10:20',bookName: '斗破苍穹',
-    },
-    {
-        key: 3, post: '苏铭好惨', replyContent: '我也这样觉得',  latReplyTime: '2019-02-15 10:15:10',bookName: '求魔',
-    },
+
 ];
 // 菜单项为“我的书评” > “点赞的书评” 时的数据
 const likeData = [
@@ -131,87 +115,33 @@ const uploadRecordData = [
     },
 ];
 const TabPane = Tabs.TabPane;
+const columns = [
+    { title: '书名', dataIndex: 'name', key: 'name' },
+    { title: '作者', dataIndex: 'author', key: 'author' },
+    { title: '类型', dataIndex: 'type',key: 'type'},
+    { title: '地区', dataIndex: 'distribute', key: 'distribute' },
+    { title: '年代', dataIndex: 'era', key: 'era' },
+    { title: '时长', dataIndex: 'totalTime',key: 'totalTime'},
+    { title: '开始阅读时间', dataIndex: 'startTime', key: 'startTime' },
+    { title: '最后阅读时间', dataIndex: 'lastTime', key: 'lastTime' },
+];
 // 菜单项为“阅读记录”时每一行展开的内容
 const recordExpandedRowRender = (e) => {
-    const columns = [
-        { title: '书名', dataIndex: 'name', key: 'name' },
-        { title: '作者', dataIndex: 'author', key: 'author' },
-        { title: '类型', dataIndex: 'type',key: 'type'},
-        { title: '地区', dataIndex: 'distribute', key: 'distribute' },
-        { title: '年代', dataIndex: 'era', key: 'era' },
-        { title: '时长', dataIndex: 'totalTime',key: 'totalTime'},
-        { title: '开始阅读时间', dataIndex: 'startTime', key: 'startTime' },
-        { title: '最后阅读时间', dataIndex: 'lastTime', key: 'lastTime' },
-    ];
-    console.log("每一行的内容为:"+JSON.stringify(e));
-
-    // weekRecords 每一周的章节阅读记录
-    let weekRecords = e.weekRecords;
-    // bookIds 每一周内的不同书籍id
-    let bookIds = e.books;
-    // 最终展示的数据
-    let books = [];
-    let index =0,booksLength = bookIds.length;
-    for(let item of bookIds){
-        let book = {};
-        book.key = item;
-        let bookRecords = []; // 每本书的所有章节阅读记录
-        let totalTime =0; // 每本书的阅读时长
-        book.startTime = moment(weekRecords[weekRecords.length-1].startTime).format('YYYY-MM-DD HH:mm:ss'); // 该书开始阅读时间
-        book.lastTime = moment(weekRecords[0].endTime).format('YYYY-MM-DD HH:mm:ss'); // 该书结束阅读时间
-        for(let record of weekRecords){
-            if(record.bookId === item){
-                bookRecords.push(record);
-                totalTime += record.endTime - record.startTime;
-            }
-        }
-        book.totalTime = formatDuring(totalTime);
-        // 通过item(每本书的id)从服务器获取该书的信息
-        reqwest({
-            url:`${bookUrl}/${item}/simpleInfo`,
-            type:'json',
-            method:'get',
-            err:(err)=>console.log(err),
-            success:(res)=>{
-                if(res){
-                    book.name = res.name;
-                    book.author =res.author;
-                    book.type = res.type;
-                    book.distribute = res.distribute;
-                    book.era = res.dynasty;
-                    index++;
-                    books.push(book);
-                    if(index === booksLength){
-                        console.log("我是最终要展示的数据："+JSON.stringify(books));
-                        return (
-                            <Table
-                                columns={columns}
-                                dataSource={data}
-                                pagination={false}
-                            />
-                        );
-                    }
-                }
-            },
-        });
-    }
-
-
-    const data = [{key: e.key+"剑来", name: '剑来'+e.key, author:"烽火戏诸侯",type: '玄幻',distribute:"中国",era:"春秋战国",totalTime:"54小时", startTime: '2018-04-30 00:03:41', lastTime: '2019-04-30 00:03:41'},
-        {key: e.key+ '秦吏', name: '秦吏'+e.key,author:"七月新番",type: '历史',distribute:"中国",era:"秦汉",totalTime:"30小时", startTime: '2018-02-15 00:03:41', lastTime: '2019-04-30 00:03:41'},
-        {key: e.key+'汉乡', name: '汉乡'+e.key, author:"孑与2",type: '历史',distribute:"中国",era:"汉朝",totalTime:"60小时", startTime: '2018-09-30 00:03:41', lastTime: '2019-04-30 00:03:41'},];
-
-
-
+    return  (<Table
+        columns={columns}
+        dataSource={e.books}
+        pagination={false}
+    />)
 };
+
 const postTabs = [{name:"发表的帖子",dataName:"postData",columnsName:"postColumns",key:"postData"},
     {name:"发表的回复",dataName:"replyData",columnsName:"replyColumns",key:"replyData"},
     /*帖子点赞功能暂不实现{name:"点赞的帖子",dataName:"likeData",columnsName:"likeColumns",key:"likeData"}*/];
 const msgTabs = [{name:"系统消息",dataName:"sysData",columnsName:"sysColumns",key:"sysData"},
     {name:"私信",dataName:"perData",columnsName:"perColumns",key:"perData"},];
 const readingRecord = [{name:"周",dataName:"weekData",columnsName:"weekColumns",key:"weekData"},
-    {name:"月",dataName:"monthData",columnsName:"monthColumns",key:"monthData",},
-    {name:"年",dataName:"yearData",columnsName:"yearColumns",key:"yearData"}];
+    /*  {name:"月",dataName:"monthData",columnsName:"monthColumns",key:"monthData",},
+      {name:"年",dataName:"yearData",columnsName:"yearColumns",key:"yearData"} 好像没必要显示年月的数据，因为推荐是根据周来推荐的*/];
 const perInfoTabs =  [{name:"基本信息",},
     {name:"修改密码",},];
 
@@ -240,9 +170,12 @@ export default class PersonalCenter extends Component{
             uploadRecordData:uploadRecordData,
             currentDataName:"bookData",
             user:user,
+            showRecords:{},
         }
     }
     componentDidMount(){
+        document.documentElement.style.backgroundColor = "white";
+        document.body.style.backgroundColor = "white";
         // 从服务器获取收藏的书籍
         reqwest({
             url:`${collectUrl}/${this.state.user.id}`,
@@ -319,7 +252,60 @@ export default class PersonalCenter extends Component{
             method:'get',
             error:(err)=>console.log(err),
             success:(res)=>{
-                this.setState({...this.state,weekData:res.sort(sortBy('key',false))});
+                if(res){
+                    res.sort(sortBy('key',false));
+                    let index =0,dataLength = res.length;
+                    for(let item of res){
+                        // weekRecords 每一周的章节阅读记录
+                        let weekRecords = item.weekRecords;
+                        // bookIds 每一周内的不同书籍id
+                        let bookIds = item.books;
+                        // 最终展示的数据
+                        let books = [];
+
+                        for(let item of bookIds){
+                            let book = {};
+                            book.key = item;
+                            let bookRecords = []; // 每本书的所有章节阅读记录
+                            let totalTime =0; // 每本书的阅读时长
+
+                            for(let record of weekRecords){
+                                if(record.bookId === item){
+                                    bookRecords.push(record);
+                                    totalTime += record.endTime - record.startTime;
+                                }
+                            }
+                            book.startTime = moment(bookRecords[0].startTime).format('YYYY-MM-DD HH:mm:ss'); // 该书开始阅读时间
+                            book.lastTime = moment(bookRecords[bookRecords.length-1].endTime).format('YYYY-MM-DD HH:mm:ss'); // 该书结束阅读时间
+                            book.totalTime = formatDuring(totalTime);
+                            // 通过item(每本书的id)从服务器获取该书的信息
+                            reqwest({
+                                url: `${bookUrl}/${item}/simpleInfo`,
+                                type: 'json',
+                                method: 'get',
+                                err: (err) => console.log(err),
+                                success: (res) => {
+                                    if (res) {
+                                        book.name = res.name;
+                                        book.author = res.author;
+                                        book.type = res.type;
+                                        book.distribute = res.distribute;
+                                        book.era = res.dynasty;
+                                        index++;
+                                        books.push(book);
+                                    }
+                                },
+                            });
+                        }
+                        item.books=books;
+                        index++;
+                        if(index === dataLength){
+                            console.log("最终得到的数据:"+JSON.stringify(res))
+                            this.setState({...this.state,weekData:res});
+                        }
+                    }
+                }
+
             }
         });
     }
@@ -395,7 +381,6 @@ export default class PersonalCenter extends Component{
             case "5":
                 this.tabs.style.display = "block";
                 table.style.display = "none";
-
                 setTimeout(()=>{
                     this.setState({...this.state,tabs:readingRecord,recordExpandedRowRender:recordExpandedRowRender,currentDataName:"weekData"});
                 },2);
@@ -574,7 +559,7 @@ export default class PersonalCenter extends Component{
                             <Menu.Item key="1"><i className="iconfont icon-shujia"/> 我的书架</Menu.Item>
                             <Menu.Item key="2"><i className="iconfont icon-shudan"/> 我的书单</Menu.Item>
                             <Menu.Item key="3"><i className="iconfont icon-pinglun"/> 我的书评</Menu.Item>
-                            <Menu.Item key="4"><i className="iconfont icon-xiaoxi"/> 消息通知</Menu.Item>
+                            {/* 没空做了，没实现的还是不展示比较好 <Menu.Item key="4"><i className="iconfont icon-xiaoxi"/> 消息通知</Menu.Item>*/}
                             <Menu.Item key="5"><i className="iconfont icon-yuedujilu"/> 阅读记录</Menu.Item>
                             <Menu.Item key="6"><i className="iconfont icon-shujushangchuanjilu"/> 上传记录</Menu.Item>
                             <Menu.Item key="7" ref={(perinfo) => this.perinfo = perinfo}><i className="iconfont icon-gerenziliao"/> 个人资料</Menu.Item>

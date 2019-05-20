@@ -44,7 +44,8 @@ exports.BookSQL = {
     updateNormalAndMemberClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1,  memberClickNumbers = memberClickNumbers+1 WHERE id = ?',
     updateNormalClickNumbers :'UPDATE book set clickNumbers = clickNumbers +1  WHERE id = ?',
     selectAllBooks :'SELECT * FROM book ',
-    selectAllBooksByUserId :"SELECT * FROM book WHERE userId = ?"
+    selectAllBooksByUserId :"SELECT * FROM book WHERE userId = ?",
+    delete :'DELETE FROM book WHERE id = ?',
 };
 exports.PostSQL = {
   insert :'INSERT INTO post (id,bookId,userId,title,content,time,userName) VALUES (?,?,?,?,?,?,?)',
