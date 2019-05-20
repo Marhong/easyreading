@@ -6,6 +6,7 @@ import {WrappedRegistrationForm} from './RegistrationForm';
 import {sortBy,formatDuring} from '../static/commonFun';
 import reqwest from "reqwest";
 import {message} from "antd/lib/index";
+import IndexHeaderSearch from "./IndexHeaderSearch";
 require('../css/PersonalCenter.css');
 const bookUrl = "http://localhost:5000/easyreading/book";
 const postUrl = "http://localhost:5000/easyreading/post";
@@ -534,6 +535,8 @@ export default class PersonalCenter extends Component{
                 { title: '起止日期', dataIndex: 'period', key: 'period' },],
         }
         return(
+            <div>
+                <IndexHeaderSearch/>
             <div className="wrap">
                 <div className="userInfo">
                     <img className="userImg" src="http://static.zongheng.com/userimage/default/image_120_120.gif"/>
@@ -592,6 +595,7 @@ export default class PersonalCenter extends Component{
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

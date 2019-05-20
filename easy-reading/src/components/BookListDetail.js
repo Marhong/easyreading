@@ -4,6 +4,7 @@ import BookListDetailItem from "./BookListDetailItem";
 import BookItemFooter from "./BookItemFooter";
 import {Breadcrumb} from 'antd';
 import { Link } from "react-router-dom";
+import IndexHeaderSearch from "./IndexHeaderSearch";
 // 书单的数据
 const bookListItem =     {
     imgs:[{src:"https://bookcover.yuewen.com/qdbimg/349573/1013470066/180",name:"沙发书单"},{name:"考虑领料",src:"https://bookcover.yuewen.com/qdbimg/349573/1013862069/180"},{name:"我的师傅",src:"https://bookcover.yuewen.com/qdbimg/349573/1010754871/180"},{name:"三国志",src:"https://bookcover.yuewen.com/qdbimg/349573/1014127256/180"}],
@@ -20,9 +21,11 @@ export default class BookListDetail extends Component{
         // 应该通过从BookListItem传过来的BookListId从服务器去获取对应书单的数据和书单内的书籍的数据
         const bookList = bookListItem.bookList;
         return(
+            <div>
+                <IndexHeaderSearch/>
             <div className="bookListDetail">
                 <Breadcrumb separator=">" style={{marginBottom:20}} >
-                    <Breadcrumb.Item ><Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item ><Link to={`/`} >首页</Link></Breadcrumb.Item>
                     <Breadcrumb.Item ><Link to={`/bookList`} >书单列表</Link></Breadcrumb.Item>
                     <Breadcrumb.Item ><Link to={`/bookList/${this.props.match.params.id}`} style={{color:"#40a9ff"}}>书单</Link></Breadcrumb.Item>
                 </Breadcrumb>
@@ -37,6 +40,7 @@ export default class BookListDetail extends Component{
                     return  <BookListDetailItem book={item} key={index} recommend={recommends[index]}/>
                 })}
                 </div>
+            </div>
             </div>
         );
     }

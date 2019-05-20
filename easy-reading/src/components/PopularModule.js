@@ -1,10 +1,5 @@
 import React,{Component} from 'react';
-import MySelectedCard from "./MySelectedCard";
-import { Carousel } from 'antd';
-import { Menu, Icon } from 'antd';
-import {CardDeck,Card,Button} from 'react-bootstrap';
 import LeftSelectedCard from "./LeftSelectedCard";
-import MyNormalCard from "./MyNormalCard";
 import MyListCard from "./MyListCard";
 
 export default class PopularModule extends Component{

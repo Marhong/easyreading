@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import '../css/BookList.css';
 import BookListItem from "./BookListItem";
 import {WrappedDynamicFieldSet} from './CreateBookList';
+import IndexHeaderSearch from "./IndexHeaderSearch";
 const TabPane = Tabs.TabPane;
 const data = [
     {
@@ -39,9 +40,11 @@ export default class BookList extends Component{
     }
     render(){
         return(
+            <div>
+                <IndexHeaderSearch/>
             <div className="bookList">
                 <Breadcrumb separator=">" >
-                    <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item > <Link to={`/`} >首页</Link></Breadcrumb.Item>
                     <Breadcrumb.Item > <Link to={`/bookList`} style={{color:"#40a9ff"}}>书单列表</Link></Breadcrumb.Item>
                 </Breadcrumb>
                 <Tabs  animated={false} onChange={this.handleOnChange}>
@@ -57,6 +60,7 @@ export default class BookList extends Component{
                         <WrappedDynamicFieldSet ref={(createList) => this.createList = createList} style={{display:"none"}}/>
                     </TabPane>
                 </Tabs>
+            </div>
             </div>
         );
     }

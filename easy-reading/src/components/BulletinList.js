@@ -4,6 +4,7 @@ import reqwest from 'reqwest';
 import moment from 'moment';
 import '../css/BulletinList.css';
 import { Link } from "react-router-dom";
+import IndexHeaderSearch from "./IndexHeaderSearch";
 const bulletinUrl = "http://localhost:5000/easyreading/bulletin";
 const num = 8; // 获取最近的8条公告
 export default class BulletinList extends Component{
@@ -72,9 +73,11 @@ export default class BulletinList extends Component{
             </div>
         ) : null;
         return(
+            <div>
+                <IndexHeaderSearch/>
             <div className="bulletinList">
                     <Breadcrumb separator=">" >
-                        <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                        <Breadcrumb.Item > <Link to={`/`} >首页</Link></Breadcrumb.Item>
                         <Breadcrumb.Item > <Link to={`/bulletinList`} style={{color:"#40a9ff"}}>公告列表</Link></Breadcrumb.Item>
                     </Breadcrumb>
                 <h2 style={{fontSize:24,marginTop:10}}>最新动态</h2>
@@ -89,7 +92,7 @@ export default class BulletinList extends Component{
                     dataSource={list}
                     style={{width:1000}}
                     renderItem={item => (
-                        <Link to={{ pathname: `/bulletinList/${item.id}`, bulletin:item}}>
+                        <Link to={`/bulletinList/${item.id}`}>
                        {/* <Link to={`/bulletinList/${item.id}`} >*/}
                             <List.Item>
                                 <Skeleton avatar title={false} loading={item.loading} active>
@@ -99,6 +102,7 @@ export default class BulletinList extends Component{
                         </Link>)}
 
                 />
+            </div>
             </div>
         );
     }

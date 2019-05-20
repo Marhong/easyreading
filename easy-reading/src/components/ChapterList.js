@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import {timestampFormat} from "../static/commonFun";
 import reqwest from "reqwest";
 import moment from 'moment';
+import IndexHeaderSearch from "./IndexHeaderSearch";
 const bookUrl = "http://localhost:5000/easyreading/book";
 const chapterUrl = "http://localhost:5000/easyreading/chapter";
 const volumeUrl = "http://localhost:5000/easyreading/volume";
@@ -55,11 +56,13 @@ export default class ChapterList extends Component{
         const latestChapter = this.state.latestChapter;
 
         return(
+            <div>
+                <IndexHeaderSearch/>
             <div className="chapterList">
                 <div className="header">
                     <div className="left" style={{width:300}}>
                         <Breadcrumb separator=">" >
-                            <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item > <Link to={`/`} >首页</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity`} >书城</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}`} >{book.name}</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity/books/${book.id}/chapterList`} style={{color:"#40a9ff"}}>章节列表</Link></Breadcrumb.Item>
@@ -81,6 +84,7 @@ export default class ChapterList extends Component{
                         return <VolumeComponent key={index} volume={item} bookId={item.bookId}/>
                     })}
                 </div>
+            </div>
             </div>
         );
     }

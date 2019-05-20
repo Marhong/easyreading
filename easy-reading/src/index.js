@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
-import App from './App';
+import AppPageRouter from './App';
 import * as serviceWorker from './serviceWorker';
 import IndexHeader from "./components/IndexHeader";
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
@@ -11,7 +11,7 @@ import IndexHeaderCenter from "./components/IndexHeaderCenter";
 import BookType from "./components/BookType";
 import BookCity from "./components/BookCity";
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<AppPageRouter/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -5,6 +5,7 @@ import IndexHeaderMain from "./IndexHeaderMain";
 import FinishedModule from "./FinishedModule";
 import PopularModule from "./PopularModule";
 import HeavyRecommend from "./HeavyRecommend";
+import IndexHeaderSearch from "./IndexHeaderSearch";
 
 export default class MainContent extends Component {
     componentDidMount(){
@@ -14,6 +15,7 @@ export default class MainContent extends Component {
     render() {
         return (
             <div >
+                <IndexHeaderSearch/>
                 <IndexHeaderMain/>
                 <HeavyRecommend/>
                 <FinishedModule moduleType="完本精选"/>

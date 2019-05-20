@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 
 import BookType from "./BookType";
 import { Link } from "react-router-dom";
+
 // 展示书籍类型
 export default class IndexHeaderLeft extends Component{
     render(){
@@ -19,6 +20,7 @@ export default class IndexHeaderLeft extends Component{
         const data1 = data.slice(0,data.length/2);
         const data2 = data.slice(data.length/2);
         return(
+
             <div className="typeList">
                 <p>作品分类</p>
                 <dl>
@@ -32,6 +34,7 @@ export default class IndexHeaderLeft extends Component{
                     })}
                 </dl>
             </div>
+
         );
     }
 }

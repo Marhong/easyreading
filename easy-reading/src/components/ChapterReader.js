@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import reqwest from "reqwest";
 import moment from 'moment';
 import {message} from "antd/lib/index";
+import IndexHeaderSearch from "./IndexHeaderSearch";
 const bookUrl = "http://localhost:5000/easyreading/book";
 const chapterUrl = "http://localhost:5000/easyreading/chapter";
 const readingSettingUrl = "http://localhost:5000/easyreading/reading_setting";
@@ -223,10 +224,12 @@ export default class ChapterReader extends Component{
         const book = this.state.book;
         //console.log(this.props.match.params.bookId,this.props.match.params.id);
         return(
+            <div>
+                <IndexHeaderSearch/>
                 <div className="readerPage">
                     <div className="readerCrumb" style={{width:300}}>
                         <Breadcrumb separator=">" >
-                            <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item > <Link to={`/`} >首页</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity`} >书城</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity/books/${this.state.bookId}`} >{book ? book.name : ""}</Link></Breadcrumb.Item>
                             <Breadcrumb.Item ><Link to={`/bookCity/books/${this.state.bookId}/chapterList`} >章节列表</Link></Breadcrumb.Item>
@@ -252,6 +255,7 @@ export default class ChapterReader extends Component{
                         </div>
                     </div>
                 </div>
+            </div>
 
         );
     }

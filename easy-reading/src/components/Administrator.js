@@ -7,6 +7,7 @@ import {WrappedBulletinForm} from './BulletinForm';
 import {formatArray,sortBy,deepClone} from '../static/commonFun';
 import reqwest from "reqwest";
 import {message} from "antd/lib/index";
+import IndexHeaderSearch from "./IndexHeaderSearch";
 const bookUrl = "http://localhost:5000/easyreading/book";
 const postUrl = "http://localhost:5000/easyreading/post";
 const replyUrl = "http://localhost:5000/easyreading/reply";
@@ -838,6 +839,8 @@ export default class Administrator extends Component{
                 },],
         }
         return(
+            <div>
+                <IndexHeaderSearch/>
             <div className="wrap">
                 <div className="content">
                     <div className="menu">
@@ -892,6 +895,7 @@ export default class Administrator extends Component{
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

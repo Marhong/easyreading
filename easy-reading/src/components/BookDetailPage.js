@@ -10,6 +10,7 @@ import BookCity from "./BookCity";
 import ChapterListPageRouter from "./ChapterListPage";
 import ChapterReaderPageRouter from "./ChapterReaderPage";
 import BookCityPageRouter from "./BookCityPage";
+import AppPageRouter from "../App";
 
 class BookDetailPage extends  Component{
 
@@ -18,7 +19,7 @@ class BookDetailPage extends  Component{
         return (
             <div>
                 <Switch >
-                    <Route exact path="/index" component={IndexPageRouter} />
+                    <Route exact path="/" component={AppPageRouter} />
                     <Route exact path="/bookCity" component={BookCityPageRouter} />
                     <Route  exact path="/bookCity/books/:id" component={BookDetail} />
                     <Route exact path="/bookCity/books/:id/chapterList" component={ChapterListPageRouter} />

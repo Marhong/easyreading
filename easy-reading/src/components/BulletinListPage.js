@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link ,Switch} from "react-router-dom";
 import BulletinList from "./BulletinList";
 import BulletinItem from "./BulletinItem";
 import IndexPageRouter from "./IndexPage";
+import AppPageRouter from "../App";
 
 class BulletinListPage extends  Component{
 
@@ -11,7 +12,7 @@ class BulletinListPage extends  Component{
         return (
             <div>
                 <Switch >
-                    <Route exact path="/index" component={IndexPageRouter} />
+                    <Route exact path="/" component={AppPageRouter} />
                     <Route exact path="/bulletinList" component={BulletinList} />
                     <Route path="/bulletinList/:id/" component={BulletinItem} />
 

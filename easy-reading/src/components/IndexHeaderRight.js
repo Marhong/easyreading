@@ -32,7 +32,7 @@ export default class IndexHeaderRight extends Component{
                 <dl>
                     <dt><strong> <Link to="/bulletinList">站内公告</Link></strong></dt>
                     {news.map((news) => {
-                            return  <Link to={{ pathname: `/bulletinList/${news.id}`, bulletin:news}} key={news.id}><dd >[{news.type}] {news.title.length >10 ? `${news.title.slice(0,10)}...` : news.title}</dd></Link>
+                            return  <Link to={ `/bulletinList/${news.id}`} key={news.id}><dd >[{news.type}] {news.title.length >10 ? `${news.title.slice(0,10)}...` : news.title}</dd></Link>
                     })}
 
                 </dl>

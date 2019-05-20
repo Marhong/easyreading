@@ -3,33 +3,44 @@ import logo from './logo.svg';
 import './css/IndexHeader.css';
 import './static/iconfont.css';
 import IndexHeaderSearch from "./components/IndexHeaderSearch";
-
+import MainContent from "./components/MainContent";
+import BookCity from "./components/BookCity";
+import IndexPageRouter from "./components/IndexPage";
+import BookDetailPageRouter from "./components/BookDetailPage";
+import { BrowserRouter as Router, Route, Link ,Switch} from "react-router-dom";
+import BookCityPageRouter from "./components/BookCityPage";
+import BulletinListPageRouter from "./components/BulletinListPage";
+import Administrator from "./components/Administrator";
+import PersonalCenter from "./components/PersonalCenter";
+import BookListPageRouter from "./components/BookListPage";
 
 class App extends Component {
   render() {
     return (
-      <div className="header">
-
-        <IndexHeaderSearch/>
-        {/*<IndexPageRouter/>*/}
-{/*        <IndexHeaderMain/>
-          <HeavyRecommend/>
-          <FinishedModule moduleType="完本精选"/>
-          <FinishedModule moduleType="火热新书"/>
-          <PopularModule moduleType="热门作品"/>*/}
-        {/*  <BulletinList/>*/}
-         {/* <BulletinItem/>*/}
-      {/*   <BookCity/>*/}
-        {/*<BookList/>*/}
-       {/*<BookListDetail/>*/}
-      {/*    <ChapterList/>*/}
-     {/*  <BookDetail/>*/}
-  {/* <ChapterReader/>*/}
-  {/*<PersonalCenter/>*/}
-{/*    <Administrator/>*/}
-      </div>
+        <div className="header">
+            <Switch >
+                <Route exact path="/" component={MainContent} />
+                <Route exact path="/bookCity" component={BookCityPageRouter} />
+                <Route exact path="/bookList" component={BookListPageRouter} />
+                <Route exact path="/bookCity/:type" component={BookCityPageRouter} />
+                <Route  exact path="/bookCity/books/:id" component={BookDetailPageRouter} />
+                <Route exact path="/bulletinList" component={BulletinListPageRouter} />
+                <Route exact path="/personalCenter" component={PersonalCenter} />
+                <Route exact path="/administrator" component={Administrator} />
+                <Route exact path="/bulletinList/:id/" component={BulletinListPageRouter} />
+            </Switch>
+        </div>
     );
   }
 }
 
-export default App;
+function AppPageRouter() {
+    return (
+        <Router >
+            <Route component={App} />
+        </Router>
+    );
+}
+export default AppPageRouter;
+
+

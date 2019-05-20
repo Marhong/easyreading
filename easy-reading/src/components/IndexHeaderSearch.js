@@ -6,6 +6,7 @@ import IndexPageRouter from "./IndexPage";
 import PersonalCenter from "./PersonalCenter";
 import {WrappedUploadBookForm} from "./UploadBookForm";
 import Administrator from "./Administrator";
+import BookCityPageRouter from "./BookCityPage";
 const Search = Input.Search;
 // 展示首页头部搜索模块
 export default class IndexHeaderSearch extends Component{
@@ -20,6 +21,7 @@ export default class IndexHeaderSearch extends Component{
             confirmLoading: false,
             isLogin:true,
             user:(JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user")) || null),
+            keywords:"",
         }
     }
     // 初始化界面
@@ -78,6 +80,11 @@ export default class IndexHeaderSearch extends Component{
         this.setState({...this.state,user:user});
         this.handleCancel();
     }
+    // 处理用户搜索
+    handleSearch = (value) => {
+        sessionStorage.setItem("keywords",value);
+        this.setState({...this.state,keywords:value});
+    };
     render(){
         const menu = (
             <Menu onClick={this.handleSignOut.bind(this)}>
@@ -85,23 +92,23 @@ export default class IndexHeaderSearch extends Component{
             </Menu>
         );
         return(
-            <Router>
                 <div>
             <div className="search">
                 <div className="left">
                    {/*   实际上应该无论在哪个页面只要点击了网站图标都能返回首页，但是这样写实现不了，干脆就去掉点击返回首页功能
                    <Link to="/index"> <img src="https://qidian.gtimg.com/qd/images/logo.beebc.png"  alt="易读中文网" /></Link>*/}
                    {/* <Link to="/index"> <img src="https://qidian.gtimg.com/qd/images/logo.beebc.png"  alt="易读中文网" /></Link>*/}
-                    <Link to="/index"><h2>易读中文网</h2></Link>
+                    <Link to="/"><h2>易读中文网</h2></Link>
                </div>
                <div className="center">
-                   <Search
-                       placeholder="输入书名、作者名或者关键字"
-                       enterButton="Search"
-                       size="large"
-                       onSearch={value => console.log(value)}
-                       className="inputSearch"
-                   />
+                       <Search
+                           placeholder="输入书名、作者名或者关键字"
+                           enterButton="Search"
+                           size="large"
+                           onSearch={this.handleSearch}
+                           className="inputSearch"
+                       >
+                       </Search>
                </div>
                <div className="right">
                    <span className="userInfo">
@@ -163,13 +170,7 @@ export default class IndexHeaderSearch extends Component{
                      </span>
                 </div>
             </div>
-                <Route exact path="/" component={IndexPageRouter} />
-                <Route exact path="/index" component={IndexPageRouter} />
-                <Route exact path="/personalCenter" component={PersonalCenter} />
-                <Route exact path="/administrator" component={Administrator} />
             </div>
-
-            </Router>
         )
     }
 }

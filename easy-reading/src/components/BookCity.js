@@ -6,6 +6,7 @@ import '../css/BookCity.css';
 import NavComponent from "./NavComponent";
 import FilterPanel from "./FilterPanel";
 import reqwest from "reqwest";
+import IndexHeaderSearch from "./IndexHeaderSearch";
 const bookUrl = "http://localhost:5000/easyreading/book";
 export default class BookCity extends Component{
     constructor(props){
@@ -15,6 +16,10 @@ export default class BookCity extends Component{
             keywords:"",
             selectType:props.match.params.type,
         }
+        window.addEventListener("storage",(e)=>{console.log(JSON.stringify(e))},false);
+    }
+    handleSearch(e){
+        console.log("动态捕获的sessionStorage值：",e);
     }
     componentDidMount(){
         document.documentElement.style.backgroundColor = "white";
@@ -50,9 +55,11 @@ export default class BookCity extends Component{
         */
         const data = this.state.data;
         return(
+            <div>
+                <IndexHeaderSearch/>
             <div className="main">
                 <Breadcrumb separator=">" style={{marginBottom:20}}>
-                    <Breadcrumb.Item > <Link to={`/index`} >首页</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item > <Link to={`/`} >首页</Link></Breadcrumb.Item>
                     <Breadcrumb.Item > <Link to={`/bookCity`} style={{color:"#40a9ff"}}>书城</Link></Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="left">
@@ -81,7 +88,7 @@ export default class BookCity extends Component{
                 </div>
 
             </div>
-
+            </div>
         );
     }
 }

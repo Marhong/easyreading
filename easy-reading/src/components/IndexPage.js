@@ -12,11 +12,6 @@ import BookDetailPageRouter from "./BookDetailPage";
 class IndexPage extends  Component{
 
     render() {
-        let bulletin = this.props.location.bulletin;
-        console.log("IndexPage",bulletin);
-        if(bulletin){
-            sessionStorage.setItem("bulletin",JSON.stringify(bulletin));
-        }
         return (
             <div>
                 <Switch >
