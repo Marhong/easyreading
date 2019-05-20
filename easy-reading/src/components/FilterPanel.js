@@ -5,11 +5,13 @@ import {getDefaultType} from '../static/commonFun';
 export default class FilterPanel extends Component{
     static defaultProps = {
         data :[{type:"分类",value:["全部","玄幻","奇幻","仙侠","历史","都市","科幻","军事","灵异"]},
+            {type:"地域",value:["全部","中国","美国","俄罗斯","英国","法国","德国","日本","加拿大"]},
+            {type:"朝代",value:["全部","夏朝","商朝","周朝","秦朝","汉朝","晋朝","隋朝","唐朝","宋朝","元朝","明朝","清朝","民国"]},
             {type:"状态",value:["全部","完结","未完结"]},
             {type:"属性",value:["全部","免费","VIP"]},
             {type:"字数",value:["全部","30万字以下","30-50万字","50-100万字","100-200万字","200万字以上"]},
             {type:"更新时间",value:["全部","三日内","七日内","半月内","一月内"]},
-            {type:"品质",value:["全部","签约作品","精品小说"]},
+           /* 这个属性先不要{type:"品质",value:["全部","签约作品","精品小说"]},*/
             {type:"标签",value:["全部","热血","重生","豪门","孤儿","盗贼","特工","黑客","明星","特种兵","杀手","老师","学生"]},]
     }
     constructor(props){
@@ -48,11 +50,12 @@ export default class FilterPanel extends Component{
                     // 之前没选过的话直接添加到数组中
                     items.splice(items.length,0,(selected));
                 }
+                if(this.props.onSelectType){
+                    this.props.onSelectType(this.state.selected);
+                }
                 return {selected: items}
             });
         }
-
-    console.log(this.state.selected);
     }
     render(){
         const result = this.state.selected;

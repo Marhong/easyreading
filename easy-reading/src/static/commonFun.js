@@ -172,7 +172,7 @@ export function sortBy(attr,rev){
         }
         return 0;
     }
-};
+}
 
 // 将毫秒转为天 时 分 秒的格式
 export function formatDuring(mss){
@@ -185,4 +185,347 @@ export function formatDuring(mss){
     let seconds = (mss % (1000 * 60)) / 1000;
     seconds = seconds > 0 ? Math.ceil(seconds)+"秒" : "";
     return days +  hours  + minutes  + seconds ;
+}
+
+// 将筛选条件转为一个book对象
+export function conditionTransform(search){
+    let book={};
+    if(search.keywords !== "" && search.keywords != null){
+        book.name = search.keywords;
+    }
+    for(let item of search.type){
+        let value = item.value;
+        switch (item.type){
+            case "分类":
+                if(value !== ""){
+                    book.type = booktypes_reverse(value);
+                }
+                break;
+            case "状态":
+                if(value === "完结"){
+                    book.isFinished = 1;
+                }else{
+                    book.isFinished = 0;
+                }
+                break;
+            case "字数":
+                switch (value){
+                    case "30万字以下":
+                        book.sanshi = 300000;
+                        break;
+                    case "30-50万字":
+                        book.wushi = 500000;
+                        break;
+                    case "50-100万字":
+                        book.yibai = 1000000;
+                        break;
+                    case "100-200万字":
+                        book.liangbai = 2000000;
+                        break;
+                    case "200万字以上":
+                        book.wubai = 5000000;
+                        break;
+                    default:
+                }
+                break;
+            case "更新时间":
+                switch (value){
+                    case "三日内":
+                        book.latestChapter = Date.now() - 1000*60*60*24*3;
+                        break;
+                    case "七日内":
+                        book.latestChapter = Date.now() - 1000*60*60*24*7;
+                        break;
+                    case "半月内":
+                        book.latestChapter = Date.now() - 1000*60*60*24*15;
+                        break;
+                    case "一月内":
+                        book.latestChapter = Date.now() - 1000*60*60*24*30;
+                        break;
+                    default:
+                }
+                break;
+            case "属性":
+                if(value === "免费"){
+                    book.isFree = 1;
+                }else{
+                    book.isFree = 0;
+                }
+                break;
+            case "标签":
+                book.keywords = keywords_reverse(value);
+                break;
+            case "地域":
+                book.distribute = distribute_reverse(value);
+                break;
+            case "朝代":
+                book.dynasty = dynasty_reverse(value);
+                break;
+            default:
+
+        }
+    }
+    return book;
+};
+export function  booktypes_reverse(value){
+    switch(value){
+        case "玄幻":
+            return 1;
+        case "奇幻":
+            return 2;
+        case "仙侠":
+            return 3;
+        case "历史":
+            return 4;
+        case"都市":
+            return 5;
+        case "科幻":
+            return 6;
+        case "军事":
+            return 7;
+        case "灵异":
+            return 8;
+        default:
+
+    }
+
+};
+export function  booktypes_reverse2(value){
+    switch(value){
+        case "xuanhuan":
+            return "玄幻";
+        case "qihuan":
+            return "奇幻";
+        case "xianxia":
+            return "仙侠";
+        case "lishi":
+            return "历史";
+        case"dushi":
+            return "都市";
+        case "kehuan":
+            return "科幻";
+        case "junshi":
+            return "军事";
+        case "lingyi":
+            return "灵异";
+        default:
+
+    }
+
+};
+export function keywords_reverse(value){
+    switch (value){
+        case "热血":
+            return 9;
+        case "重生":
+            return 10;
+        case "豪门":
+            return 11;
+        case "孤儿":
+            return 12;
+        case "盗贼":
+            return 13;
+        case "特工":
+            return 15;
+        case "黑客":
+            return 16;
+        case "明星":
+            return 17;
+        case "特种兵":
+            return 14;
+        case "杀手":
+            break;
+        case "老师":
+            break;
+        case "学生":
+            break;
+        default:
+
+    }
+};
+export  function distribute_reverse(value){
+    switch (value){
+        case "中国":
+            return  "zhongguo";
+        case "美国":
+            return "meiguo";
+        case "俄罗斯":
+            return   "eluosi";
+        case "英国":
+            return   "yingguo0";
+        case "法国":
+            return "faguo";
+        case "德国":
+            return  "deguo";
+        case "日本":
+            return  "riben";
+        case "加拿大":
+            return "jianada";
+        default:
+    }
+}
+export function dynasty_reverse(value){
+        switch (value){
+            case "夏朝":
+                return "xiachao";
+            case "商朝":
+                return "shangchao";
+            case "周朝":
+                return "zhouchao";
+            case "秦朝":
+                return "qinchao";
+            case "汉朝":
+                return  "hanchao";
+            case "晋朝":
+                return   "jinchao";
+            case "隋朝":
+                return "suichao";;
+            case "唐朝":
+                return "tangchao";
+            case "宋朝":
+                return "songchoa";
+            case "元朝":
+                return  "yuanchao";
+            case "明朝":
+                return "mingchao";
+            case "清朝":
+                return "qingchao";
+            case "民国":
+                return  "mingguo";
+            default:
+        }
+
+}
+// 判断该book是否符合筛选条件
+export  function isOk(book,search){
+    let isOk = true;
+    for(let key of Object.keys(search)){
+        let value = search[key];
+        switch (key){
+            case "name":
+                if(book.name.indexOf(value) === -1 && book.author.indexOf(value) === -1 && book.description.indexOf(value) === -1) {
+
+                    isOk = false;
+                }
+                break;
+            case "type":
+                if(book.type !== String(value) && value != null && book.type != null){
+                    isOk = false;
+                }
+                break;
+            case "distribute":
+                if(book.distribute !== value){
+                    isOk = false;
+                }
+                break;
+            case "dynasty":
+                if(book.dynasty !== value){
+                    isOk = false;
+                }
+                break;
+            case "isFinished":
+                if(book.isFinished !== value){
+                    isOk = false;
+                }
+                break;
+            case "keywords":
+                if(book.keywords.indexOf(value) === -1){
+                    isOk =false;
+                }
+                break;
+            case "isFree":
+                if(book.isFree !== value){
+                    isOk = false;
+                }
+                break;
+            case "latestChapter":
+                if(book.latestChapter < value){
+                    isOk = false;
+                }
+                break;
+            case "sanshi":
+                if(book.numbers >= value){
+                    isOk= false;
+                }
+                break;
+            case "wushi":
+                if(book.numbers >= value || book.numbers < 300000){
+                    isOk = false;
+                }
+                break;
+            case "yibai":
+                if(book.numbers >= value || book.numbers < 500000){
+                    isOk = false;
+                }
+                break;
+            case "liangbai":
+                if(book.numbers >= value || book.numbers < 1000000){
+                    isOk = false;
+                }
+                break;
+            case "wubai":
+                if(book.numbers < 2000000){
+                    isOk =false;
+                }
+                break;
+            default:
+
+        }
+    }
+    return isOk;
+}
+
+// 书籍类型对应关系
+export const booktypes = {
+    1:"玄幻",
+    2:"奇幻",
+    3:"仙侠",
+    4:"历史",
+    5:"都市",
+    6:"科幻",
+    7:"军事",
+    8:"灵异",
+};
+//
+
+// 书籍所属地域对应关系
+export const distribute = {
+    "zhongguo" :"中国",
+    "meiguo":"美国",
+    "eluosi":"俄罗斯",
+    "yingguo0":"英国",
+    "faguo":"法国",
+    "deguo":"德国",
+    "riben":"日本",
+    "jianada":"加拿大",
+};
+
+// 书籍所属朝代对应关系
+export const dynasty = {
+    "xiachao":"夏朝",
+    "shangchao":"商朝",
+    "zhouchao":"周朝",
+    "qinchao":"秦朝",
+    "hanchao":"汉朝",
+    "jinchao":"晋朝",
+    "suichao":"隋朝",
+    "tangchao":"唐朝",
+    "songchoa":"宋朝",
+    "yuanchao":"元朝",
+    "mingchao":"明朝",
+    "qingchao":"清朝",
+    "mingguo":"民国",
+};
+
+// 关键字对应关系
+export  const keywords = {
+    9:"热血",
+    10:"重生",
+    11:"豪门",
+    12:"孤儿",
+    13:"盗贼",
+    14:"特种兵",
+    15:"特工",
+    16:"黑客",
+    17:"明星",
 };

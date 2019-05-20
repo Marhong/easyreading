@@ -6,20 +6,53 @@ import '../css/BookCity.css';
 import NavComponent from "./NavComponent";
 import FilterPanel from "./FilterPanel";
 import reqwest from "reqwest";
+import {conditionTransform,isOk,booktypes_reverse2} from '../static/commonFun';
 import IndexHeaderSearch from "./IndexHeaderSearch";
 const bookUrl = "http://localhost:5000/easyreading/book";
+const searchRecord = "http://localhost:5000/easyreading/search";
 export default class BookCity extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            data:[],
-            keywords:"",
-            selectType:props.match.params.type,
+        let user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+        if(user == null){
+            user = {id:Date.now()};
         }
-        window.addEventListener("storage",(e)=>{console.log(JSON.stringify(e))},false);
+        let selectType = [{"type":"分类",value:booktypes_reverse2(props.match.params.type)}];
+        this.state = {
+            data:[], // 获取的所有书籍数据
+            result:[], // 根据用户搜索展示的数据
+            keywords:"",
+            selectType:selectType,
+            user:user,
+        };
+
     }
-    handleSearch(e){
-        console.log("动态捕获的sessionStorage值：",e);
+    handleSearch(value){
+
+            let search = conditionTransform({keywords: value.trim(), type: this.state.selectType});
+                let books = this.state.data;
+                let result = [];
+                for (let book of books) {
+                    if (isOk(book, search)) {
+                        result.push(book);
+                    }
+                }
+                this.setState({...this.state, result: result});
+        // 向服务器发送请求，插入一条该用户的搜索记录
+        reqwest({
+            url:`${searchRecord}/add`,
+            type:'json',
+            method:'post',
+            data:{...search,userId:this.state.user.id},
+            err:(err)=>console.log(err),
+            success:(res)=>{
+                if(res){
+
+                }
+            }
+        });
+
+
     }
     componentDidMount(){
         document.documentElement.style.backgroundColor = "white";
@@ -32,10 +65,18 @@ export default class BookCity extends Component{
             error:(err)=>console.log(err),
             success:(res)=>{
                 console.log(res);
-                this.setState({...this.state,data:res});
+
+                this.setState({...this.state,data:res,result:res});
+                setTimeout(()=>{
+                    this.handleSearch("",this.state.selectType);
+                },2)
             }
         });
     }
+    handleSelectType(types){
+        this.setState({...this.state,selectType:types});
+    }
+
     // 最开始只传递该类型数据的长度，以及第一个page页面展示的数据。
     // 如pagesize为5，总共有22条数据。初始化时只传递25和前5条数据
     // 切换page,根据page值向服务器请求新page页面的数据
@@ -53,17 +94,17 @@ export default class BookCity extends Component{
                     {id:"sm12sddf2",clickedNumbers:231220,numbers:620152,author:"辰东",imgSrc:"https://bookcover.yuewen.com/qdbimg/349573/1004608738/150",name:"圣墟",bookHref:"",desc:"在破败中崛起，在寂灭中复苏。\n" +
                         "　　沧海成尘，雷电枯竭，那一缕幽雾又一次临近大地，世间的枷锁被打开了，一个全新的世界就此揭开神秘的一角……",type:"玄幻",isOver:false},];
         */
-        const data = this.state.data;
+        const data = this.state.result;
         return(
             <div>
-                <IndexHeaderSearch/>
+                <IndexHeaderSearch onSearch={this.handleSearch.bind(this)}/>
             <div className="main">
                 <Breadcrumb separator=">" style={{marginBottom:20}}>
                     <Breadcrumb.Item > <Link to={`/`} >首页</Link></Breadcrumb.Item>
                     <Breadcrumb.Item > <Link to={`/bookCity`} style={{color:"#40a9ff"}}>书城</Link></Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="left">
-                    <FilterPanel defaultType={this.props.match.params.type}/>
+                    <FilterPanel defaultType={this.props.match.params.type} onSelectType={this.handleSelectType.bind(this)}/>
                 </div>
                 <div className="right">
                    {/* <NavComponent/>*/}

@@ -254,6 +254,7 @@ exports.formatDuring = (mss) => {
     return days +  hours  + minutes  + seconds ;
 };
 
+
 // 书籍类型对应关系
 exports.booktypes = {
     1:"玄幻",
@@ -265,6 +266,7 @@ exports.booktypes = {
     7:"军事",
     8:"灵异",
 };
+//
 
 // 书籍所属地域对应关系
 exports.distribute = {

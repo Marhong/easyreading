@@ -124,6 +124,9 @@ exports.ChapterReadingRecordSQL = {
     update :'UPDATE chapterreadingrecord set endTime = ? WHERE id = ?',
     selectAllByUserId :'SELECT * FROM chapterreadingrecord WHERE userId = ? order by id desc',
 };
+exports.SearchRecordSQL = {
+  insert:'INSERT INTO search_record (id,userId,name,type,distribute,dynasty,isFinished,isFree,numbers,latestChapter,keywords) VALUES(?,?,?,?,?,?,?,?,?,?,?)',
+};
 exports.VolumeChaptersSQL = {
   insert : 'INSERT INTO volume_chapters (volumeId,chapterId) VALUES (?,?)',
     selectAll : 'SELECT * FROM volume_chapters WHERE volumeId = ?',

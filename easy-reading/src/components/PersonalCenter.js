@@ -232,7 +232,10 @@ export default class PersonalCenter extends Component{
             error:(err)=>console.log(err),
             success:(res)=>{
                 console.log("收到的reply:"+res);
-                this.setState({...this.state,replyData:res.sort(sortBy('key',false))});
+                if(res){
+                    this.setState({...this.state,replyData:res.sort(sortBy('key',false))});
+                }
+
             }
         });
         // 从服务器获取用户的上传记录
@@ -560,7 +563,7 @@ export default class PersonalCenter extends Component{
                             mode="inline"
                         >
                             <Menu.Item key="1"><i className="iconfont icon-shujia"/> 我的书架</Menu.Item>
-                            <Menu.Item key="2"><i className="iconfont icon-shudan"/> 我的书单</Menu.Item>
+                          {/* 没空做了，不展示 <Menu.Item key="2"><i className="iconfont icon-shudan"/> 我的书单</Menu.Item>*/}
                             <Menu.Item key="3"><i className="iconfont icon-pinglun"/> 我的书评</Menu.Item>
                             {/* 没空做了，没实现的还是不展示比较好 <Menu.Item key="4"><i className="iconfont icon-xiaoxi"/> 消息通知</Menu.Item>*/}
                             <Menu.Item key="5"><i className="iconfont icon-yuedujilu"/> 阅读记录</Menu.Item>

@@ -176,6 +176,15 @@ exports.getAllBooks = (req,res) => {
     })
 };
 
+// 搜索书籍
+exports.searchBook = (req,res) =>{
+    console.log(JSON.stringify(req.body));
+   /* pool.query(BookSQL.searchBook,[],(err,rows)=>{
+        if(err) throw err;
+        res.send(rows);
+        res.end();
+    })*/
+};
 // 通过用户id获取所有上传的书籍
 exports.getAllBooksByUserId = (req,res) =>{
     pool.query(BookSQL.selectAllBooksByUserId,[req.params.userId],(err,rows) => {

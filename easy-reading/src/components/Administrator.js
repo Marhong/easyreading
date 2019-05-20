@@ -46,12 +46,7 @@ const bookListData = [
 ];
 // 菜单项为“公告管理” > “公告列表” 时的数据
 const bulletinListData = [
-    {
-        key: "bulletinListData1", title  : '关于大量上传侵权书籍情况', content   : '由于法律规定，在版权有效期内容不能在未经允许的情况下随意转发他人作品',  publisher: '管理员XX',publishTime   : '2019-02-10 14:20:20',
-    },
-    {
-        key: "bulletinListData2", title  : '网站更新通知', content   : '为提高大家的使用体验，最近将对网站进行更新',  publisher: '管理员XX',publishTime   : '2019-02-10 14:20:20',
-    },
+
 ];
 // 菜单项为“帖子管理” > “举报信息” 时的数据
 const postReportData = [

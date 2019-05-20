@@ -4,6 +4,7 @@ import BulletinList from "./BulletinList";
 import BulletinItem from "./BulletinItem";
 import IndexPageRouter from "./IndexPage";
 import AppPageRouter from "../App";
+import BookCityPageRouter from "./BookCityPage";
 
 class BulletinListPage extends  Component{
 
@@ -15,7 +16,7 @@ class BulletinListPage extends  Component{
                     <Route exact path="/" component={AppPageRouter} />
                     <Route exact path="/bulletinList" component={BulletinList} />
                     <Route path="/bulletinList/:id/" component={BulletinItem} />
-
+                    <Route exact path="/bookCity" component={BookCityPageRouter} />
                 </Switch>
             </div>
         );

@@ -82,8 +82,9 @@ export default class IndexHeaderSearch extends Component{
     }
     // 处理用户搜索
     handleSearch = (value) => {
-        sessionStorage.setItem("keywords",value);
-        this.setState({...this.state,keywords:value});
+        if(this.props.onSearch){
+            this.props.onSearch(value);
+        }
     };
     render(){
         const menu = (
@@ -101,6 +102,7 @@ export default class IndexHeaderSearch extends Component{
                     <Link to="/"><h2>易读中文网</h2></Link>
                </div>
                <div className="center">
+                   <Link to="/bookCity">
                        <Search
                            placeholder="输入书名、作者名或者关键字"
                            enterButton="Search"
@@ -109,6 +111,8 @@ export default class IndexHeaderSearch extends Component{
                            className="inputSearch"
                        >
                        </Search>
+                   </Link>
+
                </div>
                <div className="right">
                    <span className="userInfo">
