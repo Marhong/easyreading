@@ -233,3 +233,57 @@ exports.sortBy = (attr,rev) =>{
         return 0;
     }
 };
+
+// 将毫秒转为天 时 分 秒的格式
+exports.formatDuring = (mss) => {
+    let  days = parseInt(mss / (1000 * 60 * 60 * 24));
+    days = days > 0 ? days+"天" : "";
+    let hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    hours = hours > 0 ? hours+"小时" : "";
+    let minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+    minutes = minutes > 0 ? minutes+"分钟" : "";
+    let seconds = (mss % (1000 * 60)) / 1000;
+    seconds = seconds > 0 ? Math.ceil(seconds)+"秒" : "";
+    return days +  hours  + minutes  + seconds ;
+};
+
+// 书籍类型对应关系
+exports.booktypes = {
+    1:"玄幻",
+    2:"奇幻",
+    3:"仙侠",
+    4:"历史",
+    5:"都市",
+    6:"科幻",
+    7:"军事",
+    8:"灵异",
+};
+
+// 书籍所属地域对应关系
+exports.distribute = {
+    "zhongguo" :"中国",
+    "meiguo":"美国",
+    "eluosi":"俄罗斯",
+    "yingguo0":"英国",
+    "faguo":"法国",
+    "deguo":"德国",
+    "riben":"日本",
+    "jianada":"加拿大",
+};
+
+// 书籍所属朝代对应关系
+exports.dynasty = {
+    "xiachao":"夏朝",
+    "shangchao":"商朝",
+    "zhouchao":"周朝",
+    "qinchao":"秦朝",
+    "hanchao":"汉朝",
+    "jinchao":"晋朝",
+    "suichao":"隋朝",
+    "tangchao":"唐朝",
+    "songchoa":"宋朝",
+    "yuanchao":"元朝",
+    "mingchao":"明朝",
+    "qingchao":"清朝",
+    "mingguo":"民国",
+};

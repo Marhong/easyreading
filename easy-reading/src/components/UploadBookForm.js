@@ -296,6 +296,11 @@ class UploadBookForm extends Component {
                                                  <Option value="jinchao">晋朝</Option>
                                                  <Option value="suichao">隋朝</Option>
                                                  <Option value="tangchao">唐朝</Option>
+                                                 <Option value="songchoa">宋朝</Option>
+                                                 <Option value="yuanchao">元朝</Option>
+                                                 <Option value="mingchao">明朝</Option>
+                                                 <Option value="qingchao">清朝</Option>
+                                                 <Option value="mingguo">民国</Option>
                                              </Select>
                                          )}
                                      </Form.Item>

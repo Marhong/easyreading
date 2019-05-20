@@ -65,6 +65,8 @@ router.post('/book/add',book_controller.addBook);
 router.get('/book/all',book_controller.getAllBooks);
 // GET 通过书籍id获取某一书籍详细信息
 router.get('/book/:id',book_controller.getBookById);
+// GET 通过书籍id获取某本书的简略信息
+router.get('/book/:id/simpleInfo',book_controller.getSimpleBookById);
 // GET 通过用户id获取用户上传的所有书籍
 router.get('/book/:userId/upload',book_controller.getAllBooksByUserId)
 // POST 举报书籍
@@ -144,7 +146,8 @@ router.post('/reading_setting/:id/save',reading_setting_controller.saveReadingSe
 router.post('/chapterreadingrecord/add',chapter_reading_record_controller.addReadingRecord);
 // POST 更新一条章节阅读记录
 router.post('/chapterreadingrecord/update',chapter_reading_record_controller.updateReadingRecord);
-
+// GET 获取某一用户的周阅读记录
+router.get('/chapterreadingrecord/:userId/week',chapter_reading_record_controller.getWeekRecord);
 // POST 添加一条收藏记录
 router.post('/collect/add',collect_record_controller.addCollectRecord);
 // GET 通过userId获取用户收藏的所有书籍

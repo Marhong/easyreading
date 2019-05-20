@@ -173,3 +173,16 @@ export function sortBy(attr,rev){
         return 0;
     }
 };
+
+// 将毫秒转为天 时 分 秒的格式
+export function formatDuring(mss){
+    let  days = parseInt(mss / (1000 * 60 * 60 * 24));
+    days = days > 0 ? days+"天" : "";
+    let hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    hours = hours > 0 ? hours+"小时" : "";
+    let minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+    minutes = minutes > 0 ? minutes+"分钟" : "";
+    let seconds = (mss % (1000 * 60)) / 1000;
+    seconds = seconds > 0 ? Math.ceil(seconds)+"秒" : "";
+    return days +  hours  + minutes  + seconds ;
+};

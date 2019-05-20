@@ -17,6 +17,9 @@ let readImage = require("./readImage");
 let formidable = require('formidable');
 let moment = require('moment');
 let callback = common.parseUploadBookCallBack;
+let  booktypes = common.booktypes;
+let distribute = common.distribute;
+let dynasty = common.dynasty;
 let changeEncoding = common.changeEncoding;
 let fs = require('fs');
 
@@ -143,6 +146,22 @@ exports.getBookById = (req,res) => {
 })
 };
 
+// 通过id获取某一书籍简略信息
+exports.getSimpleBookById = (req,res) =>{
+    pool.query(BookSQL.selectOneBook,[req.params.id],(err,rows) =>{
+        if(err) throw err;
+        let book = rows[0];
+        let bookDistribute = book.distribute;
+        let showDistribute = bookDistribute ? distribute[bookDistribute] : "中国";
+        book.distribute = showDistribute;
+        let bookDynasty = book.dynasty;
+        let showDynasty = bookDynasty ? dynasty[bookDynasty] : "汉朝";
+        book.dynasty = showDynasty;
+        book.type = booktypes[book.type];
+        res.send(book);
+        res.end();
+    })
+};
 // 获取所有书籍
 exports.getAllBooks = (req,res) => {
     pool.query(BookSQL.selectAllBooks,(err,rows) => {
@@ -156,16 +175,7 @@ exports.getAllBooks = (req,res) => {
         res.end();
     })
 };
-const booktypes = {
-    1:"玄幻",
-    2:"奇幻",
-    3:"仙侠",
-    4:"历史",
-    5:"都市",
-    6:"科幻",
-    7:"军事",
-    8:"灵异",
-};
+
 // 通过用户id获取所有上传的书籍
 exports.getAllBooksByUserId = (req,res) =>{
     pool.query(BookSQL.selectAllBooksByUserId,[req.params.userId],(err,rows) => {

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Menu ,Divider,Tabs,Table,Popconfirm,Tag} from 'antd';
 import moment from 'moment';
 import {WrappedRegistrationForm} from './RegistrationForm';
-import {sortBy} from '../static/commonFun';
+import {sortBy,formatDuring} from '../static/commonFun';
 import reqwest from "reqwest";
 import {message} from "antd/lib/index";
 require('../css/PersonalCenter.css');
@@ -11,6 +11,7 @@ const bookUrl = "http://localhost:5000/easyreading/book";
 const postUrl = "http://localhost:5000/easyreading/post";
 const replyUrl = "http://localhost:5000/easyreading/reply";
 const collectUrl = "http://localhost:5000/easyreading/collect";
+const chapterReadingRecordUrl = "http://localhost:5000/easyreading/chapterreadingrecord";
 // 菜单项为“我的书架”时的数据
 const bookData = [
 
@@ -142,17 +143,66 @@ const recordExpandedRowRender = (e) => {
         { title: '开始阅读时间', dataIndex: 'startTime', key: 'startTime' },
         { title: '最后阅读时间', dataIndex: 'lastTime', key: 'lastTime' },
     ];
+    console.log("每一行的内容为:"+JSON.stringify(e));
+
+    // weekRecords 每一周的章节阅读记录
+    let weekRecords = e.weekRecords;
+    // bookIds 每一周内的不同书籍id
+    let bookIds = e.books;
+    // 最终展示的数据
+    let books = [];
+    let index =0,booksLength = bookIds.length;
+    for(let item of bookIds){
+        let book = {};
+        book.key = item;
+        let bookRecords = []; // 每本书的所有章节阅读记录
+        let totalTime =0; // 每本书的阅读时长
+        book.startTime = moment(weekRecords[weekRecords.length-1].startTime).format('YYYY-MM-DD HH:mm:ss'); // 该书开始阅读时间
+        book.lastTime = moment(weekRecords[0].endTime).format('YYYY-MM-DD HH:mm:ss'); // 该书结束阅读时间
+        for(let record of weekRecords){
+            if(record.bookId === item){
+                bookRecords.push(record);
+                totalTime += record.endTime - record.startTime;
+            }
+        }
+        book.totalTime = formatDuring(totalTime);
+        // 通过item(每本书的id)从服务器获取该书的信息
+        reqwest({
+            url:`${bookUrl}/${item}/simpleInfo`,
+            type:'json',
+            method:'get',
+            err:(err)=>console.log(err),
+            success:(res)=>{
+                if(res){
+                    book.name = res.name;
+                    book.author =res.author;
+                    book.type = res.type;
+                    book.distribute = res.distribute;
+                    book.era = res.dynasty;
+                    index++;
+                    books.push(book);
+                    if(index === booksLength){
+                        console.log("我是最终要展示的数据："+JSON.stringify(books));
+                        return (
+                            <Table
+                                columns={columns}
+                                dataSource={data}
+                                pagination={false}
+                            />
+                        );
+                    }
+                }
+            },
+        });
+    }
+
+
     const data = [{key: e.key+"剑来", name: '剑来'+e.key, author:"烽火戏诸侯",type: '玄幻',distribute:"中国",era:"春秋战国",totalTime:"54小时", startTime: '2018-04-30 00:03:41', lastTime: '2019-04-30 00:03:41'},
         {key: e.key+ '秦吏', name: '秦吏'+e.key,author:"七月新番",type: '历史',distribute:"中国",era:"秦汉",totalTime:"30小时", startTime: '2018-02-15 00:03:41', lastTime: '2019-04-30 00:03:41'},
         {key: e.key+'汉乡', name: '汉乡'+e.key, author:"孑与2",type: '历史',distribute:"中国",era:"汉朝",totalTime:"60小时", startTime: '2018-09-30 00:03:41', lastTime: '2019-04-30 00:03:41'},];
 
-    return (
-        <Table
-            columns={columns}
-            dataSource={data}
-            pagination={false}
-        />
-    );
+
+
 };
 const postTabs = [{name:"发表的帖子",dataName:"postData",columnsName:"postColumns",key:"postData"},
     {name:"发表的回复",dataName:"replyData",columnsName:"replyColumns",key:"replyData"},
@@ -260,6 +310,16 @@ export default class PersonalCenter extends Component{
             success:(res)=>{
                 console.log("收到的reply:"+res);
                 this.setState({...this.state,uploadRecordData:res.sort(sortBy('key',false))});
+            }
+        });
+        // 从服务器获取用户的阅读记录
+        reqwest({
+            url:`${chapterReadingRecordUrl}/${this.state.user.id}/week`,
+            type:'json',
+            method:'get',
+            error:(err)=>console.log(err),
+            success:(res)=>{
+                this.setState({...this.state,weekData:res.sort(sortBy('key',false))});
             }
         });
     }

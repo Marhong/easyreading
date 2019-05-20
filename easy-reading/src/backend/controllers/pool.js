@@ -121,6 +121,7 @@ exports.ChapterSQL = {
 exports.ChapterReadingRecordSQL = {
     insert : 'INSERT INTO chapterreadingrecord (id,chapterId,bookId,userId,startTime,endTime) VALUES (?,?,?,?,?,?)',
     update :'UPDATE chapterreadingrecord set endTime = ? WHERE id = ?',
+    selectAllByUserId :'SELECT * FROM chapterreadingrecord WHERE userId = ? order by id desc',
 };
 exports.VolumeChaptersSQL = {
   insert : 'INSERT INTO volume_chapters (volumeId,chapterId) VALUES (?,?)',
