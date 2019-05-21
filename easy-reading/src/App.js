@@ -13,6 +13,8 @@ import BulletinListPageRouter from "./components/BulletinListPage";
 import Administrator from "./components/Administrator";
 import PersonalCenter from "./components/PersonalCenter";
 import BookListPageRouter from "./components/BookListPage";
+import BookReadingData from "./components/BookReadingData";
+import UserReadingRecordData from "./components/UserReadingRecordData";
 
 class App extends Component {
   render() {
@@ -27,7 +29,8 @@ class App extends Component {
                 <Route exact path="/bulletinList" component={BulletinListPageRouter} />
                 <Route exact path="/personalCenter" component={PersonalCenter} />
                 <Route exact path="/administrator" component={Administrator} />
-                <Route exact path="/bulletinList/:id/" component={BulletinListPageRouter} />
+                <Route exact path="/book_reading_data" component={BookReadingData} />
+                <Route exact path="user_reading_data" component={UserReadingRecordData} />
             </Switch>
         </div>
     );

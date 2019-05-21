@@ -368,8 +368,7 @@ class UploadBookForm extends Component {
                                          style={{marginBottom:5,}}>
 
                                          {getFieldDecorator('preface', {
-                                             rules: [{ required: false, message: '请填写书籍序言!' },
-                                                 {max:50,message:"书籍序言长度不能超过50"}],
+                                             rules: [{ required: false, message: '请填写书籍序言!' }],
                                          })(
                                              <Input  placeholder="填写书籍序言" style={{width:200}} />
                                          )}

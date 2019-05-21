@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Menu ,Divider,Tabs,Table,Modal,Button,Input,Icon,Popconfirm} from 'antd';
 import moment from 'moment';
+import {Link } from "react-router-dom";
 import Highlighter from 'react-highlight-words';
 import {WrappedBulletinForm} from './BulletinForm';
 import {formatArray,sortBy,deepClone} from '../static/commonFun';
@@ -849,6 +850,8 @@ export default class Administrator extends Component{
                             <Menu.Item key="3"><i className="iconfont icon-tiezi"/> 帖子管理</Menu.Item>
                             <Menu.Item key="4"><i className="iconfont icon-pinglun"/> 评论管理</Menu.Item>
                             <Menu.Item key="5"><i className="iconfont icon-yonghudianji"/> 人员管理</Menu.Item>
+                           <Menu.Item key="6"> <Link to="/book_reading_data"><i className="iconfont icon-yonghudianji"/>书籍阅读数据统计</Link></Menu.Item>
+                            <Menu.Item key="7"> <Link to="/user_reading_data"><i className="iconfont icon-yonghudianji"/>用户阅读数据统计</Link></Menu.Item>
                         </Menu>
                     </div>
                     <div className="main">

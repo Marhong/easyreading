@@ -4,9 +4,9 @@ let common = require('./common');
 let recommendRecordController =require('./recommendRecordController');
 let getRecommendNumbers = recommendRecordController.getRecommendNumbers;
 let BookSQL = poolModule.BookSQL;
-let BookTypesSQL = poolModule.BookTypesSQL;
+let UserSQL = poolModule.UserSQL;
 let BookTypeSQL = poolModule.BookTypeSQL;
-let BookRecomendRecordsSQL = poolModule.BookRecomendRecordsSQL;
+let RecomendRecordSQL = poolModule.RecomendRecordSQL;
 let BookRankRecordsSQL = poolModule.BookRankRecordsSQL;
 let RankRecordSQL = poolModule.RankRecordSQL;
 let ChapterSQL = poolModule.ChapterSQL;
@@ -20,6 +20,7 @@ let callback = common.parseUploadBookCallBack;
 let  booktypes = common.booktypes;
 let distribute = common.distribute;
 let dynasty = common.dynasty;
+let keywords = common.keywords;
 let changeEncoding = common.changeEncoding;
 let fs = require('fs');
 
@@ -72,8 +73,78 @@ exports.addBook = (req, res) => {
         return callback(err,res,book);
     });
 };
-
 // 通过id获取某一书籍
+exports.getBookById = (req,res) => {
+    let book;
+    pool.query(BookSQL.selectOneBook,[req.params.id], (err, rows)=> {
+        if (err) {
+            res.send(false);
+            throw err;
+        }
+         book = rows[0];
+    });
+    let isSend = false;
+    for(let i=0;i<3;i++){
+        setTimeout(()=>{
+            if(book != null && !isSend){
+                // 获取该书相关的所有推荐记录
+                pool.query(RecomendRecordSQL.selectNumbersByBookId,[book.id],(err,rows)=>{
+                    if(err) throw err;
+                    book.recommendNumbers=0;
+                    if(rows.length>0){
+                        book.recommendNumbers = rows[0]["COUNT(id)"];
+                    }
+
+                });
+                // 获取该书相关的所有评分记录
+                pool.query(RankRecordSQL.selectAllRecordByBookId,[book.id],(err,rows)=>{
+                    if(err) throw err;
+                    book.rankNumbers = 0;
+                    if(rows.length>0) {
+                        book.rankNumbers = rows.length;
+                        // 计算书籍评分
+                        let sum = 0;
+                        for (let i = 0, len = rows.length; i < len; i++) {
+                            sum += rows[i].score;
+                        }
+                        book.score = (sum / rows.length).toFixed(1);
+                    }
+                });
+          /*      // 获取该书的最新章节信息
+                pool.query(ChapterSQL.selectSomeProperities,[book.latestChapter], (err, rows)=>{
+                    if (err){
+                        res.send(false);
+                        throw err;
+                    }
+                    console.log(JSON.stringify(rows[0]))
+                   // book.latestChapter = rows[0];
+                });*/
+
+                if(book.recommendNumbers != null && book.rankNumbers !=null ){
+                 // 将type数字转为type中文
+                book.type = booktypes[String(book.type)];
+                // 将keywords数字转为keywords中文
+                let transformed = "";
+                let words = book.keywords.split(",");
+                let length = book.keywords.split(",").length;
+                for (let i = 0; i < length; i++) {
+                    if(i<length-1){
+                        transformed = keywords[words[i]]+",";
+                    }else{
+                        transformed = keywords[words[i]];
+                    }
+                }
+                book.keywords = transformed;
+                   /* console.log(book.type,book.keywords,book.recommendNumbers,book.rankNumbers,book.latestChapter)*/
+                    res.send(book);
+                    res.end();
+                    isSend=true;
+                }
+
+            }},100*i)
+        }
+};
+/*// 通过id获取某一书籍
 exports.getBookById = (req,res) => {
     pool.query(BookSQL.selectOneBook,[req.params.id], (err, rows)=>{
         if (err){
@@ -144,7 +215,7 @@ exports.getBookById = (req,res) => {
             }
         })
 })
-};
+};*/
 
 // 通过id获取某一书籍简略信息
 exports.getSimpleBookById = (req,res) =>{
@@ -166,13 +237,26 @@ exports.getSimpleBookById = (req,res) =>{
 exports.getAllBooks = (req,res) => {
     pool.query(BookSQL.selectAllBooks,(err,rows) => {
         if(err) throw err;
-        for(let item of rows){
-            item.key =item.id;
-            item.uploader = item.userId;
-            item.uploadTime = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
+        if(rows.length > 0){
+            let index =0,bookLength = rows.length,books=rows;
+            for(let item of books){
+                item.key =item.id;
+                item.uploadTime = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
+                item.uploader = item.userId;
+                pool.query(UserSQL.selectOneByUserId,[item.userId],(err,rows)=>{
+                    if(err) throw err;
+                    item.uploader =rows[0].name;
+                    index++;
+                    if(index === bookLength){
+                        res.send(books);
+                        res.end();
+                    }
+                })
+
+            }
+
         }
-        res.send(rows);
-        res.end();
+
     })
 };
 

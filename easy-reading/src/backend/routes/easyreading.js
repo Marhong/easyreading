@@ -22,6 +22,8 @@ const bulletin_controller = require('../controllers/bulletinController');
 const post_report_controller = require('../controllers/postReportController');
 const reply_report_controller = require('../controllers/replyReportController');
 const book_report_controller = require('../controllers/bookReportController');
+const book_reading_data_controller =require('../controllers/bookReadingDataController');
+const heavy_recommend_controller = require('../controllers/heavyRecommendController');
 // 用户路由
 // POST 验证用户登录
 router.post('/user/login',user_controller.userLogin);
@@ -157,12 +159,27 @@ router.get('/collect/:userId',collect_record_controller.getAllByUserId);
 router.post('/collect/delete',collect_record_controller.deleteRecord);
 // POST 插入一条搜索记录
 router.post('/search/add',search_record_controller.addRecord);
-// POST 请求删除藏书
-router.post('/book/:id/delete', book_controller.book_delete_post);
+
+
+// POST 更新所有的书籍阅读记录
+router.post('/bookReadingData/update',book_reading_data_controller.updateBookReadingData);
+// GET 获取所有的书籍阅读记录
+router.get('/bookReadingData/all',book_reading_data_controller.getAllData);
+// GET 获取重磅推荐书籍
+router.get('/heavy_recommend/:num',heavy_recommend_controller.getBooks);
+
+
+
+
+
+
+
+
 
 // POST 请求更新藏书
 router.post('/book/:id/update', book_controller.book_update_post);
-
+// POST 请求删除藏书
+router.post('/book/:id/delete', book_controller.book_delete_post);
 
 
 module.exports = router;

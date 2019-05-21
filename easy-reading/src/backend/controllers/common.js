@@ -7,6 +7,7 @@ let VolumeSQL = poolModule.VolumeSQL;
 let ChapterSQL = poolModule.ChapterSQL;
 let VolumeChaptersSQL = poolModule.VolumeChaptersSQL;
 let BookVolumesSQL = poolModule.BookVolumesSQL;
+let BookReadingDataSQL =poolModule.BookReadingDataSQL;
 let fs = require('fs');
 let readline = require('readline');
 let chardet = require('chardet');
@@ -23,31 +24,12 @@ exports.parseUploadBookCallBack = async (err,res,book) =>{
                   res.send(err);
                   throw err;
               }
-              // 如果成功插入书籍，则应该在book_types表中插入插入相应的数据
-              // 章节的volumeList应该放在后面，去插入，章节的latestChapter应该放在后面去插入.
-              let booktypes = `${book.type},${book.keywords}`;
-              for(let bookType of booktypes.split(",")){
-                  pool.query(BookTypesSQL.insert,[book.id,bookType],(err) => {
-                      if(err){
-                          res.send(err);
-                          throw err;
-                      }
-                      // 同时要更新对应类型书籍的userTimes
-                      pool.query(BookTypeSQL.updateUseTimes,[bookType],(err) => {
-                          if(err){
-                              res.send(err);
-                              throw err;
-                          }
-
-                      })
-                  })
-              }
               res.send(true);
 
           });
-      analyseTxtFile(res,book.fileUrl,book.id);
+      analyseTxtFile(res,book.fileUrl,book.id,book);
 }
-async function analyseTxtFile(res,url,bookId) {
+async function analyseTxtFile(res,url,bookId,book) {
     // 创建文件读取流。一次最多可读取64M。设置读取流的编码方式为utf-8
      let fRead = fs.createReadStream(url,{highWaterMark:65536});
      fRead.setEncoding("utf-8");
@@ -129,6 +111,50 @@ async function analyseTxtFile(res,url,bookId) {
         // 解析完txt文件后，将相应数据插入数据库
          if(chapterList.length > 0){
              insertBookData(res,volumeList,chapterList,numbers,bookId);
+             // 如果书籍解析成功,向book_reading_data中插入一条该书的的记录
+             let id =Date.now();
+             let book_id = book.id;
+             let book_name = book.name;
+             let type = book.type;
+             let isFinished = book.isFinished;
+             let startTime = book.startTime;
+             let click_numbers = 0;
+             let recommend_numbers = 0;
+             let collect_numbers =0;
+             let post_numbers =0;
+             let reply_numbers  =0;
+             let rank_numbers =0;
+             let total_time =0;
+             let rank =1;
+             let lastModifiedTime =Date.now();
+             pool.query(BookReadingDataSQL.insert,[id,book_id,book_name,type,isFinished,startTime,click_numbers,recommend_numbers,collect_numbers,
+             post_numbers,reply_numbers,rank_numbers,total_time,rank,lastModifiedTime],(err,rows)=>{
+                if(err){
+                    res.send(false);
+                    res.end();
+                    throw err;
+                }
+
+             });
+             // 如果书籍解析成功，则应该在book_types表中插入插入相应的数据
+             // 章节的volumeList应该放在后面，去插入，章节的latestChapter应该放在后面去插入.
+             let booktypes = `${book.type},${book.keywords}`;
+             for(let bookType of booktypes.split(",")){
+                 pool.query(BookTypesSQL.insert,[book.id,bookType],(err) => {
+                     if(err){
+                         res.send(false);
+                         throw err;
+                     }
+                     // 同时要更新对应类型书籍的userTimes
+                     pool.query(BookTypeSQL.updateUseTimes,[bookType],(err) => {
+                         if(err){
+                             res.send(false);
+                             throw err;
+                         }
+
+                     })
+                 })
+             }
          }else{
              pool.query(BookSQL.delete,[bookId],(err,row)=>{
                  if(err) throw err;
@@ -179,6 +205,8 @@ async function insertBookData(res,volumeList,chapterList,numbers,bookId){
             throw err;
         }
     })
+
+
 }
 // 将文件编码格式转为utf-8
 exports.changeEncoding=(fileName) => {
@@ -253,7 +281,20 @@ exports.formatDuring = (mss) => {
     seconds = seconds > 0 ? Math.ceil(seconds)+"秒" : "";
     return days +  hours  + minutes  + seconds ;
 };
-
+// 根据clickNumbers,recommend_numbers,collect_numbers,rank_numbers,post_numbers,reply_numbers,total_time确定分数
+exports.calculateRank = (book) =>{
+    // 点击一次算一分
+    // 推荐一次算2分
+    // 收藏一次算5分
+    // 评分一次算2分
+    // 一条帖子算5分
+    // 一条评论算3分
+    // 阅读总时长一分钟算一分
+    return book.clickNumbers+book.recommend_numbers*2+
+        book.collect_numbers*5+book.rank_numbers*2+
+        book.post_numbers*5+book.reply_numbers*3+
+        (Math.floor(book.total_time/6000));
+};
 
 // 书籍类型对应关系
 exports.booktypes = {
@@ -295,4 +336,16 @@ exports.dynasty = {
     "mingchao":"明朝",
     "qingchao":"清朝",
     "mingguo":"民国",
+};
+// 关键字对应关系
+exports.keywords = {
+    9:"热血",
+    10:"重生",
+    11:"豪门",
+    12:"孤儿",
+    13:"盗贼",
+    14:"特种兵",
+    15:"特工",
+    16:"黑客",
+    17:"明星",
 };

@@ -66,6 +66,7 @@
     transform: translateY(-50%);
     padding: 20px 0;
     background: #e4e8ea;
+    height:auto;
 }
 .menu .ant-menu .ant-menu-item{
     height:50px;

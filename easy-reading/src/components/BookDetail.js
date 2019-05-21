@@ -35,13 +35,14 @@ export default class BookDetail extends Component{
             method:'get',
             error:(err)=>console.log(err),
             success:(res)=>{
-                this.setState({...this.state,book:res,latestChapter:res.latestChapter});
+
+                this.setState({...this.state,book:res});
             }
         });
     }
 
     render(){
-        const latestChapter = this.state.latestChapter;
+    /*    const latestChapter = this.state.latestChapter;*/
         const book =this.state.book;
        return(
            <div>
@@ -60,13 +61,13 @@ export default class BookDetail extends Component{
                <div className="card-container">
 
                    <Tabs type="card">
-                       <TabPane tab="最新章节" key="1">
+                     {/*  <TabPane tab="最新章节" key="1">
                            <p>{latestChapter.name}<span  className="time">{latestChapter.time ? moment(latestChapter.time).format('YYYY-MM-DD HH:mm:ss') : ""}</span></p>
-                           {/*这里怎么展示最近更新章节的部分内容还没想好怎么实现*/}
-                          {/* <p className="con">{latestChapter.content ? latestChapter.content.slice(0,150) : ""}</p>*/}
+                           这里怎么展示最近更新章节的部分内容还没想好怎么实现
+                           <p className="con">{latestChapter.content ? latestChapter.content.slice(0,150) : ""}</p>
                            <p className="content"
                                 dangerouslySetInnerHTML={{__html: latestChapter.content ? latestChapter.content.slice(0,150) : ""}}/>
-                       </TabPane>
+                       </TabPane>*/}
                        <TabPane tab="作品信息" key="2">
                            <p className="detailedIns">{book.preface}</p>
                        </TabPane>

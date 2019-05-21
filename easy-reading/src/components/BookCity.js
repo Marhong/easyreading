@@ -65,8 +65,9 @@ export default class BookCity extends Component{
             error:(err)=>console.log(err),
             success:(res)=>{
                 console.log(res);
-
-                this.setState({...this.state,data:res,result:res});
+                let end = res.length > 10 ? 10 : res.length;
+                let show = res.slice(0,end);
+                this.setState({...this.state,data:res,result:show});
                 setTimeout(()=>{
                     this.handleSearch("",this.state.selectType);
                 },2)
@@ -82,7 +83,11 @@ export default class BookCity extends Component{
     // 切换page,根据page值向服务器请求新page页面的数据
     // 需要判断table展示的什么类型的数据(书籍、公告、帖子、评论等)
     onChange(page,pageSize,e){
-        console.log(page,pageSize,this.state.currentDataName);
+        let start = (page-1)*10;
+        let result = this.state.data.slice(start,start+pageSize);
+        this.setState({...this.state,result:result});
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+
     }
     render(){
         console.log("当前默认类型为: ",this.props.match.params.type)

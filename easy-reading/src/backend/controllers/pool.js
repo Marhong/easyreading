@@ -53,6 +53,7 @@ exports.PostSQL = {
     selectAll :'SELECT * FROM post order by id desc',
     delete :'DELETE FROM post WHERE id = ?',
     selectAllByUserId:'SELECT * FROM post WHERE userId = ?',
+    selectNumbersByBookId :'SELECT COUNT(id) FROM post WHERE bookId = ?',
 };
 exports.ReplySQL = {
     insert :'INSERT INTO reply (id,userId,postId,anotherUserId,content,time,bookId,userName,postTitle) VALUES (?,?,?,?,?,?,?,?,?)',
@@ -61,6 +62,8 @@ exports.ReplySQL = {
     delete :'DELETE FROM reply WHERE id = ?',
     deleteAllByPostId:'DELETE FROM reply WHERE postId = ?',
     selectAllByUserId:'SELECT * FROM reply WHERE userId = ? order by id desc',
+    selectAllByBookId :'SELECT * FROM reply WHERE bookId = ?',
+    selectNumbersByBookId :'SELECT COUNT(id) FROM reply WHERE bookId = ?',
 };
 exports.ReplyReportSQL = {
     insert :'INSERT INTO replyreport (id,content,replyContent,userId,userName,reportedUserId,reportedUserName,replyId,time,postId) VALUES (?,?,?,?,?,?,?,?,?,?)',
@@ -86,6 +89,8 @@ exports.BookRecomendRecordsSQL = {
 };
 exports.RecomendRecordSQL = {
     insert:'INSERT INTO recommend_record (id,userId,bookId,time) VALUES (?,?,?,?)',
+    selectAllByBookId :'SELECT * FROM recommend_record WHERE bookId = ?',
+    selectNumbersByBookId :'SELECT COUNT(id) FROM recommend_record WHERE bookId = ?',
 };
 exports.BookRankRecordsSQL = {
     selectAllRankRecordsByBookId : 'SELECT * FROM book_rank_records WHERE bookId = ?',
@@ -95,12 +100,15 @@ exports.RankRecordSQL = {
     selectAllRecordByBookId : 'SELECT * FROM rank_record WHERE  bookId = ?',
     insert : 'INSERT INTO rank_record (id,bookId,userId,score,time) VALUES (?,?,?,?,?)',
     updateScore : 'UPDATE rank_record set score = ? WHERE userId = ?',
+    selectNumbersByBookId :'SELECT COUNT(id) FROM rank_record WHERE bookId = ?',
 };
 exports.CollectRecordSQL = {
   insert :'INSERT INTO collectrecord (id,userId,bookId,time) VALUES (?,?,?,?)',
     selectByUserAndBookId : 'SELECT * FROM collectrecord WHERE userId = ? and bookId = ?',
     selectAllByUserId :'SELECT * FROM collectrecord WHERE userId = ? order by id desc',
     delete:'DELETE FROM collectrecord WHERE id = ?',
+    selectAllByBookId :'SELECT * FROM collectrecord WHERE bookId = ?',
+    selectNumbersByBookId :'SELECT COUNT(id) FROM collectrecord WHERE bookId = ?',
 };
 exports.BookTypeSQL = {
     updateUseTimes : 'UPDATE booktype set useTimes = useTimes+1 where id = ?',
@@ -113,16 +121,20 @@ exports.VolumeSQL = {
   insert : 'INSERT INTO volume (id,bookId,name,isFree,startTime,numbers) VALUES (?,?,?,?,?,?)',
     selectOneById : 'SELECT * FROM volume WHERE id = ?',
     selectAllByBookId :'SELECT * FROM volume WHERE bookId = ?',
+    selectNumbersByBookId :'SELECT COUNT(id) FROM volume WHERE bookId = ?',
 };
 exports.ChapterSQL = {
     insert :'INSERT INTO chapter (id,volumeId,bookId,name,numbers,link,isFree,time,content) VALUES (?,?,?,?,?,?,?,?,?)',
     selectOneById : 'SELECT * FROM chapter WHERE id = ?',
     selectAllByVolumeId : 'SELECT * FROM chapter WHERE volumeId = ?',
+    selectSomeProperities :'SELECT id,name,time FROM chapter WHERE id = ?',
 };
 exports.ChapterReadingRecordSQL = {
     insert : 'INSERT INTO chapterreadingrecord (id,chapterId,bookId,userId,startTime,endTime) VALUES (?,?,?,?,?,?)',
     update :'UPDATE chapterreadingrecord set endTime = ? WHERE id = ?',
     selectAllByUserId :'SELECT * FROM chapterreadingrecord WHERE userId = ? order by id desc',
+    selectAllByBookId :'SELECT * FROM chapterreadingrecord WHERE bookId = ?',
+    selectNumbersByBookId :'SELECT COUNT(id) FROM chapterreadingrecord WHERE bookId = ?',
 };
 exports.SearchRecordSQL = {
   insert:'INSERT INTO search_record (id,userId,name,type,distribute,dynasty,isFinished,isFree,numbers,latestChapter,keywords) VALUES(?,?,?,?,?,?,?,?,?,?,?)',
@@ -142,4 +154,15 @@ exports.BulletinSQL = {
     selectTopNumBulletin : 'SELECT * FROM bulletin order by time desc limit ?',
     selectOneBulletin : 'SELECT * FROM bulletin WHERE id = ?',
 
+};
+exports.BookReadingDataSQL = {
+    insert:'INSERT INTO book_reading_data (id ,book_id ,book_name ,type ,isFinished ,startTime, click_numbers ,recommend_numbers,collect_numbers ,post_numbers ,reply_numbers  ,rank_numbers ,total_time ,rank ,lastModifiedTime) ' +
+    'VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+    update:'UPDATE book_reading_data set click_numbers =?,recommend_numbers=?,collect_numbers=?,post_numbers=?,reply_numbers=?,rank_numbers=?,total_time=?,rank=?,lastModifiedTime=? WHERE book_id = ? ',
+    selectAll:'SELECT * FROM book_reading_data ',
+    selectSome:'SELECT book_id FROM book_reading_data order by rank desc limit ?',
+};
+exports.HeavyRecommendSQL = {
+    insert :'INSERT INTO heavy_recommend (id,time,book_ids) VALUES (?,?,?)',
+    selectTodayBooks :'SELECT * FROM heavy_recommend WHERE time > ? and time < ? limit ?',
 };

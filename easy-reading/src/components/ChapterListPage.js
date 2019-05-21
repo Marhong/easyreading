@@ -12,6 +12,8 @@ import ChapterReaderPageRouter from "./ChapterReaderPage";
 import BookDetailPageRouter from "./BookDetailPage";
 import BookCityPageRouter from "./BookCityPage";
 import AppPageRouter from "../App";
+import Administrator from "./Administrator";
+import PersonalCenter from "./PersonalCenter";
 
 class ChapterListPage extends  Component{
 
@@ -27,6 +29,8 @@ class ChapterListPage extends  Component{
                     <Route  exact path="/bookCity/books/:id" component={BookDetailPageRouter} />
                     <Route exact path="/bookCity/books/:id/chapterList" component={ChapterList} />
                     <Route exact path="/bookCity/books/:bookId/chapterList/:id" component={ChapterReaderPageRouter} />
+                    <Route exact path="/personalCenter" component={PersonalCenter} />
+                    <Route exact path="/administrator" component={Administrator} />
                 </Switch>
             </div>
         );
