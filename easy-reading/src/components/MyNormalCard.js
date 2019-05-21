@@ -12,11 +12,11 @@ export default class MyNormalCard extends Component{
         return(
             <div className="myNormalCard" >
                     <div className="bookImg">
-                        <Link to={`/bookCity/books/${book.id}`}><img src={book.imgSrc} alt={book.name} /></Link>
+                        <Link to={`/bookCity/books/${book.id}`}><img src={book.imgUrl} alt={book.name} /></Link>
                     </div>
                     <div className="bookInfo">
                         <p className="bookName"> <Link to={`/bookCity/books/${book.id}`}>{book.name}</Link></p>
-                        <p className="bookDesc">{book.desc.length>38 ? `${book.desc.slice(0,38)}...` : book.desc}</p>
+                        <p className="bookDesc">{book.description.length>38 ? `${book.description.slice(0,38)}...` : book.description}</p>
                         <div className="bookStatistics">
                             <div className="leftName">
                                 <i className="iconfont icon-yonghudianji"/> {book.author}

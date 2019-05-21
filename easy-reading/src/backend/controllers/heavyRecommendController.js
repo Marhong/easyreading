@@ -11,7 +11,7 @@ exports.getBooks = (req,res) => {
     dayStartTime.setHours(0,0,0,0);
     dayEndTime.setHours(23,59,59,999);
     // 获取距离现在
-       pool.query(HeavyRecommendSQL.selectTodayBooks,[dayStartTime.getTime(),dayEndTime.getTime(),Number(req.params.num)], (err, rows)=>{
+       pool.query(HeavyRecommendSQL.selectTodayBooks,[dayStartTime.getTime(),dayEndTime.getTime()], (err, rows)=>{
            if (err){
                res.send(err);
                throw err;
@@ -46,7 +46,7 @@ exports.getBooks = (req,res) => {
                            let id = rows[i].book_id;
                            pool.query(BookSQL.selectOneBook,[id],(err,rows)=>{
                                if(err) throw err;
-                               if(i === booksLength-1){
+                               if(index === booksLength-1){
                                    book_ids += id;
                                }else{
                                    book_ids += id+",";

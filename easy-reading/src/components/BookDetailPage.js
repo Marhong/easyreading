@@ -1,12 +1,6 @@
 import React,{Component} from 'react';
 import { BrowserRouter as Router, Route, Link ,Switch} from "react-router-dom";
-import BulletinList from "./BulletinList";
-import BulletinItem from "./BulletinItem";
-import IndexPageRouter from "./IndexPage";
-import BookListDetail from "./BookListDetail";
-import BookList from "./BookList";
 import BookDetail from "./BookDetail";
-import BookCity from "./BookCity";
 import ChapterListPageRouter from "./ChapterListPage";
 import ChapterReaderPageRouter from "./ChapterReaderPage";
 import BookCityPageRouter from "./BookCityPage";

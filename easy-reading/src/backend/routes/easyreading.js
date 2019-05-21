@@ -24,6 +24,21 @@ const reply_report_controller = require('../controllers/replyReportController');
 const book_report_controller = require('../controllers/bookReportController');
 const book_reading_data_controller =require('../controllers/bookReadingDataController');
 const heavy_recommend_controller = require('../controllers/heavyRecommendController');
+const finished_recommend_controller = require('../controllers/finishedRecommendController');
+const hot_new_recommned_controller = require('../controllers/hotNewRecommendController');
+const popular_recommned_controller = require('../controllers/popularRecommendController');
+// POST 更新所有的书籍阅读记录
+router.post('/bookReadingData/update',book_reading_data_controller.updateBookReadingData);
+// GET 获取所有的书籍阅读记录
+router.get('/bookReadingData/all',book_reading_data_controller.getAllData);
+// GET 获取重磅推荐书籍
+router.get('/heavy_recommend/:num',heavy_recommend_controller.getBooks);
+// GET 获取完本精选选推荐书籍
+router.get('/finished_recommend/:num',finished_recommend_controller.getBooks);
+// GET 获取火热新书推荐书籍
+router.get('/hot_new_recommend/:num',hot_new_recommned_controller.getBooks);
+// GET 获取热门作品推荐书籍
+router.get('/popular_recommend/:type_numbers/:numbers',popular_recommned_controller.getBooks);
 // 用户路由
 // POST 验证用户登录
 router.post('/user/login',user_controller.userLogin);
@@ -159,14 +174,6 @@ router.get('/collect/:userId',collect_record_controller.getAllByUserId);
 router.post('/collect/delete',collect_record_controller.deleteRecord);
 // POST 插入一条搜索记录
 router.post('/search/add',search_record_controller.addRecord);
-
-
-// POST 更新所有的书籍阅读记录
-router.post('/bookReadingData/update',book_reading_data_controller.updateBookReadingData);
-// GET 获取所有的书籍阅读记录
-router.get('/bookReadingData/all',book_reading_data_controller.getAllData);
-// GET 获取重磅推荐书籍
-router.get('/heavy_recommend/:num',heavy_recommend_controller.getBooks);
 
 
 

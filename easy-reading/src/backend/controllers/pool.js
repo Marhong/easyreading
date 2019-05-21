@@ -159,10 +159,27 @@ exports.BookReadingDataSQL = {
     insert:'INSERT INTO book_reading_data (id ,book_id ,book_name ,type ,isFinished ,startTime, click_numbers ,recommend_numbers,collect_numbers ,post_numbers ,reply_numbers  ,rank_numbers ,total_time ,rank ,lastModifiedTime) ' +
     'VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
     update:'UPDATE book_reading_data set click_numbers =?,recommend_numbers=?,collect_numbers=?,post_numbers=?,reply_numbers=?,rank_numbers=?,total_time=?,rank=?,lastModifiedTime=? WHERE book_id = ? ',
-    selectAll:'SELECT * FROM book_reading_data ',
+    selectAll:'SELECT * FROM book_reading_data order by rank',
+    selectTypeBooks :'SELECT * FROM book_reading_data order by type,rank desc ',
     selectSome:'SELECT book_id FROM book_reading_data order by rank desc limit ?',
+    selectFinishedBooks :'SELECT * FROM book_reading_data  WHERE isFinished = 1 order by rank desc limit ? ',
+    selectHotNewBooks :'SELECT * FROM book_reading_data where startTime > ?  order by rank desc,startTime desc  limit ?'
 };
 exports.HeavyRecommendSQL = {
     insert :'INSERT INTO heavy_recommend (id,time,book_ids) VALUES (?,?,?)',
-    selectTodayBooks :'SELECT * FROM heavy_recommend WHERE time > ? and time < ? limit ?',
+    selectTodayBooks :'SELECT * FROM heavy_recommend WHERE time > ? and time < ?',
 };
+exports.FinishedRecommendSQL = {
+    insert :'INSERT INTO finished_recommend (id,time,book_ids) VALUES (?,?,?)',
+    selectTodayBooks :'SELECT * FROM finished_recommend WHERE time > ? and time < ? ',
+};
+exports.HotNewRecommendSQL = {
+    insert :'INSERT INTO hot_new_recommend (id,time,book_ids) VALUES (?,?,?)',
+    selectTodayBooks :'SELECT * FROM hot_new_recommend WHERE time > ? and time < ? ',
+};
+exports.PopularRecommendSQL = {
+    insert :'INSERT INTO popular_recommend (id,time,book_ids) VALUES (?,?,?)',
+    selectTodayBooks :'SELECT * FROM popular_recommend WHERE time > ? and time < ? ',
+};
+
+
