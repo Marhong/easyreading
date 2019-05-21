@@ -58,9 +58,9 @@ export default class IndexHeaderCenter extends Component{
 {/*                    <Menu.Item key="rank">
                       排行
                     </Menu.Item>*/}
-                    <Menu.Item key="list">
+               {/*做不完了     <Menu.Item key="list">
                         <Link to="/bookList">书单</Link>
-                    </Menu.Item>
+                    </Menu.Item>*/}
 
                 </Menu>
             <Carousel autoplay  >

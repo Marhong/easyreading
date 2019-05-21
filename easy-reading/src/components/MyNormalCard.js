@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Tag } from 'antd';
 import '../css/MyNormalCard.css';
+import {booktypes} from '../static/commonFun';
 import { Link } from "react-router-dom";
 // 自定义的Card，用于展示“静态”书籍信息
 export default class MyNormalCard extends Component{
@@ -22,7 +23,7 @@ export default class MyNormalCard extends Component{
                                 <i className="iconfont icon-yonghudianji"/> {book.author}
                             </div>
                             <div className="rightTags">
-                                <Tag>体育赛事</Tag><Tag color="red">100万字</Tag>
+                                <Tag>{booktypes[book.type]}</Tag><Tag color="red">{(book.numbers/10000).toFixed(2)}万字</Tag>
                             </div>
                         </div>
                     </div>
