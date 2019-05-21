@@ -5,23 +5,28 @@ let VolumeChaptersSQL = poolModule.VolumeChaptersSQL;
 let compare = poolModule.compare;
 // 通过id获取某一条章节
 exports.getChapterById = (req,res) =>{
-    pool.query(ChapterSQL.selectOneById,[req.params.id], (err, rows)=>{
+    pool.query(ChapterSQL.selectSimpleInfoById,[req.params.id], (err, rows)=>{
         if (err){
             res.send(false);
             throw err;
         }
-        res.send(rows[0]);
-        res.end();
-    });
+        let chapter = rows[0];
+        pool.query(ChapterSQL.selectContentById,[rows[0].id],(err,rows)=>{
+            if(err) throw err;
+            chapter.content = rows[0].content;
+            res.send(chapter);
+            res.end();
+        });
+    })
 };
+
 
 // 通过卷id获取所有的章节
 exports.getChaptersByVolumeId = (req,res) =>{
 
     // 通过volumeId从chapter中获取所有对应chapter
-    pool.query(ChapterSQL.selectAllByVolumeId,[req.params.id],(err,rows)=>{
+    pool.query(ChapterSQL.selectNamesByVolumeId,[req.params.id],(err,rows)=>{
         if(err) throw err;
-        console.log(req.params.id,rows.length);
         res.send(rows.sort(compare('id')));
         res.end();
     })

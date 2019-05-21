@@ -126,8 +126,13 @@ exports.VolumeSQL = {
 exports.ChapterSQL = {
     insert :'INSERT INTO chapter (id,volumeId,bookId,name,numbers,link,isFree,time,content) VALUES (?,?,?,?,?,?,?,?,?)',
     selectOneById : 'SELECT * FROM chapter WHERE id = ?',
-    selectAllByVolumeId : 'SELECT * FROM chapter WHERE volumeId = ?',
-    selectSomeProperities :'SELECT id,name,time FROM chapter WHERE id = ?',
+    selectAllByVolumeId : 'SELECT * FROM chapter WHERE volumeId = ? order by id',
+    selectSomeProperities :'SELECT id,name,time FROM chapter WHERE id = ? ',
+    selectNamesByVolumeId:'SELECT id,name FROM chapter_info WHERE volumeId = ? ',
+    selectContentById :'SELECT content FROM chaptercontent WHERE chapterId = ?',
+    selectSimpleInfoById :'SELECT * FROM chapter_info WHERE id = ?',
+    insertContent : 'INSERT INTO chaptercontent (chapterId,content) VALUES (?,?)',
+    insertSimpleInfo :'INSERT INTO chapter_info(id,volumeId,bookId,name,numbers,link,isFree,time) VALUES (?,?,?,?,?,?,?,?)',
 };
 exports.ChapterReadingRecordSQL = {
     insert : 'INSERT INTO chapterreadingrecord (id,chapterId,bookId,userId,startTime,endTime) VALUES (?,?,?,?,?,?)',
@@ -135,6 +140,7 @@ exports.ChapterReadingRecordSQL = {
     selectAllByUserId :'SELECT * FROM chapterreadingrecord WHERE userId = ? order by id desc',
     selectAllByBookId :'SELECT * FROM chapterreadingrecord WHERE bookId = ?',
     selectNumbersByBookId :'SELECT COUNT(id) FROM chapterreadingrecord WHERE bookId = ?',
+
 };
 exports.SearchRecordSQL = {
   insert:'INSERT INTO search_record (id,userId,name,type,distribute,dynasty,isFinished,isFree,numbers,latestChapter,keywords) VALUES(?,?,?,?,?,?,?,?,?,?,?)',

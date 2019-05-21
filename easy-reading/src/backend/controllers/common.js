@@ -189,13 +189,28 @@ async function insertBookData(res,volumeList,chapterList,numbers,bookId){
             if(err){
                 throw err;
             }
+
             // 每插入一个chapter,就插入一个volumeChapters
             pool.query(VolumeChaptersSQL.insert,[chapter.volumeId,chapter.id],(err) =>{
                 if(err){
                     res.send(err);
                     throw err;
                 }
-            })
+            });
+            // 每插入一个chapter,就插入一条chapter_info
+            pool.query(ChapterSQL.insertSimpleInfo,[chapter.id,chapter.volumeId,bookId,chapter.name,chapter.numbers,chapter.link,chapter.isFree,chapter.time],(err) =>{
+                if(err){
+                    res.send(err);
+                    throw err;
+                }
+            });
+            // 每插入一个chapter,就插入一条chaptercontent
+            pool.query(VolumeChaptersSQL.insert,[chapter.id,chapter.content],(err) =>{
+                if(err){
+                    res.send(err);
+                    throw err;
+                }
+            });
         })
     }
     // update书籍的number和latestChapter

@@ -75,7 +75,7 @@ export default class ChapterList extends Component{
                         <span>作者: {book.author}</span>
 
                         <span>更新时间: {latestChapter ? moment(latestChapter.time).format('YYYY-MM-DD HH:mm:ss') : ""}</span>
-                        <span>最新章节: {latestChapter.name}</span>
+                       {/*获取每本书的信息时不获取章节信息，否则速度很慢 <span>最新章节: {latestChapter.name}</span>*/}
     {/*       这个正序、倒序暂时先不实现             <span onClick={this.handleChaptersSort.bind(this)}><a className="sort">{this.state.sort === 'icon-shengxu' ? '正序' : '倒序'}<i className={`iconfont ${this.state.sort}`}/></a></span>*/}
                     </p>
                 </div>

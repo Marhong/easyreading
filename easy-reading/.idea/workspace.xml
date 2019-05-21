@@ -17,17 +17,17 @@
       <file leaf-file-name="easyreading.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/routes/easyreading.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="40" column="44" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="44" />
+            <state relative-caret-position="179">
+              <caret line="151" column="22" selection-start-line="151" selection-start-column="12" selection-end-line="151" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="popularRecommendController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="popularRecommendController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/controllers/popularRecommendController.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="400">
-              <caret line="170" column="32" lean-forward="true" selection-start-line="170" selection-start-column="32" selection-end-line="170" selection-end-column="32" />
+              <caret line="170" lean-forward="true" selection-start-line="170" selection-end-line="170" />
               <folding>
                 <element signature="e#1329#1348#0" />
                 <element signature="e#3443#3504#0" />
@@ -49,6 +49,79 @@
                 <element signature="e#9994#10160#0" />
                 <element signature="e#10244#10565#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChapterReader.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/ChapterReader.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="394">
+              <caret line="75" selection-start-line="75" selection-end-line="75" />
+              <folding>
+                <element signature="e#1272#1675#0" />
+                <element signature="e#2061#2722#0" />
+                <element signature="e#3079#3381#0" />
+                <element signature="e#3434#4628#0" />
+                <element signature="e#4649#4875#0" />
+                <element signature="e#4914#6374#0" />
+                <element signature="e#6414#7995#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChapterList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/ChapterList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="177">
+              <caret line="72" column="40" lean-forward="true" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VolumeComponent.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VolumeComponent.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="855">
+              <caret line="45" column="139" selection-start-line="45" selection-start-column="135" selection-end-line="45" selection-end-column="139" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chapterController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/backend/controllers/chapterController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="13" column="74" lean-forward="true" selection-start-line="13" selection-start-column="74" selection-end-line="13" selection-end-column="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/backend/controllers/common.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="311">
+              <caret line="203" column="30" lean-forward="true" selection-start-line="203" selection-start-column="30" selection-end-line="203" selection-end-column="30" />
+              <folding>
+                <element signature="e#11036#11196#0" />
+                <element signature="e#11231#11502#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pool.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/backend/controllers/pool.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="293">
+              <caret line="134" column="124" selection-start-line="134" selection-start-column="124" selection-end-line="134" selection-end-column="124" />
             </state>
           </provider>
         </entry>
@@ -77,57 +150,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="commonFun.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/static/commonFun.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="478" column="22" selection-start-line="478" selection-start-column="13" selection-end-line="478" selection-end-column="22" />
-              <folding>
-                <element signature="n#!!block;n#getDefaultType#0" />
-                <element signature="n#!!block;n#conditionTransform#0" />
-                <element signature="n#!!block;n#booktypes_reverse2#0" />
-                <element signature="n#!!block;n#distribute_reverse#0" />
-                <element signature="n#!!block;n#dynasty_reverse#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pool.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/backend/controllers/pool.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="162" column="19" selection-start-line="162" selection-start-column="4" selection-end-line="162" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FinishedModule.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/FinishedModule.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-                <element signature="e#745#1242#0" />
-                <element signature="n#div#0;n#!!top" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainContent.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/MainContent.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="24" column="10" lean-forward="true" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -141,8 +163,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ChapterRea</find>
-      <find>console</find>
       <find>reqwest</find>
       <find>我的书单</find>
       <find>网站</find>
@@ -163,7 +183,6 @@
       <find>keywords</find>
       <find>latestChapter</find>
       <find>latestCha</find>
-      <find>ChapterSQL</find>
       <find>limit</find>
       <find>BookReading</find>
       <find>HeavyRecommendSQL</find>
@@ -171,19 +190,19 @@
       <find>insert</find>
       <find>FinishedRecommendSQL</find>
       <find>BookReadingDataSQL</find>
+      <find>/chapter/:</find>
+      <find>最新</find>
+      <find>ChapterSQL</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/IndexHeaderLeft.js" />
         <option value="$PROJECT_DIR$/src/components/BookCityPage.js" />
         <option value="$PROJECT_DIR$/src/components/IndexHeaderRight.js" />
         <option value="$PROJECT_DIR$/src/components/IndexPage.js" />
         <option value="$PROJECT_DIR$/src/components/BulletinList.js" />
         <option value="$PROJECT_DIR$/src/components/BulletinItem.js" />
-        <option value="$PROJECT_DIR$/src/components/ChapterList.js" />
-        <option value="$PROJECT_DIR$/src/components/ChapterReader.js" />
         <option value="$PROJECT_DIR$/src/components/BookList.js" />
         <option value="$PROJECT_DIR$/src/components/BookListDetail.js" />
         <option value="$PROJECT_DIR$/src/components/IndexHeaderCenter.js" />
@@ -204,7 +223,6 @@
         <option value="$PROJECT_DIR$/src/components/BulletinListPage.js" />
         <option value="$PROJECT_DIR$/src/components/ChapterListPage.js" />
         <option value="$PROJECT_DIR$/src/components/ChapterReaderPage.js" />
-        <option value="$PROJECT_DIR$/src/backend/controllers/common.js" />
         <option value="$PROJECT_DIR$/src/backend/controllers/bookController.js" />
         <option value="$PROJECT_DIR$/src/backend/controllers/bookReadingDataController.js" />
         <option value="$PROJECT_DIR$/src/components/BookReadingData.js" />
@@ -222,11 +240,15 @@
         <option value="$PROJECT_DIR$/src/backend/controllers/finishedRecommendController.js" />
         <option value="$PROJECT_DIR$/src/components/MainContent.js" />
         <option value="$PROJECT_DIR$/src/backend/routes/easyreading.js" />
-        <option value="$PROJECT_DIR$/src/backend/controllers/pool.js" />
         <option value="$PROJECT_DIR$/src/components/FinishedModule.js" />
         <option value="$PROJECT_DIR$/src/components/PopularModule.js" />
         <option value="$PROJECT_DIR$/src/components/MyListCard.js" />
         <option value="$PROJECT_DIR$/src/backend/controllers/popularRecommendController.js" />
+        <option value="$PROJECT_DIR$/src/components/ChapterList.js" />
+        <option value="$PROJECT_DIR$/src/backend/controllers/chapterController.js" />
+        <option value="$PROJECT_DIR$/src/components/ChapterReader.js" />
+        <option value="$PROJECT_DIR$/src/backend/controllers/pool.js" />
+        <option value="$PROJECT_DIR$/src/backend/controllers/common.js" />
       </list>
     </option>
   </component>
@@ -396,12 +418,12 @@
       <workItem from="1558055681061" duration="28102000" />
       <workItem from="1558226868015" duration="4173000" />
       <workItem from="1558315637733" duration="10764000" />
-      <workItem from="1558393941319" duration="40030000" />
+      <workItem from="1558393941319" duration="44120000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="710011000" />
+    <option name="totallyTimeSpent" value="714101000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -410,7 +432,7 @@
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17173052" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5006605" side_tool="true" visible="true" weight="0.122507125" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5006605" side_tool="true" visible="true" weight="0.10683761" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32905984" />
       <window_info id="npm" order="2" side_tool="true" />
@@ -439,31 +461,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/PageSetting.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-29" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VolumeComponent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="45" column="139" selection-start-line="45" selection-start-column="135" selection-end-line="45" selection-end-column="139" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ChapterList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="87" column="18" selection-start-line="87" selection-start-column="18" selection-end-line="87" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/BookList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="385">
@@ -592,13 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ChapterReader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="253" column="93" selection-start-line="253" selection-start-column="56" selection-end-line="253" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/UserReadingRecordData.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -639,17 +629,6 @@
           <caret line="22" column="83" selection-start-line="22" selection-start-column="83" selection-end-line="22" selection-end-column="83" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/controllers/common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="534">
-          <caret line="340" column="16" selection-start-line="340" selection-start-column="8" selection-end-line="340" selection-end-column="16" />
-          <folding>
-            <element signature="e#11036#11196#0" />
-            <element signature="e#11231#11502#0" />
           </folding>
         </state>
       </provider>
@@ -841,13 +820,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/controllers/pool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="162" column="19" selection-start-line="162" selection-start-column="4" selection-end-line="162" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/FinishedModule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
@@ -867,13 +839,6 @@
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/routes/easyreading.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="40" column="44" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -914,7 +879,7 @@
     <entry file="file://$PROJECT_DIR$/src/backend/controllers/popularRecommendController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
-          <caret line="170" column="32" lean-forward="true" selection-start-line="170" selection-start-column="32" selection-end-line="170" selection-end-column="32" />
+          <caret line="170" lean-forward="true" selection-start-line="170" selection-end-line="170" />
           <folding>
             <element signature="e#1329#1348#0" />
             <element signature="e#3443#3504#0" />
@@ -935,6 +900,74 @@
             <element signature="e#9862#10183#0" />
             <element signature="e#9994#10160#0" />
             <element signature="e#10244#10565#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/routes/easyreading.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="151" column="22" selection-start-line="151" selection-start-column="12" selection-end-line="151" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VolumeComponent.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="45" column="139" selection-start-line="45" selection-start-column="135" selection-end-line="45" selection-end-column="139" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ChapterList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="72" column="40" lean-forward="true" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ChapterReader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="75" selection-start-line="75" selection-end-line="75" />
+          <folding>
+            <element signature="e#1272#1675#0" />
+            <element signature="e#2061#2722#0" />
+            <element signature="e#3079#3381#0" />
+            <element signature="e#3434#4628#0" />
+            <element signature="e#4649#4875#0" />
+            <element signature="e#4914#6374#0" />
+            <element signature="e#6414#7995#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/controllers/chapterController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="13" column="74" lean-forward="true" selection-start-line="13" selection-start-column="74" selection-end-line="13" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/controllers/pool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="134" column="124" selection-start-line="134" selection-start-column="124" selection-end-line="134" selection-end-column="124" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/controllers/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="203" column="30" lean-forward="true" selection-start-line="203" selection-start-column="30" selection-end-line="203" selection-end-column="30" />
+          <folding>
+            <element signature="e#11036#11196#0" />
+            <element signature="e#11231#11502#0" />
           </folding>
         </state>
       </provider>

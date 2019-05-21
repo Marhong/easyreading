@@ -73,6 +73,7 @@ export default class ChapterReader extends Component{
             method:'get',
             error:(err)=>console.log("获取失败"),
             success:(res)=>{
+
                 this.setState({...this.state,chapter:res});
             }
         });

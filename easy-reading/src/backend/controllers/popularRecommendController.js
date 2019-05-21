@@ -168,7 +168,7 @@ exports.getBooks = (req,res) => {
                                         lishiData:lishiData,dushiData:dushiData,junshiData:junshiData,kehuanData:kehuanData,lingyiData:kehuanData});
                                     res.end();
                                 })
-                                
+
                             }
                             for (let i = 0; i < leftDataIds.length; i++) {
                                 let id = leftDataIds[i];
