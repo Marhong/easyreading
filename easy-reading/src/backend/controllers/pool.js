@@ -46,6 +46,7 @@ exports.BookSQL = {
     selectAllBooks :'SELECT * FROM book ',
     selectAllBooksByUserId :"SELECT * FROM book WHERE userId = ?",
     delete :'DELETE FROM book WHERE id = ?',
+    selectBooksByAuthor:'SELECT * FROM book WHERE author = ?',
 };
 exports.PostSQL = {
   insert :'INSERT INTO post (id,bookId,userId,title,content,time,userName) VALUES (?,?,?,?,?,?,?)',
@@ -186,6 +187,10 @@ exports.HotNewRecommendSQL = {
 exports.PopularRecommendSQL = {
     insert :'INSERT INTO popular_recommend (id,time,book_ids) VALUES (?,?,?)',
     selectTodayBooks :'SELECT * FROM popular_recommend WHERE time > ? and time < ? ',
+};
+exports.PersonalRecommendSQL = {
+    insert :'INSERT INTO personal_recommend (id,user_id,book_ids,time) VALUES (?,?,?,?)',
+    selectTodayBooks :'SELECT * FROM personal_recommend WHERE time > ? and time < ? and user_id = ?',
 };
 
 

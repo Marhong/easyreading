@@ -27,6 +27,7 @@ const heavy_recommend_controller = require('../controllers/heavyRecommendControl
 const finished_recommend_controller = require('../controllers/finishedRecommendController');
 const hot_new_recommned_controller = require('../controllers/hotNewRecommendController');
 const popular_recommned_controller = require('../controllers/popularRecommendController');
+const personal_recommend_controller = require('../controllers/personalRecommendController');
 // POST 更新所有的书籍阅读记录
 router.post('/bookReadingData/update',book_reading_data_controller.updateBookReadingData);
 // GET 获取所有的书籍阅读记录
@@ -39,6 +40,8 @@ router.get('/finished_recommend/:num',finished_recommend_controller.getBooks);
 router.get('/hot_new_recommend/:num',hot_new_recommned_controller.getBooks);
 // GET 获取热门作品推荐书籍
 router.get('/popular_recommend/:type_numbers/:numbers',popular_recommned_controller.getBooks);
+// GET 获取个性化推荐书籍
+router.get('/personal_recommend/:id/:num',personal_recommend_controller.getBooks);
 // 用户路由
 // POST 验证用户登录
 router.post('/user/login',user_controller.userLogin);
