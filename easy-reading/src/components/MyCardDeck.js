@@ -8,7 +8,6 @@ export default class MyCardDeck extends Component{
 
     render(){
         const data = this.props.data;
-
         return(
 
             <CardDeck>

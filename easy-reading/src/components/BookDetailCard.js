@@ -53,10 +53,12 @@ export default class BookDetailCard extends Component{
                     this.setState((preState) => {
                         let preBook = preState.book;
                         let oldScore = 0;
+                        /*alert(String(preBook.score))
                         if(String(preBook.score) !== "NaN"){
                             oldScore = preBook.score;
-                        }
-                        let newScore = ((number*2)+(oldScore*preBook.rankNumbers))/(preBook.rankNumbers+1).toFixed(1);
+                        }*/
+
+                        let newScore = (((number*2)+(oldScore*preBook.rankNumbers))/(preBook.rankNumbers+1)).toFixed(1);
                         return {...preState,book:{...preBook,score:newScore,rankNumbers:preBook.rankNumbers+1}};
                     });
                 }else if(res.code === 300 && res.oldScore){
@@ -170,7 +172,7 @@ export default class BookDetailCard extends Component{
                         <ReportItem item={book} onSubmit={this.handleBookReportSubmit.bind(this,book.id,book.name,book.userId)}/> </p>
                 </div>
                 <div className="tRan">
-                    <h2>{String(book.score) === "NaN" ? "暂无评分" : Math.floor(book.score)}.<span className="point">{String(book.score).split(".")[1]}</span></h2>
+                    <h2>{String(book.score) === "NaN" || book.score==null ? "暂无评分" : Math.floor(book.score)}.<span className="point">{String(book.score).split(".")[1]}</span></h2>
                     <p className="bookRank">{book.rankNumbers}人评价</p>
                     <p><strong>我要评价</strong></p>
                     <Rate allowHalf defaultValue={2.5} onChange={this.handleChange.bind(this,book.id)}/>

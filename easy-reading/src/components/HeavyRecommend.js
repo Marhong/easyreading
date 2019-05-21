@@ -20,7 +20,6 @@ export default class HeavyRecommend extends Component{
             method:'get',
             error:(err)=>console.log(err),
             success:(res)=>{
-             /*   console.log(JSON.stringify(res));*/
                 this.setState({...this.state,data:res});
             }
         });

@@ -27,6 +27,7 @@ export default class BookDetail extends Component{
         document.documentElement.style.backgroundColor = "white";
         document.body.style.backgroundColor = "white";
         // 获取传递过来的bookId参数
+
         let bookid = this.props.match.params.id;
         // 通过bookId从服务器获取书籍
         reqwest({
