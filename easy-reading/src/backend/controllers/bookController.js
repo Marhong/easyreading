@@ -141,7 +141,7 @@ exports.getBookById = (req,res) => {
                     isSend=true;
                 }
 
-            }},100*i)
+            }},500*i)
         }
 };
 /*// 通过id获取某一书籍
